@@ -1,0 +1,22 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Cargo Build (debug)",
+            "type": "shell",
+            "command": "cargo build",
+            "group": "build",
+        },
+        {
+            "label": "Cargo Build (release)",
+            "type": "shell",
+            "command": "cargo build --release",
+            "group": "build",
+        },
+        {
+            "label": "Flash S140 SoftDevice to nRF52840",
+            "type": "shell",
+            "command": "bash ${workspaceFolder}/softdevices/flash.sh",
+        },
+    ],
+}
