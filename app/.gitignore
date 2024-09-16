@@ -1,0 +1,13 @@
+# android
+/android/app/debug
+/android/app/profile
+/android/app/release
+
+# flutter
+**/ios/Flutter/.last_build_id
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.pub/
+.pub-cache/
+/build/
