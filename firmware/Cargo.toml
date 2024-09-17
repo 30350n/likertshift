@@ -38,5 +38,3 @@ embedded-storage-async = "0.4.1"
 futures = { version = "0.3.29", default-features = false }
 fixed = "1.24.0"
 heapless = "0.8.0"
-atomic-pool = "1.0.1"
-static_cell = "2.0.0"

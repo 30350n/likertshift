@@ -6,7 +6,7 @@
 }:
 pkgs.mkShell {
     nativeBuildInputs = with pkgs.buildPackages; [
-        (rust-bin.stable.latest.default.override {
+        (rust-bin.nightly.latest.default.override {
             targets = ["thumbv7em-none-eabihf"];
             extensions = [
                 "rust-src"
@@ -14,6 +14,7 @@ pkgs.mkShell {
             ];
         })
         cargo
+        cargo-udeps
         probe-rs
         rustfmt
         scrcpy
