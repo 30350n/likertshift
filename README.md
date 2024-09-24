@@ -27,6 +27,8 @@ The App stores all the recorded data locally.
 
 The `Export Data & Reset` option in the `Settings` tab can be used to export all the recorded data to a `.zip` archive and subsequently delete it from the local App storage.
 
+*Note: Usage of the [MapTiler API](app/lib/api-keys/README.md#maptilerdart) allows [MapTiler AG](https://www.maptiler.com/) to indirectly track the [users location and IP address](https://www.maptiler.com/privacy-policy/).*
+
 ## Licenses
 
 - The code included in this project is licensed under the [MIT](app/LICENSE) license.
