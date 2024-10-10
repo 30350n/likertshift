@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 
 import "package:adaptive_theme/adaptive_theme.dart";
 
+import "package:likertshift/system_navigation_bar.dart";
 import "package:likertshift/util.dart";
 
 class SettingsScreen extends StatelessWidget {
@@ -26,6 +27,7 @@ class SettingsScreen extends StatelessWidget {
               onSelected: (theme) {
                 if (theme != null) {
                   adaptiveTheme.setThemeMode(theme);
+                  updateSystemNavigationBarTheme();
                 }
               },
             ),
