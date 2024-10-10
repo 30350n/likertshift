@@ -1,39 +1,44 @@
 import "package:flutter/material.dart";
 
-import "package:adaptive_theme/adaptive_theme.dart";
-import "package:flutter_map/flutter_map.dart";
-import "package:latlong2/latlong.dart";
+import "package:likertshift/screens/map.dart";
+import "package:likertshift/screens/settings.dart";
 
-import "package:likertshift/api-keys/maptiler.dart" as maptiler;
-
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({super.key});
 
   @override
+  HomeState createState() => HomeState();
+}
+
+class HomeState extends State<Home> with SingleTickerProviderStateMixin {
+  @override
   Widget build(BuildContext context) {
-    return FlutterMap(
-      options: const MapOptions(initialCenter: LatLng(52.4294, 13.5303)),
-      children: [
-        TileLayer(
-          urlTemplate: AdaptiveTheme.of(context).brightness == Brightness.light
-              ? "https://api.maptiler.com/maps/openstreetmap/256/{z}/{x}/{y}@2x.jpg?key=${maptiler.apiKey}"
-              : "https://api.maptiler.com/maps/basic-v2-dark/256/{z}/{x}/{y}@2x.png?key=${maptiler.apiKey}",
-          userAgentPackageName: "com.github.u30350n.likertshift",
-        ),
-        MarkerLayer(
-          markers: [
-            Marker(
-              point: const LatLng(52.4294, 13.5303),
-              child: Icon(
-                Icons.location_on,
-                color: AdaptiveTheme.of(context).theme.colorScheme.primary,
-                size: 48.0,
-              ),
-              height: 60,
-            ),
-          ],
-        ),
-      ],
+    return Scaffold(
+      body: pages(context).values.elementAt(currentPageIndex),
+      bottomNavigationBar: NavigationBar(
+        destinations: pages(context).keys.toList(),
+        onDestinationSelected: (index) {
+          setState(() {
+            currentPageIndex = index;
+          });
+        },
+        selectedIndex: currentPageIndex,
+      ),
     );
+  }
+
+  int currentPageIndex = 0;
+  Map<Widget, Widget> pages(BuildContext context) {
+    return {
+      const NavigationDestination(icon: Icon(Icons.map), label: "Map"): const MapScreen(),
+      const NavigationDestination(icon: Icon(Icons.polyline), label: "Routes"): Scaffold(
+        appBar: AppBar(leading: const Icon(Icons.polyline), title: const Text("Routes")),
+      ),
+      const NavigationDestination(icon: Icon(Icons.bluetooth), label: "Devices"): Scaffold(
+        appBar: AppBar(leading: const Icon(Icons.bluetooth), title: const Text("Devices")),
+      ),
+      const NavigationDestination(icon: Icon(Icons.settings), label: "Settings"):
+          const SettingsScreen(),
+    };
   }
 }
