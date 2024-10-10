@@ -9,8 +9,8 @@
     androidPkgs ? (
         pkgs.androidenv.composeAndroidPackages
         {
-            buildToolsVersions = ["34.0.0" "30.0.3"];
-            platformVersions = ["34"];
+            buildToolsVersions = ["34.0.0" "33.0.1"];
+            platformVersions = ["34" "33"];
             abiVersions = ["armeabi-v7a" "arm64-v8a" "x86_64"];
             includeSystemImages = true;
             systemImageTypes = ["google_apis"];
