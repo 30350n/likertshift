@@ -41,6 +41,10 @@ class BluetoothModel with ChangeNotifier {
     notifyListeners();
   }
 
+  late StreamSubscription<int> _likertshiftValueSubscription;
+  int? _likertshiftValue;
+  int? get likertshiftValue => _likertshiftValue;
+
   BluetoothModel() {
     _adapterStateSubscription = FlutterBluePlus.adapterState.listen((state) {
       switch (state) {
@@ -72,6 +76,38 @@ class BluetoothModel with ChangeNotifier {
       _isScanning = value;
       notifyListeners();
     });
+
+    _likertshiftValueSubscription = onLikertshiftValue(
+      updateInterval: const Duration(milliseconds: 500),
+    ).listen((value) {
+      _likertshiftValue = value;
+      notifyListeners();
+    });
+  }
+
+  Stream<int> onLikertshiftValue({
+    Duration updateInterval = const Duration(seconds: 1),
+  }) async* {
+    while (true) {
+      await Future.delayed(updateInterval);
+      if (_activeDevice == null) {
+        continue;
+      }
+
+      final services = {
+        for (final service in _activeDevice!.servicesList) service.uuid: service,
+      };
+      final service = services[serviceUUID];
+
+      if (service == null) {
+        continue;
+      }
+
+      try {
+        await service.characteristics[0].write([0], timeout: 1);
+        yield (await service.characteristics[0].read(timeout: 1))[0];
+      } catch (_) {}
+    }
   }
 
   Future<void> startScan() async {
@@ -112,6 +148,7 @@ class BluetoothModel with ChangeNotifier {
   @override
   void dispose() {
     stopScan();
+    _likertshiftValueSubscription.cancel();
     _isScanningSubscription.cancel();
     _scanSubscription.cancel();
     _adapterStateSubscription.cancel();

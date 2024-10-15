@@ -5,6 +5,7 @@ import "package:latlong2/latlong.dart";
 import "package:provider/provider.dart";
 
 import "package:likertshift/api-keys/maptiler.dart" as maptiler;
+import "package:likertshift/bluetooth.dart";
 import "package:likertshift/location.dart";
 
 class MapScreen extends StatefulWidget {
@@ -40,6 +41,11 @@ class MapScreenState extends State<MapScreen> {
     if (followLocation && locationModel.currentLocation != null) {
       mapController.move(locationModel.currentLocation!, mapController.camera.zoom);
     }
+
+    final activeDevice =
+        context.select<BluetoothModel, bool>((model) => model.activeDevice != null);
+    final likertshiftValue =
+        context.select<BluetoothModel, int?>((model) => model.likertshiftValue);
 
     return Scaffold(
       body: Stack(
@@ -92,6 +98,8 @@ class MapScreenState extends State<MapScreen> {
             child: Column(
               children: [
                 if (!locationModel.isLocationEnabled) const LocationOffWidget(),
+                if (activeDevice && likertshiftValue != null)
+                  LikertshiftValueWidget(likertshiftValue),
               ],
             ),
           ),
@@ -114,6 +122,49 @@ class MapScreenState extends State<MapScreen> {
           }
         },
         child: Icon(followLocation ? Icons.gps_fixed : Icons.gps_not_fixed),
+      ),
+    );
+  }
+}
+
+const likertshiftValueMap = {
+  1: "Very Unsatisfied",
+  2: "Unsatisfied",
+  3: "Neutral",
+  4: "Satisfied",
+  5: "Very Satisfied",
+};
+
+const likertshiftIconMap = {
+  1: Icons.sentiment_very_dissatisfied,
+  2: Icons.sentiment_dissatisfied,
+  3: Icons.sentiment_neutral,
+  4: Icons.sentiment_satisfied,
+  5: Icons.sentiment_very_satisfied,
+};
+
+class LikertshiftValueWidget extends StatelessWidget {
+  final int value;
+
+  const LikertshiftValueWidget(this.value, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Card(
+      color: theme.colorScheme.primaryContainer,
+      margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Icon(likertshiftIconMap[value] ?? Icons.error),
+            Text(likertshiftValueMap[value] ?? "None", style: theme.textTheme.headlineSmall),
+            Text("[ $value ]", style: theme.textTheme.headlineSmall),
+          ],
+        ),
       ),
     );
   }
