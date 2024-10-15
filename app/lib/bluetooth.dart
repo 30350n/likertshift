@@ -107,37 +107,54 @@ class BluetoothModel with ChangeNotifier {
   }
 }
 
-class BluetoothLogo extends AnimatedWidget {
-  final BluetoothAdapterState adapterState;
-  final BluetoothDevice? activeDevice;
-  const BluetoothLogo({
+class AnimatedBluetoothLogo extends AnimatedWidget {
+  final BluetoothStatus bluetoothStatus;
+
+  const AnimatedBluetoothLogo({
     super.key,
-    required this.adapterState,
-    required this.activeDevice,
+    required this.bluetoothStatus,
     required Animation<double> animation,
   }) : super(listenable: animation);
 
   @override
   Widget build(BuildContext context) {
     final animation = listenable as Animation<double>;
+    return BluetoothLogo(bluetoothStatus: bluetoothStatus, blurRadius: animation.value);
+  }
+}
+
+class BluetoothLogo extends StatelessWidget {
+  final BluetoothStatus bluetoothStatus;
+  final double blurRadius;
+
+  const BluetoothLogo({super.key, required this.bluetoothStatus, this.blurRadius = 20});
+
+  @override
+  Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final appColors = theme.extension<AppColors>();
-    return adapterState == BluetoothAdapterState.off
-        ? Icon(Icons.bluetooth_disabled, color: theme.disabledColor)
-        : activeDevice == null
-            ? const Icon(Icons.bluetooth_connected)
-            : Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
-                      color: (appColors?.connectedColor ?? Colors.white).withOpacity(0.7),
-                      blurRadius: animation.value,
-                      spreadRadius: 0,
-                    ),
-                  ],
-                ),
-                child: Icon(Icons.bluetooth, color: appColors?.connectedColor),
-              );
+    return switch (bluetoothStatus) {
+      BluetoothStatus.unavailable => Icon(Icons.bluetooth_disabled, color: theme.disabledColor),
+      BluetoothStatus.available => const Icon(Icons.bluetooth),
+      BluetoothStatus.connected => Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            boxShadow: [
+              BoxShadow(
+                color: (appColors?.connectedColor ?? Colors.white).withOpacity(0.7),
+                blurRadius: blurRadius,
+                spreadRadius: 0,
+              ),
+            ],
+          ),
+          child: Icon(Icons.bluetooth_connected, color: appColors?.connectedColor),
+        ),
+    };
   }
+}
+
+enum BluetoothStatus {
+  unavailable,
+  available,
+  connected,
 }

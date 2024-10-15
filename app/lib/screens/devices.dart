@@ -6,7 +6,6 @@ import "package:flutter_blue_plus/flutter_blue_plus.dart";
 import "package:loading_animation_widget/loading_animation_widget.dart";
 import "package:provider/provider.dart";
 
-import "package:likertshift/colors.dart";
 import "package:likertshift/bluetooth.dart";
 import "package:likertshift/location.dart";
 
@@ -32,7 +31,7 @@ class DevicesScreen extends StatelessWidget {
                       padding: const EdgeInsets.symmetric(horizontal: 8),
                       children: [
                         ...bluetoothModel.devices.map(
-                          (device) => DeviceCard(device.remoteId.str, device.isConnected),
+                          (device) => DeviceCard(bluetoothModel, device),
                         ),
                         Padding(
                           padding: const EdgeInsets.all(10),
@@ -49,28 +48,30 @@ class DevicesScreen extends StatelessWidget {
 }
 
 class DeviceCard extends StatelessWidget {
-  final String name;
-  final bool isConnected;
+  final BluetoothModel bluetoothModel;
+  final BluetoothDevice device;
 
-  const DeviceCard(this.name, this.isConnected, {super.key});
+  const DeviceCard(this.bluetoothModel, this.device, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final appColors = theme.extension<AppColors>();
+    final bluetoothStatus =
+        device.isConnected ? BluetoothStatus.connected : BluetoothStatus.available;
+    final name = device.platformName != ""
+        ? device.platformName
+        : device.advName != ""
+            ? device.advName
+            : device.remoteId.str;
+
     return Card(
       margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
       child: ListTile(
-        leading: isConnected
-            ? Icon(Icons.bluetooth, color: appColors?.connectedColor)
-            : const Icon(Icons.bluetooth_disabled),
+        leading: BluetoothLogo(bluetoothStatus: bluetoothStatus),
         title: Text(name),
-        trailing: isConnected
-            ? IconButton(
-                icon: const Icon(Icons.settings),
-                onPressed: () {},
-              )
-            : Icon(Icons.settings, color: theme.disabledColor),
+        trailing: IconButton(
+          icon: const Icon(Icons.settings),
+          onPressed: device.isConnected ? () {} : null,
+        ),
       ),
     );
   }

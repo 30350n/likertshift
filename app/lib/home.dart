@@ -55,9 +55,12 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
         selector: (_, model) => (state: model.adapterState, device: model.activeDevice),
         builder: (_, data, __) {
           return NavigationDestination(
-            icon: BluetoothLogo(
-              adapterState: data.state,
-              activeDevice: data.device,
+            icon: AnimatedBluetoothLogo(
+              bluetoothStatus: data.state != BluetoothAdapterState.off
+                  ? data.device != null
+                      ? BluetoothStatus.connected
+                      : BluetoothStatus.available
+                  : BluetoothStatus.unavailable,
               animation: _glowBreatheAnimation,
             ),
             label: "Devices",
