@@ -29,6 +29,18 @@ class BluetoothModel with ChangeNotifier {
 
   BluetoothDevice? _activeDevice;
   BluetoothDevice? get activeDevice => _activeDevice;
+  set activeDevice(BluetoothDevice? device) {
+    if (!(device?.isConnected ?? true) || device == _activeDevice) {
+      return;
+    }
+
+    if (_activeDevice?.isConnected ?? false) {
+      _activeDevice?.disconnect();
+    }
+    _activeDevice = device;
+    notifyListeners();
+  }
+
   BluetoothModel() {
     _adapterStateSubscription = FlutterBluePlus.adapterState.listen((state) {
       switch (state) {

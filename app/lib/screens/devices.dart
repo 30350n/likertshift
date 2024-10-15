@@ -1,3 +1,4 @@
+import "dart:async";
 import "dart:io";
 
 import "package:flutter/material.dart";
@@ -8,6 +9,7 @@ import "package:provider/provider.dart";
 
 import "package:likertshift/bluetooth.dart";
 import "package:likertshift/location.dart";
+import "package:likertshift/snackbar.dart";
 
 class DevicesScreen extends StatelessWidget {
   const DevicesScreen({super.key});
@@ -47,31 +49,91 @@ class DevicesScreen extends StatelessWidget {
   }
 }
 
-class DeviceCard extends StatelessWidget {
+class DeviceCard extends StatefulWidget {
   final BluetoothModel bluetoothModel;
   final BluetoothDevice device;
 
   const DeviceCard(this.bluetoothModel, this.device, {super.key});
 
   @override
+  State<StatefulWidget> createState() {
+    return DeviceCardState();
+  }
+}
+
+class DeviceCardState extends State<DeviceCard> {
+  late StreamSubscription<BluetoothConnectionState> connectionSubscription;
+
+  bool isAvailable = true;
+
+  @override
+  void initState() {
+    super.initState();
+    connectionSubscription = widget.device.connectionState.listen((connectionState) {
+      if (connectionState == BluetoothConnectionState.connected) {
+        widget.device.discoverServices();
+        widget.bluetoothModel.activeDevice = widget.device;
+      } else if (connectionState == BluetoothConnectionState.disconnected) {
+        widget.bluetoothModel.activeDevice = null;
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    connectionSubscription.cancel();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final bluetoothStatus =
-        device.isConnected ? BluetoothStatus.connected : BluetoothStatus.available;
-    final name = device.platformName != ""
-        ? device.platformName
-        : device.advName != ""
-            ? device.advName
-            : device.remoteId.str;
+    final theme = Theme.of(context);
+
+    final bluetoothStatus = isAvailable
+        ? widget.device.isConnected
+            ? BluetoothStatus.connected
+            : BluetoothStatus.available
+        : BluetoothStatus.unavailable;
+
+    final name = widget.device.platformName != ""
+        ? widget.device.platformName
+        : widget.device.advName != ""
+            ? widget.device.advName
+            : widget.device.remoteId.str;
 
     return Card(
+      color: switch (bluetoothStatus) {
+        BluetoothStatus.connected => theme.colorScheme.surfaceContainerHigh,
+        BluetoothStatus.available => theme.colorScheme.surfaceContainer,
+        BluetoothStatus.unavailable => theme.colorScheme.surfaceContainerLow,
+      },
       margin: const EdgeInsets.symmetric(vertical: 6, horizontal: 4),
       child: ListTile(
+        contentPadding: const EdgeInsets.only(left: 16, right: 6),
         leading: BluetoothLogo(bluetoothStatus: bluetoothStatus),
         title: Text(name),
         trailing: IconButton(
           icon: const Icon(Icons.settings),
-          onPressed: device.isConnected ? () {} : null,
+          onPressed: widget.device.isConnected ? () {} : null,
         ),
+        onTap: () async {
+          if (!widget.device.isConnected) {
+            try {
+              await widget.device.connect();
+            } on Exception {
+              if (context.mounted) {
+                showSnackbarMessage(context, "Failed to connect to device.", success: false);
+              }
+              setState(() {
+                isAvailable = false;
+              });
+            }
+          } else {
+            try {
+              await widget.device.disconnect();
+            } catch (_) {}
+          }
+        },
       ),
     );
   }
