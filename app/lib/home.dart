@@ -6,6 +6,7 @@ import "package:provider/provider.dart";
 import "package:likertshift/bluetooth.dart";
 import "package:likertshift/screens/devices.dart";
 import "package:likertshift/screens/map.dart";
+import "package:likertshift/screens/routes.dart";
 import "package:likertshift/screens/settings.dart";
 
 class Home extends StatefulWidget {
@@ -48,9 +49,8 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
   Map<Widget, Widget> pages(BuildContext context) {
     return {
       const NavigationDestination(icon: Icon(Icons.map), label: "Map"): const MapScreen(),
-      const NavigationDestination(icon: Icon(Icons.polyline), label: "Routes"): Scaffold(
-        appBar: AppBar(leading: const Icon(Icons.polyline), title: const Text("Routes")),
-      ),
+      const NavigationDestination(icon: Icon(Icons.polyline), label: "Routes"):
+          const RoutesScreen(),
       Selector<BluetoothModel, ({BluetoothAdapterState state, BluetoothDevice? device})>(
         selector: (_, model) => (state: model.adapterState, device: model.activeDevice),
         builder: (_, data, __) {
