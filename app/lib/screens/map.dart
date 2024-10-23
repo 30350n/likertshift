@@ -7,6 +7,7 @@ import "package:provider/provider.dart";
 import "package:likertshift/api-keys/maptiler.dart" as maptiler;
 import "package:likertshift/bluetooth.dart";
 import "package:likertshift/location.dart";
+import "package:likertshift/recording.dart";
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
@@ -31,6 +32,8 @@ class MapScreenState extends State<MapScreen> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final locationModel = context.watch<LocationModel>();
+    final recordingModel = context.watch<RecordingModel>();
+    final activeRecording = recordingModel.activeRecording;
 
     if (followLocation && !locationModel.isLocationEnabled) {
       setState(() {
@@ -73,8 +76,35 @@ class MapScreenState extends State<MapScreen> {
                     : tileProviderUrlDark,
                 userAgentPackageName: "com.github.u30350n.likertshift",
               ),
+              PolylineLayer(
+                polylines: [
+                  if (recordingModel.isRecording && activeRecording?.routePreset != null)
+                    Polyline(
+                      points: activeRecording!.routePreset!.points,
+                      color: Colors.orange.withOpacity(0.4),
+                      strokeWidth: 5,
+                      useStrokeWidthInMeter: true,
+                    ),
+                  if (recordingModel.isRecording)
+                    Polyline(
+                      points: activeRecording!.locations,
+                      color: theme.colorScheme.onPrimaryFixedVariant,
+                      strokeWidth: 3,
+                      useStrokeWidthInMeter: true,
+                    ),
+                ],
+              ),
               CircleLayer(
                 circles: [
+                  if (recordingModel.isRecording && activeRecording?.routePreset != null)
+                    CircleMarker(
+                      point: recordingModel.activeRecording!.routePreset!.points[0],
+                      radius: 10,
+                      borderStrokeWidth: 3,
+                      borderColor: Colors.orange.withOpacity(0.8),
+                      color: Colors.white.withOpacity(0.2),
+                      useRadiusInMeter: true,
+                    ),
                   if (locationModel.isLocationEnabled && locationModel.currentLocation != null)
                     CircleMarker(
                       point: locationModel.currentLocation!,

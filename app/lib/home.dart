@@ -5,6 +5,7 @@ import "package:provider/provider.dart";
 
 import "package:likertshift/bluetooth.dart";
 import "package:likertshift/demographics.dart";
+import "package:likertshift/recording.dart";
 import "package:likertshift/screens/devices.dart";
 import "package:likertshift/screens/map.dart";
 import "package:likertshift/screens/routes.dart";
@@ -36,8 +37,21 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
       return const Demographics();
     }
 
+    final recordingModel = context.watch<RecordingModel>();
+
     return Scaffold(
       body: pages(context).values.elementAt(currentPageIndex),
+      persistentFooterButtons: !recordingModel.isRecording
+          ? null
+          : [
+              Center(
+                child: OutlinedButton.icon(
+                  icon: const Icon(Icons.stop),
+                  label: const Text("Stop Recording"),
+                  onPressed: recordingModel.stopRecording,
+                ),
+              ),
+            ],
       bottomNavigationBar: NavigationBar(
         destinations: pages(context).keys.toList(),
         onDestinationSelected: (index) {

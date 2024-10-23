@@ -10,6 +10,7 @@ import "package:likertshift/colors.dart";
 import "package:likertshift/demographics.dart";
 import "package:likertshift/home.dart";
 import "package:likertshift/location.dart";
+import "package:likertshift/recording.dart";
 import "package:likertshift/system_navigation_bar.dart";
 
 void main() async {
@@ -24,8 +25,10 @@ void main() async {
 
 class App extends StatelessWidget {
   final DemographicsModel demographicsModel;
+  final locationModel = LocationModel();
+  final bluetoothModel = BluetoothModel();
 
-  const App({super.key, required this.demographicsModel});
+  App({super.key, required this.demographicsModel});
 
   static final lightTheme = ThemeData.light(useMaterial3: true)
       .copyWith(extensions: [const AppColors.fromBrightness(Brightness.light)]);
@@ -44,9 +47,15 @@ class App extends StatelessWidget {
         darkTheme: darkTheme,
         home: MultiProvider(
           providers: [
-            ChangeNotifierProvider(create: (_) => BluetoothModel()),
-            ChangeNotifierProvider(create: (_) => LocationModel()),
             ChangeNotifierProvider(create: (_) => demographicsModel),
+            ChangeNotifierProvider(create: (_) => bluetoothModel),
+            ChangeNotifierProvider(create: (_) => locationModel),
+            ChangeNotifierProvider(
+              create: (_) => RecordingModel(
+                bluetoothModel: bluetoothModel,
+                locationModel: locationModel,
+              ),
+            ),
           ],
           child: const Home(),
         ),

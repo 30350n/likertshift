@@ -1,7 +1,11 @@
 import "package:flutter/material.dart";
 
+import "package:flutter_form_builder/flutter_form_builder.dart";
+import "package:form_builder_validators/form_builder_validators.dart";
 import "package:latlong2/latlong.dart";
+import "package:provider/provider.dart";
 
+import "package:likertshift/recording.dart";
 import "package:likertshift/util.dart";
 
 class RoutesScreen extends StatelessWidget {
@@ -9,6 +13,8 @@ class RoutesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final recordingModel = context.watch<RecordingModel>();
+
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -47,10 +53,92 @@ class RoutesScreen extends StatelessWidget {
                   )
                   .toList(),
             ),
-            ListView(),
+            ListView(
+              children: recordingModel.recordings
+                  .map((recording) => Card(child: ListTile(title: Text(recording.name))))
+                  .toList(),
+            ),
           ],
         ),
+        floatingActionButton: recordingModel.isRecording
+            ? null
+            : FloatingActionButton(
+                tooltip: "Start a new Recording",
+                child: const Icon(Icons.add),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => RouteSelection(recordingModel)),
+                  );
+                },
+              ),
       ),
+    );
+  }
+}
+
+class RouteSelection extends StatelessWidget {
+  final _formKey = GlobalKey<FormBuilderState>();
+  final RecordingModel recordingModel;
+
+  RouteSelection(this.recordingModel, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Recording Options"),
+      ),
+      body: FormListView(
+        formKey: _formKey,
+        children: [
+          FormBuilderDropdown(
+            name: "route_preset",
+            decoration: const InputDecoration(label: Text("Route Preset")),
+            items: [null, ...routes]
+                .map(
+                  (route) => DropdownMenuItem(
+                    value: route,
+                    child: Text(
+                      route == null ? "None" : "${route.name} (${route.lengthString})",
+                    ),
+                  ),
+                )
+                .toList(),
+          ),
+          FormBuilderDropdown(
+            name: "method",
+            decoration: const InputDecoration(label: Text("Recording Method")),
+            validator: FormBuilderValidators.required(),
+            items: RecordingMethod.values
+                .map(
+                  (method) => DropdownMenuItem(
+                    value: method,
+                    child: Text(method.description),
+                  ),
+                )
+                .toList(),
+          ),
+        ],
+      ),
+      persistentFooterButtons: [
+        Center(
+          child: OutlinedButton.icon(
+            icon: const Icon(Icons.fiber_manual_record),
+            label: const Text("Start Recording"),
+            onPressed: () {
+              final formState = _formKey.currentState;
+              if (formState?.validate() ?? false) {
+                recordingModel.startRecording(
+                  formState!.fields["method"]!.value,
+                  routePreset: formState.fields["route_preset"]?.value,
+                );
+                Navigator.pop(context);
+              }
+            },
+          ),
+        ),
+      ],
     );
   }
 }
