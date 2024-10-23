@@ -1,3 +1,5 @@
+import "dart:async";
+
 import "package:flutter/material.dart";
 
 import "package:adaptive_theme/adaptive_theme.dart";
@@ -5,20 +7,25 @@ import "package:provider/provider.dart";
 
 import "package:likertshift/bluetooth.dart";
 import "package:likertshift/colors.dart";
+import "package:likertshift/demographics.dart";
 import "package:likertshift/home.dart";
 import "package:likertshift/location.dart";
 import "package:likertshift/system_navigation_bar.dart";
 
-void main() {
-  runApp(const App());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-  updateSystemNavigationBarTheme();
+  runApp(App(demographicsModel: await DemographicsModel.create()));
+
+  unawaited(updateSystemNavigationBarTheme());
   WidgetsBinding.instance.platformDispatcher.onPlatformBrightnessChanged =
       updateSystemNavigationBarTheme;
 }
 
 class App extends StatelessWidget {
-  const App({super.key});
+  final DemographicsModel demographicsModel;
+
+  const App({super.key, required this.demographicsModel});
 
   static final lightTheme = ThemeData.light(useMaterial3: true)
       .copyWith(extensions: [const AppColors.fromBrightness(Brightness.light)]);
@@ -39,6 +46,7 @@ class App extends StatelessWidget {
           providers: [
             ChangeNotifierProvider(create: (_) => BluetoothModel()),
             ChangeNotifierProvider(create: (_) => LocationModel()),
+            ChangeNotifierProvider(create: (_) => demographicsModel),
           ],
           child: const Home(),
         ),

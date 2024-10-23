@@ -4,6 +4,7 @@ import "package:flutter_blue_plus/flutter_blue_plus.dart";
 import "package:provider/provider.dart";
 
 import "package:likertshift/bluetooth.dart";
+import "package:likertshift/demographics.dart";
 import "package:likertshift/screens/devices.dart";
 import "package:likertshift/screens/map.dart";
 import "package:likertshift/screens/routes.dart";
@@ -31,6 +32,10 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    if (!context.watch<DemographicsModel>().isValid()) {
+      return const Demographics();
+    }
+
     return Scaffold(
       body: pages(context).values.elementAt(currentPageIndex),
       bottomNavigationBar: NavigationBar(
