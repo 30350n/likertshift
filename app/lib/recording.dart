@@ -32,24 +32,27 @@ class Recording {
 
   Recording({required this.routePreset, required this.method});
 
-  Future<File> get _file async {
-    final directory = await getRecordingDirectory();
-    return File("${directory.path}/$name.csv");
-  }
+  IOSink? _fileSink;
 
   Future<void> start() async {
-    final file = await _file;
+    final directory = await getRecordingDirectory();
+    final file = File("${directory.path}/$name.csv");
     await file.writeAsString(
-      "${[shortHash(start), method.name, routePreset?.id ?? ""].join(", ")}\n",
+      "${[shortHash(startTime), method.name, routePreset?.id ?? ""].join(", ")}\n",
     );
+    _fileSink = file.openWrite(mode: FileMode.append);
+  }
+
+  Future<void> stop() async {
+    await _fileSink?.close();
   }
 
   Future<void> addPoint(LatLng location, dynamic data) async {
     final relativeTimestamp = DateTime.now().difference(startTime);
     _points.add((location, relativeTimestamp, data));
-    final file = await _file;
-    await file.writeAsString(
-      mode: FileMode.append,
+
+    assert(_fileSink != null);
+    _fileSink?.write(
       "${[
         location.latitude.toStringAsExponential(),
         location.longitude.toStringAsExponential(),
@@ -57,6 +60,7 @@ class Recording {
         data?.toString() ?? "",
       ].join(", ")}\n",
     );
+    await _fileSink?.flush();
   }
 }
 
@@ -85,10 +89,12 @@ class RecordingModel with ChangeNotifier {
     notifyListeners();
   }
 
-  void stopRecording() {
+  Future<void> stopRecording() async {
     if (!isRecording) {
       return;
     }
+
+    await _activeRecording!.stop();
 
     locationModel.removeListener(onLocationUpdate);
     _recordings.add(_activeRecording!);
