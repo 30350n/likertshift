@@ -3,6 +3,7 @@ import "dart:io";
 import "package:flutter/foundation.dart";
 
 import "package:latlong2/latlong.dart";
+import "package:record/record.dart";
 
 import "package:likertshift/bluetooth.dart";
 import "package:likertshift/location.dart";
@@ -70,6 +71,8 @@ class RecordingModel with ChangeNotifier {
 
   RecordingModel({required this.bluetoothModel, required this.locationModel});
 
+  final audioRecorder = AudioRecorder();
+
   final List<Recording> _recordings = [];
   List<Recording> get recordings => List.unmodifiable(_recordings);
 
@@ -82,8 +85,24 @@ class RecordingModel with ChangeNotifier {
       return;
     }
 
+    if (method == RecordingMethod.audio && !await audioRecorder.hasPermission()) {
+      return;
+    }
+
     final recording = Recording(routePreset: routePreset, method: method);
     await recording.start();
+    if (method == RecordingMethod.audio) {
+      const recordConfig = RecordConfig(
+        encoder: AudioEncoder.flac,
+        autoGain: true,
+        numChannels: 1,
+      );
+      await audioRecorder.start(
+        recordConfig,
+        path: "${(await getRecordingDirectory()).path}/${recording.name}.flac",
+      );
+    }
+
     _activeRecording = recording;
     locationModel.addListener(onLocationUpdate);
     notifyListeners();
@@ -95,6 +114,9 @@ class RecordingModel with ChangeNotifier {
     }
 
     await _activeRecording!.stop();
+    if (_activeRecording!.method == RecordingMethod.audio) {
+      await audioRecorder.stop();
+    }
 
     locationModel.removeListener(onLocationUpdate);
     _recordings.add(_activeRecording!);
