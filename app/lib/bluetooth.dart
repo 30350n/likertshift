@@ -124,13 +124,8 @@ class BluetoothModel with ChangeNotifier {
       );
     }
     unawaited(
-      FlutterBluePlus.systemDevices.then((devices) {
-        _devices.addAll(
-          devices.where(
-            (device) =>
-                device.servicesList.map((service) => service.uuid).contains(serviceUUID),
-          ),
-        );
+      FlutterBluePlus.systemDevices([serviceUUID]).then((devices) {
+        _devices.addAll(devices);
         notifyListeners();
       }),
     );
