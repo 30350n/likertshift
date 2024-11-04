@@ -8,20 +8,24 @@ import "package:latlong2/latlong.dart";
 class LocationModel with ChangeNotifier {
   bool _isLocationEnabled = false;
   bool get isLocationEnabled => _isLocationEnabled;
-  late StreamSubscription _isLocationEnabledSubscription;
+  StreamSubscription? _isLocationEnabledSubscription;
 
   LatLng? _currentLocation = const LatLng(0, 0);
   LatLng? get currentLocation => _currentLocation;
 
-  late StreamSubscription _locationUpdateSubscription;
+  StreamSubscription? _locationUpdateSubscription;
 
-  LocationModel() {
-    Geolocator.isLocationServiceEnabled().then(
-      (isLocationEnabled) {
-        _isLocationEnabled = isLocationEnabled;
-        notifyListeners();
-      },
-    );
+  static Future<LocationModel> create() async {
+    final model = LocationModel();
+    await model.init();
+    return model;
+  }
+
+  Future<void> init() async {
+    if (await Geolocator.isLocationServiceEnabled()) {
+      _isLocationEnabled = true;
+      notifyListeners();
+    }
 
     _isLocationEnabledSubscription = Geolocator.getServiceStatusStream().listen(
       (status) {
@@ -45,8 +49,8 @@ class LocationModel with ChangeNotifier {
 
   @override
   void dispose() {
-    _locationUpdateSubscription.cancel();
-    _isLocationEnabledSubscription.cancel();
+    _locationUpdateSubscription?.cancel();
+    _isLocationEnabledSubscription?.cancel();
     super.dispose();
   }
 

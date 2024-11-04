@@ -16,7 +16,12 @@ import "package:likertshift/system_navigation_bar.dart";
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(App(demographicsModel: await DemographicsModel.create()));
+  runApp(
+    App(
+      demographicsModel: await DemographicsModel.create(),
+      locationModel: await LocationModel.create(),
+    ),
+  );
 
   unawaited(updateSystemNavigationBarTheme());
   WidgetsBinding.instance.platformDispatcher.onPlatformBrightnessChanged =
@@ -25,10 +30,10 @@ void main() async {
 
 class App extends StatelessWidget {
   final DemographicsModel demographicsModel;
-  final locationModel = LocationModel();
+  final LocationModel locationModel;
   final bluetoothModel = BluetoothModel();
 
-  App({super.key, required this.demographicsModel});
+  App({super.key, required this.demographicsModel, required this.locationModel});
 
   static final lightTheme = ThemeData.light(useMaterial3: true)
       .copyWith(extensions: [const AppColors.fromBrightness(Brightness.light)]);
