@@ -39,6 +39,10 @@ extension LatLngExtension on LatLng {
         earthRadius *
         asin(sqrt((1 - cosLatDelta + cosLat * cosLatOther * (1 - cosLongDelta)) * 0.5));
   }
+
+  Vector2 mercator() {
+    return Vector2(radians(longitude), log(tan(pi / 4 + radians(latitude) / 2)));
+  }
 }
 
 class FormListView extends StatelessWidget {

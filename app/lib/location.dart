@@ -4,12 +4,16 @@ import "package:flutter/material.dart";
 
 import "package:geolocator/geolocator.dart";
 import "package:latlong2/latlong.dart";
+import "package:vector_math/vector_math.dart";
+
+import "package:likertshift/util.dart";
 
 class LocationModel with ChangeNotifier {
   bool _isLocationEnabled = false;
   bool get isLocationEnabled => _isLocationEnabled;
   StreamSubscription? _isLocationEnabledSubscription;
 
+  LatLng? _previousLocation = const LatLng(0, 0);
   LatLng? _currentLocation = const LatLng(0, 0);
   LatLng? get currentLocation => _currentLocation;
 
@@ -31,6 +35,7 @@ class LocationModel with ChangeNotifier {
       (status) {
         _isLocationEnabled = status == ServiceStatus.enabled;
         if (!_isLocationEnabled) {
+          _previousLocation = null;
           _currentLocation = null;
         }
         notifyListeners();
@@ -39,6 +44,7 @@ class LocationModel with ChangeNotifier {
 
     _locationUpdateSubscription = Geolocator.getPositionStream().listen(
       (position) {
+        _previousLocation = _currentLocation;
         _currentLocation = LatLng(position.latitude, position.longitude);
         notifyListeners();
       },
@@ -52,6 +58,20 @@ class LocationModel with ChangeNotifier {
     _locationUpdateSubscription?.cancel();
     _isLocationEnabledSubscription?.cancel();
     super.dispose();
+  }
+
+  Vector2? direction() {
+    if (_currentLocation == null || _previousLocation == null) {
+      return null;
+    }
+    return (_currentLocation!.mercator() - _previousLocation!.mercator()).normalized();
+  }
+
+  double? distance() {
+    if (_currentLocation == null || _previousLocation == null) {
+      return null;
+    }
+    return _currentLocation!.distance(_previousLocation!);
   }
 
   static Future<bool> requestLocationService() async {

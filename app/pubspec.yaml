@@ -15,6 +15,7 @@ dependencies:
   flutter_blue_plus: ^1.33.6
   flutter_form_builder: ^9.3.0
   flutter_map: ^7.0.2
+  flutter_map_compass: ^1.1.0
   form_builder_validators: ^11.0.0
   geolocator: ^13.0.1
   latlong2: ^0.9.1

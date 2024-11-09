@@ -1,8 +1,11 @@
+import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 
 import "package:flutter_map/flutter_map.dart";
+import "package:flutter_map_compass/flutter_map_compass.dart";
 import "package:latlong2/latlong.dart";
 import "package:provider/provider.dart";
+import "package:vector_math/vector_math.dart" hide Colors;
 
 import "package:likertshift/api-keys/maptiler.dart" as maptiler;
 import "package:likertshift/bluetooth.dart";
@@ -19,14 +22,16 @@ class MapScreen extends StatefulWidget {
 class MapScreenState extends State<MapScreen> {
   final mapController = MapController();
 
-  final tileProviderUrlLight =
-      "https://api.maptiler.com/maps/openstreetmap/256/{z}/{x}/{y}@2x.jpg"
+  final maptilerUrlLight = "https://api.maptiler.com/maps/openstreetmap/256/{z}/{x}/{y}@2x.jpg"
       "?key=${maptiler.apiKey}";
-  final tileProviderUrlDark =
-      "https://api.maptiler.com/maps/basic-v2-dark/256/{z}/{x}/{y}@2x.png"
+  final maptilerUrlDark = "https://api.maptiler.com/maps/basic-v2-dark/256/{z}/{x}/{y}@2x.png"
       "?key=${maptiler.apiKey}";
 
   bool followLocation = false;
+  bool followRotation = false;
+
+  static const minFollowRotationDistance = 1.0;
+  static final upVector = Vector2(0, 1);
 
   @override
   Widget build(BuildContext context) {
@@ -35,14 +40,21 @@ class MapScreenState extends State<MapScreen> {
     final recordingModel = context.watch<RecordingModel>();
     final activeRecording = recordingModel.activeRecording;
 
-    if (followLocation && !locationModel.isLocationEnabled) {
+    if ((followLocation || followRotation) && !locationModel.isLocationEnabled) {
       setState(() {
         followLocation = false;
+        followRotation = false;
       });
     }
 
     if (followLocation && locationModel.currentLocation != null) {
       mapController.move(locationModel.currentLocation!, mapController.camera.zoom);
+    }
+
+    final direction = locationModel.direction();
+    final distance = locationModel.distance();
+    if (followRotation && direction != null && (distance ?? 0) > minFollowRotationDistance) {
+      mapController.rotate(degrees(direction.angleToSigned(upVector)));
     }
 
     final activeDevice =
@@ -71,10 +83,22 @@ class MapScreenState extends State<MapScreen> {
             ),
             children: [
               TileLayer(
-                urlTemplate: theme.brightness == Brightness.light
-                    ? tileProviderUrlLight
-                    : tileProviderUrlDark,
+                urlTemplate:
+                    theme.brightness == Brightness.light ? maptilerUrlLight : maptilerUrlDark,
                 userAgentPackageName: "com.github.u30350n.likertshift",
+              ),
+              SafeArea(
+                child: GestureDetector(
+                  child: Compass(isLocked: followRotation),
+                  onLongPress: () {
+                    setState(() {
+                      followRotation = !followRotation;
+                      if (!followRotation) {
+                        mapController.rotate(0);
+                      }
+                    });
+                  },
+                ),
               ),
               PolylineLayer(
                 polylines: [
@@ -145,6 +169,30 @@ class MapScreenState extends State<MapScreen> {
           }
         },
         child: Icon(followLocation ? Icons.gps_fixed : Icons.gps_not_fixed),
+      ),
+    );
+  }
+}
+
+class Compass extends StatelessWidget {
+  final bool isLocked;
+
+  const Compass({super.key, this.isLocked = false});
+
+  @override
+  Widget build(BuildContext context) {
+    return MapCompass(
+      rotationOffset: -45,
+      icon: Stack(
+        children: [
+          Icon(CupertinoIcons.compass, color: Colors.red.shade600, size: 40),
+          Icon(CupertinoIcons.compass_fill, color: Colors.grey.shade200, size: 40),
+          Icon(
+            CupertinoIcons.circle,
+            color: isLocked ? Colors.blue : Colors.grey.shade600,
+            size: 40,
+          ),
+        ],
       ),
     );
   }
