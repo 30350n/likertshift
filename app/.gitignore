@@ -1,4 +1,5 @@
 lib/api-keys/*.dart
+assets/generate/.venv/
 
 # android
 /android/app/debug

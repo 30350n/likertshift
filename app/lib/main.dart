@@ -16,10 +16,15 @@ import "package:likertshift/system_navigation_bar.dart";
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  final bluetoothModel = BluetoothModel();
+  final locationModel = await LocationModel.create();
+
   runApp(
     App(
+      bluetoothModel: bluetoothModel,
       demographicsModel: await DemographicsModel.create(),
-      locationModel: await LocationModel.create(),
+      locationModel: locationModel,
+      recordingModel: await RecordingModel.create(bluetoothModel, locationModel),
     ),
   );
 
@@ -29,11 +34,18 @@ void main() async {
 }
 
 class App extends StatelessWidget {
+  final BluetoothModel bluetoothModel;
   final DemographicsModel demographicsModel;
+  final RecordingModel recordingModel;
   final LocationModel locationModel;
-  final bluetoothModel = BluetoothModel();
 
-  App({super.key, required this.demographicsModel, required this.locationModel});
+  const App({
+    super.key,
+    required this.bluetoothModel,
+    required this.demographicsModel,
+    required this.locationModel,
+    required this.recordingModel,
+  });
 
   static final lightTheme = ThemeData.light(useMaterial3: true)
       .copyWith(extensions: [const AppColors.fromBrightness(Brightness.light)]);
@@ -52,15 +64,10 @@ class App extends StatelessWidget {
         darkTheme: darkTheme,
         home: MultiProvider(
           providers: [
-            ChangeNotifierProvider(create: (_) => demographicsModel),
             ChangeNotifierProvider(create: (_) => bluetoothModel),
+            ChangeNotifierProvider(create: (_) => demographicsModel),
             ChangeNotifierProvider(create: (_) => locationModel),
-            ChangeNotifierProvider(
-              create: (_) => RecordingModel(
-                bluetoothModel: bluetoothModel,
-                locationModel: locationModel,
-              ),
-            ),
+            ChangeNotifierProvider(create: (_) => recordingModel),
           ],
           child: const Home(),
         ),

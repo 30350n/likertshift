@@ -1,6 +1,8 @@
+import "dart:convert";
 import "dart:io";
 
 import "package:flutter/foundation.dart";
+import "package:flutter/services.dart";
 
 import "package:latlong2/latlong.dart";
 import "package:record/record.dart";
@@ -71,6 +73,9 @@ class RecordingModel with ChangeNotifier {
 
   RecordingModel({required this.bluetoothModel, required this.locationModel});
 
+  final List<Route> _routes = [];
+  List<Route> get routes => List.unmodifiable(_routes);
+
   final audioRecorder = AudioRecorder();
 
   final List<Recording> _recordings = [];
@@ -79,6 +84,32 @@ class RecordingModel with ChangeNotifier {
   Recording? _activeRecording;
   Recording? get activeRecording => _activeRecording;
   bool get isRecording => activeRecording != null;
+
+  static Future<RecordingModel> create(
+    BluetoothModel bluetoothModel,
+    LocationModel locationModel,
+  ) async {
+    final model = RecordingModel(
+      bluetoothModel: bluetoothModel,
+      locationModel: locationModel,
+    );
+    await model.loadAssets();
+    return model;
+  }
+
+  Future<void> loadAssets() async {
+    final routePaths = json
+        .decode(await rootBundle.loadString("AssetManifest.json"))
+        .keys
+        .where((String path) => path.startsWith("assets/routes/"));
+
+    for (String path in routePaths) {
+      try {
+        _routes.add(Route.fromJson(json.decode(await rootBundle.loadString(path))));
+        notifyListeners();
+      } catch (_) {}
+    }
+  }
 
   Future<void> startRecording(RecordingMethod method, {Route? routePreset}) async {
     if (isRecording) {
