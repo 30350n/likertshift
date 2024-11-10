@@ -107,7 +107,7 @@ class MapScreenState extends State<MapScreen> {
                     if (activeRecording?.routePreset != null)
                       Polyline(
                         points: activeRecording!.routePreset!.points,
-                        color: Colors.orange.withOpacity(0.4),
+                        color: Colors.orange.withValues(alpha: 0.4),
                         strokeWidth: 5,
                         useStrokeWidthInMeter: true,
                       ),
@@ -122,7 +122,7 @@ class MapScreenState extends State<MapScreen> {
                           (route) => Polyline(
                             points: route.points,
                             color: Colors.primaries[route.hashCode % Colors.primaries.length]
-                                .withOpacity(0.8),
+                                .withValues(alpha: 0.8),
                             strokeWidth: 5,
                           ),
                         ),
@@ -135,8 +135,8 @@ class MapScreenState extends State<MapScreen> {
                       point: recordingModel.activeRecording!.routePreset!.points[0],
                       radius: 10,
                       borderStrokeWidth: 3,
-                      borderColor: Colors.orange.withOpacity(0.8),
-                      color: Colors.white.withOpacity(0.2),
+                      borderColor: Colors.orange.withValues(alpha: 0.8),
+                      color: Colors.white.withValues(alpha: 0.2),
                       useRadiusInMeter: true,
                     ),
                   if (locationModel.isLocationEnabled && locationModel.currentLocation != null)
@@ -268,10 +268,10 @@ class LocationOffWidget extends StatelessWidget {
       minimumSize: Size.zero,
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      side: BorderSide(color: borderColor.withOpacity(0.8)),
+      side: BorderSide(color: borderColor.withValues(alpha: 0.8)),
       foregroundColor: color,
       textStyle: theme.textTheme.titleSmall,
-      backgroundColor: backgroundColor.withOpacity(0.8),
+      backgroundColor: backgroundColor.withValues(alpha: 0.8),
     );
 
     return Center(

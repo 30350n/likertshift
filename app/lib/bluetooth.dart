@@ -185,7 +185,7 @@ class BluetoothLogo extends StatelessWidget {
             shape: BoxShape.circle,
             boxShadow: [
               BoxShadow(
-                color: (appColors?.connectedColor ?? Colors.white).withOpacity(0.7),
+                color: (appColors?.connectedColor ?? Colors.white).withValues(alpha: 0.7),
                 blurRadius: blurRadius,
                 spreadRadius: 0,
               ),
