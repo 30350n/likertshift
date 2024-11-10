@@ -45,28 +45,45 @@ extension LatLngExtension on LatLng {
   }
 }
 
+class SeperatedListView extends StatelessWidget {
+  final List<Widget> children;
+  final EdgeInsets? padding;
+  final double? spacing;
+
+  const SeperatedListView({super.key, required this.children, this.padding, this.spacing});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      padding: padding ?? const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      itemBuilder: (_, index) => children[index],
+      separatorBuilder: (_, __) => SizedBox(height: spacing ?? 10),
+      itemCount: children.length,
+    );
+  }
+}
+
 class FormListView extends StatelessWidget {
   final GlobalKey<FormBuilderState> formKey;
   final List<Widget> children;
-  final EdgeInsets padding;
-  final double spacing;
+  final EdgeInsets? padding;
+  final double? spacing;
   const FormListView({
     super.key,
     required this.formKey,
     required this.children,
-    this.padding = const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-    this.spacing = 10,
+    this.padding,
+    this.spacing,
   });
 
   @override
   Widget build(BuildContext context) {
     return FormBuilder(
       key: formKey,
-      child: ListView.separated(
+      child: SeperatedListView(
         padding: padding,
-        itemBuilder: (_, index) => children[index],
-        separatorBuilder: (_, __) => SizedBox(height: spacing),
-        itemCount: children.length,
+        spacing: spacing,
+        children: children,
       ),
     );
   }

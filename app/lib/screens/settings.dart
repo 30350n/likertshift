@@ -4,6 +4,7 @@ import "package:flutter_translate/flutter_translate.dart";
 import "package:adaptive_theme/adaptive_theme.dart";
 
 import "package:likertshift/system_navigation_bar.dart";
+import "package:likertshift/util.dart";
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -16,7 +17,9 @@ class SettingsScreen extends StatelessWidget {
     return Scaffold(
       appBar:
           AppBar(leading: const Icon(Icons.settings), title: Text(translate("settings.title"))),
-      body: ListView(
+      body: SeperatedListView(
+        padding: EdgeInsets.zero,
+        spacing: 8,
         children: [
           ListTile(
             title: Text(translate("settings.language")),
