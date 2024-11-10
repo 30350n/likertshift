@@ -1,0 +1,25 @@
+{
+    "id": "demographics",
+    "title": "translate('forms.demographics.title')",
+    "note": "translate('forms.demographics.note')",
+    "fields": [
+        {
+            "id": "age",
+            "label": "translate('forms.demographics.age')",
+            "fieldType": "Int"
+        },
+        {
+            "id": "gender",
+            "label": "translate('forms.demographics.gender.label')",
+            "fieldType": {
+                "type": "CustomEnum",
+                "values": [
+                    "translate('forms.demographics.gender.male')",
+                    "translate('forms.demographics.gender.female')"
+                ],
+                "customValue": "translate('forms.demographics.gender.other')",
+                "customLabel": "translate('forms.demographics.gender.other_gender')"
+            }
+        }
+    ]
+}

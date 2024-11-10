@@ -9,7 +9,6 @@ import "package:provider/provider.dart";
 
 import "package:likertshift/bluetooth.dart";
 import "package:likertshift/colors.dart";
-import "package:likertshift/demographics.dart";
 import "package:likertshift/home.dart";
 import "package:likertshift/location.dart";
 import "package:likertshift/recording.dart";
@@ -32,7 +31,6 @@ void main() async {
       localizationDelegate,
       App(
         bluetoothModel: bluetoothModel,
-        demographicsModel: await DemographicsModel.create(),
         locationModel: locationModel,
         recordingModel: await RecordingModel.create(bluetoothModel, locationModel),
       ),
@@ -46,14 +44,12 @@ void main() async {
 
 class App extends StatelessWidget {
   final BluetoothModel bluetoothModel;
-  final DemographicsModel demographicsModel;
   final RecordingModel recordingModel;
   final LocationModel locationModel;
 
   const App({
     super.key,
     required this.bluetoothModel,
-    required this.demographicsModel,
     required this.locationModel,
     required this.recordingModel,
   });
@@ -87,7 +83,6 @@ class App extends StatelessWidget {
           home: MultiProvider(
             providers: [
               ChangeNotifierProvider(create: (_) => bluetoothModel),
-              ChangeNotifierProvider(create: (_) => demographicsModel),
               ChangeNotifierProvider(create: (_) => locationModel),
               ChangeNotifierProvider(create: (_) => recordingModel),
             ],

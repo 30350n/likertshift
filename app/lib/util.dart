@@ -24,6 +24,10 @@ extension CapitalizeExtension on String {
     }
     return this[0].toUpperCase() + substring(1);
   }
+
+  String transformed(String Function(String) transform) {
+    return transform(this);
+  }
 }
 
 const earthRadius = 6378137.0;

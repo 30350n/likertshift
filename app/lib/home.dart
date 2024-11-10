@@ -2,10 +2,10 @@ import "package:flutter/material.dart";
 import "package:flutter_translate/flutter_translate.dart";
 
 import "package:flutter_blue_plus/flutter_blue_plus.dart";
+import "package:likertshift/forms.dart";
 import "package:provider/provider.dart";
 
 import "package:likertshift/bluetooth.dart";
-import "package:likertshift/demographics.dart";
 import "package:likertshift/recording.dart";
 import "package:likertshift/screens/devices.dart";
 import "package:likertshift/screens/map.dart";
@@ -30,6 +30,16 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
     _animationController = AnimationController(vsync: this, duration: Durations.extralong4);
     _animationController.repeat(reverse: true);
     _glowBreatheAnimation = Tween(begin: 16.0, end: 18.5).animate(_animationController);
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const JsonForm("demographics"),
+          fullscreenDialog: true,
+        ),
+      );
+    });
   }
 
   @override
@@ -40,10 +50,6 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    if (!context.watch<DemographicsModel>().isValid()) {
-      return const Demographics();
-    }
-
     final recordingModel = context.watch<RecordingModel>();
 
     return Scaffold(

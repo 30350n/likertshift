@@ -6,9 +6,6 @@
         "off": "Off",
         "on": "On"
     },
-    "forms": {
-        "custom": "Custom"
-    },
     "map": {
         "title": "Map",
         "likertshift_values": {
@@ -62,6 +59,22 @@
             "light": "Light",
             "dark": "Dark",
             "system": "System"
+        },
+        "debug_forms": "Debug Forms"
+    },
+    "forms": {
+        "custom": "Custom",
+        "demographics": {
+            "title": "Demographics",
+            "note": "Please provide some information about yourself.",
+            "age": "Age",
+            "gender": {
+                "label": "Gender",
+                "male": "Male",
+                "female": "Female",
+                "other": "Other",
+                "other_gender": "Other Gender"
+            }
         }
     }
 }

@@ -6,9 +6,6 @@
         "off": "Aus",
         "on": "An"
     },
-    "forms": {
-        "custom": "Anderes"
-    },
     "map": {
         "title": "Karte",
         "likertshift_values": {
@@ -62,6 +59,22 @@
             "light": "Hell",
             "dark": "Dunkel",
             "system": "System"
+        },
+        "debug_forms": "Formulare (Debug)"
+    },
+    "forms": {
+        "custom": "Anderes",
+        "demographics": {
+            "title": "Demografie",
+            "note": "Bitte vervollständigen Sie die folgenden Angaben zu Ihrer Person.",
+            "age": "Alter",
+            "gender": {
+                "label": "Geschlecht",
+                "male": "Male",
+                "female": "Female",
+                "other": "Divers",
+                "other_gender": "Divers"
+            }
         }
     }
 }

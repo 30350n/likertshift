@@ -2,6 +2,7 @@ import "package:flutter/material.dart";
 import "package:flutter_translate/flutter_translate.dart";
 
 import "package:adaptive_theme/adaptive_theme.dart";
+import "package:likertshift/forms.dart";
 
 import "package:likertshift/system_navigation_bar.dart";
 import "package:likertshift/util.dart";
@@ -13,6 +14,7 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final adaptiveTheme = AdaptiveTheme.of(context);
     final localization = LocalizedApp.of(context).delegate;
+    final theme = Theme.of(context);
 
     return Scaffold(
       appBar:
@@ -59,6 +61,26 @@ class SettingsScreen extends StatelessWidget {
                   adaptiveTheme.setThemeMode(theme);
                   updateSystemNavigationBarTheme();
                 }
+              },
+            ),
+          ),
+          ListTile(
+            title:
+                Text(translate("settings.debug_forms"), style: theme.textTheme.headlineSmall),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: ElevatedButton(
+              child: Text(
+                translate("forms.demographics.title"),
+                style: theme.textTheme.titleMedium,
+              ),
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const JsonForm("demographics", prefix: "debug"),
+                  ),
+                );
               },
             ),
           ),
