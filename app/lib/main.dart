@@ -1,8 +1,10 @@
 import "dart:async";
 
 import "package:flutter/material.dart";
+import "package:flutter_localizations/flutter_localizations.dart";
 
 import "package:adaptive_theme/adaptive_theme.dart";
+import "package:flutter_translate/flutter_translate.dart";
 import "package:provider/provider.dart";
 
 import "package:likertshift/bluetooth.dart";
@@ -19,12 +21,21 @@ void main() async {
   final bluetoothModel = BluetoothModel();
   final locationModel = await LocationModel.create();
 
+  final localizationDelegate = await LocalizationDelegate.create(
+    fallbackLocale: "en",
+    supportedLocales: ["en", "de"],
+    basePath: "assets/locales/",
+  );
+
   runApp(
-    App(
-      bluetoothModel: bluetoothModel,
-      demographicsModel: await DemographicsModel.create(),
-      locationModel: locationModel,
-      recordingModel: await RecordingModel.create(bluetoothModel, locationModel),
+    LocalizedApp(
+      localizationDelegate,
+      App(
+        bluetoothModel: bluetoothModel,
+        demographicsModel: await DemographicsModel.create(),
+        locationModel: locationModel,
+        recordingModel: await RecordingModel.create(bluetoothModel, locationModel),
+      ),
     ),
   );
 
@@ -54,22 +65,35 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final localizationDelegate = LocalizedApp.of(context).delegate;
+
     return AdaptiveTheme(
       light: lightTheme,
       dark: darkTheme,
       initial: AdaptiveThemeMode.system,
-      builder: (theme, darkTheme) => MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: theme,
-        darkTheme: darkTheme,
-        home: MultiProvider(
-          providers: [
-            ChangeNotifierProvider(create: (_) => bluetoothModel),
-            ChangeNotifierProvider(create: (_) => demographicsModel),
-            ChangeNotifierProvider(create: (_) => locationModel),
-            ChangeNotifierProvider(create: (_) => recordingModel),
+      builder: (theme, darkTheme) => LocalizationProvider(
+        state: LocalizationProvider.of(context).state,
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          theme: theme,
+          darkTheme: darkTheme,
+          localizationsDelegates: [
+            localizationDelegate,
+            ...GlobalMaterialLocalizations.delegates,
+            GlobalWidgetsLocalizations.delegate,
           ],
-          child: const Home(),
+          supportedLocales: localizationDelegate.supportedLocales,
+          locale: localizationDelegate.currentLocale,
+          home: MultiProvider(
+            providers: [
+              ChangeNotifierProvider(create: (_) => bluetoothModel),
+              ChangeNotifierProvider(create: (_) => demographicsModel),
+              ChangeNotifierProvider(create: (_) => locationModel),
+              ChangeNotifierProvider(create: (_) => recordingModel),
+            ],
+            // ignore: prefer_const_constructors
+            child: Home(),
+          ),
         ),
       ),
     );

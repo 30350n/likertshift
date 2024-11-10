@@ -1,0 +1,8 @@
+languageIds:
+  - dart
+  - json
+
+usageMatchRegex:
+  - "[^\\w\\d]translate\\(['\"`]({key})['\"`]"
+
+monopoly: true

@@ -1,0 +1,67 @@
+{
+    "common": {
+        "turn_on": "Turn On",
+        "location_disabled": "Gerätestandort nicht verfügbar",
+        "submit": "Speichern",
+        "off": "Aus",
+        "on": "An"
+    },
+    "forms": {
+        "custom": "Anderes"
+    },
+    "map": {
+        "title": "Karte",
+        "likertshift_values": {
+            "01_very_dissatisfying": "Sehr Unzufrieden",
+            "02_dissatisfying": "Unzufrieden",
+            "03_neutral": "Neutral",
+            "04_satisfying": "Zufrieden",
+            "05_very_satisfying": "Sehr Zufrieden"
+        }
+    },
+    "routes": {
+        "title": "Routen",
+        "presets": "Vorgaben",
+        "recordings": {
+            "title": "Aufnahmen",
+            "new_hint": "Neue Aufnahme Starten",
+            "options": {
+                "title": "Aufnahme Optionen",
+                "route_preset": "Vorgegebene Route",
+                "method": {
+                    "title": "Aufnahme Methode",
+                    "01_device": "Likertshift Gerät",
+                    "02_audio": "Audio",
+                    "03_manual": "Manuel (Karte)"
+                },
+                "start": "Aufnahme Starten"
+            },
+            "stop": "Aufnahmen Beenden"
+        }
+    },
+    "devices": {
+        "title": "Likershift Geräte",
+        "connection_error": "Verbindung fehlgeschlagen.",
+        "bluetooth_state": {
+            "unauthorized": "nicht authorisiert",
+            "unavailable": "nicht erreichbar",
+            "unknown": "unbekannt"
+        },
+        "blueetooth_adapter_is": "Bluetooth Adapter ist",
+        "title_short": "Geräte"
+    },
+    "settings": {
+        "title": "Einstellungen",
+        "language": "Sprache",
+        "languages": {
+            "en": "Englisch",
+            "de": "Deutsch"
+        },
+        "color_scheme": "Color Scheme",
+        "color_schemes": {
+            "light": "Hell",
+            "dark": "Dunkel",
+            "system": "System"
+        }
+    }
+}

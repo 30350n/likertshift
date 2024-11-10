@@ -13,9 +13,9 @@ import "package:likertshift/screens/routes.dart";
 import "package:likertshift/util.dart";
 
 enum RecordingMethod {
-  device(description: "Feedbike Device"),
-  audio(description: "Audio"),
-  mapping(description: "Manual Mapping");
+  device(description: "routes.recordings.options.method.01_device"),
+  audio(description: "routes.recordings.options.method.02_audio"),
+  mapping(description: "routes.recordings.options.method.03_manual");
 
   final String description;
 
@@ -27,7 +27,7 @@ class Recording {
   final RecordingMethod method;
   final Route? routePreset;
 
-  String get name => "rec-${shortHash(startTime)}-${method.name}-${routePreset?.id ?? "none"}";
+  String get name => "rec-${shortHash(startTime)}-${method.name}-${routePreset?.id ?? "null"}";
 
   final List<(LatLng, Duration, dynamic)> _points = [];
   List<(LatLng, Duration, dynamic)> get points => List.unmodifiable(_points);

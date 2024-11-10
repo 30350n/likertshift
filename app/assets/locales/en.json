@@ -1,0 +1,67 @@
+{
+    "common": {
+        "turn_on": "Turn On",
+        "location_disabled": "Location Service is disabled",
+        "submit": "Submit",
+        "off": "Off",
+        "on": "On"
+    },
+    "forms": {
+        "custom": "Custom"
+    },
+    "map": {
+        "title": "Map",
+        "likertshift_values": {
+            "01_very_dissatisfying": "Very Dissatisfying",
+            "02_dissatisfying": "Dissatisfying",
+            "03_neutral": "Neutral",
+            "04_satisfying": "Satisfying",
+            "05_very_satisfying": "Very Satisfying"
+        }
+    },
+    "routes": {
+        "title": "Routes",
+        "presets": "Presets",
+        "recordings": {
+            "title": "Recordings",
+            "new_hint": "Start a new Recording",
+            "options": {
+                "title": "Recording Options",
+                "route_preset": "Route Preset",
+                "method": {
+                    "title": "Recording Method",
+                    "01_device": "Likertshift Device",
+                    "02_audio": "Audio",
+                    "03_manual": "Manual Mapping"
+                },
+                "start": "Start Recording"
+            },
+            "stop": "Stop Recording"
+        }
+    },
+    "devices": {
+        "title": "Likershift Devices",
+        "connection_error": "Failed to connect to device.",
+        "bluetooth_state": {
+            "unauthorized": "Unauthorized",
+            "unavailable": "Unavailable",
+            "unknown": "Unknown"
+        },
+        "blueetooth_adapter_is": "Bluetooth adapter is",
+        "title_short": "Devices"
+    },
+    "settings": {
+        "title": "Settings",
+        "language": "Language",
+        "languages": {
+            "en": "English",
+            "de": "German"
+        },
+        "color_scheme": "Color Scheme",
+        "color_schemes": {
+            "light": "Light",
+            "dark": "Dark",
+            "system": "System"
+        }
+    }
+}

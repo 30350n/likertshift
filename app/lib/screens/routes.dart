@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 
 import "package:flutter_form_builder/flutter_form_builder.dart";
+import "package:flutter_translate/flutter_translate.dart";
 import "package:form_builder_validators/form_builder_validators.dart";
 import "package:latlong2/latlong.dart";
 import "package:provider/provider.dart";
@@ -20,19 +21,25 @@ class RoutesScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           leading: const Icon(Icons.polyline),
-          title: const Text("Routes"),
-          bottom: const TabBar(
+          title: Text(translate("routes.title")),
+          bottom: TabBar(
             tabs: [
               Tab(
                 child: Wrap(
                   spacing: 8,
-                  children: [Icon(Icons.route, size: 20), Text("Presets")],
+                  children: [
+                    const Icon(Icons.route, size: 20),
+                    Text(translate("routes.presets")),
+                  ],
                 ),
               ),
               Tab(
                 child: Wrap(
                   spacing: 8,
-                  children: [Icon(Icons.fiber_manual_record, size: 20), Text("Recordings")],
+                  children: [
+                    const Icon(Icons.fiber_manual_record, size: 20),
+                    Text(translate("routes.recordings.title")),
+                  ],
                 ),
               ),
             ],
@@ -78,7 +85,7 @@ class RoutesScreen extends StatelessWidget {
         floatingActionButton: recordingModel.isRecording
             ? null
             : FloatingActionButton(
-                tooltip: "Start a new Recording",
+                tooltip: translate("routes.recordings.new_hint"),
                 child: const Icon(Icons.add),
                 onPressed: () {
                   Navigator.push(
@@ -102,14 +109,16 @@ class RouteSelection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Recording Options"),
+        title: Text(translate("routes.recordings.options.title")),
       ),
       body: FormListView(
         formKey: _formKey,
         children: [
           FormBuilderDropdown(
             name: "route_preset",
-            decoration: const InputDecoration(label: Text("Route Preset")),
+            decoration: InputDecoration(
+              label: Text(translate("routes.recordings.options.route_preset")),
+            ),
             items: [null, ...recordingModel.routes]
                 .map(
                   (route) => DropdownMenuItem(
@@ -123,13 +132,15 @@ class RouteSelection extends StatelessWidget {
           ),
           FormBuilderDropdown(
             name: "method",
-            decoration: const InputDecoration(label: Text("Recording Method")),
+            decoration: InputDecoration(
+              label: Text(translate("routes.recordings.options.method.title")),
+            ),
             validator: FormBuilderValidators.required(),
             items: RecordingMethod.values
                 .map(
                   (method) => DropdownMenuItem(
                     value: method,
-                    child: Text(method.description),
+                    child: Text(translate(method.description)),
                   ),
                 )
                 .toList(),
@@ -140,7 +151,7 @@ class RouteSelection extends StatelessWidget {
         Center(
           child: OutlinedButton.icon(
             icon: const Icon(Icons.fiber_manual_record),
-            label: const Text("Start Recording"),
+            label: Text(translate("routes.recordings.options.start")),
             onPressed: () {
               final formState = _formKey.currentState;
               if (formState?.validate() ?? false) {

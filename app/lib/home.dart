@@ -1,4 +1,5 @@
 import "package:flutter/material.dart";
+import "package:flutter_translate/flutter_translate.dart";
 
 import "package:flutter_blue_plus/flutter_blue_plus.dart";
 import "package:provider/provider.dart";
@@ -47,7 +48,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
               Center(
                 child: OutlinedButton.icon(
                   icon: const Icon(Icons.stop),
-                  label: const Text("Stop Recording"),
+                  label: Text(translate("routes.recordings.stop")),
                   onPressed: recordingModel.stopRecording,
                 ),
               ),
@@ -67,8 +68,9 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
   int currentPageIndex = 0;
   Map<Widget, Widget> pages(BuildContext context) {
     return {
-      const NavigationDestination(icon: Icon(Icons.map), label: "Map"): const MapScreen(),
-      const NavigationDestination(icon: Icon(Icons.polyline), label: "Routes"):
+      NavigationDestination(icon: const Icon(Icons.map), label: translate("map.title")):
+          const MapScreen(),
+      NavigationDestination(icon: const Icon(Icons.polyline), label: translate("routes.title")):
           const RoutesScreen(),
       Selector<BluetoothModel, ({BluetoothAdapterState state, BluetoothDevice? device})>(
         selector: (_, model) => (state: model.adapterState, device: model.activeDevice),
@@ -82,12 +84,14 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                   : BluetoothStatus.unavailable,
               animation: _glowBreatheAnimation,
             ),
-            label: "Devices",
+            label: translate("devices.title_short"),
           );
         },
       ): const DevicesScreen(),
-      const NavigationDestination(icon: Icon(Icons.settings), label: "Settings"):
-          const SettingsScreen(),
+      NavigationDestination(
+        icon: const Icon(Icons.settings),
+        label: translate("settings.title"),
+      ): const SettingsScreen(),
     };
   }
 }

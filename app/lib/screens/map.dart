@@ -3,6 +3,7 @@ import "package:flutter/material.dart";
 
 import "package:flutter_map/flutter_map.dart";
 import "package:flutter_map_compass/flutter_map_compass.dart";
+import "package:flutter_translate/flutter_translate.dart";
 import "package:latlong2/latlong.dart";
 import "package:provider/provider.dart";
 import "package:vector_math/vector_math.dart" hide Colors;
@@ -207,26 +208,26 @@ class Compass extends StatelessWidget {
   }
 }
 
-const likertshiftValueMap = {
-  1: "Very Unsatisfied",
-  2: "Unsatisfied",
-  3: "Neutral",
-  4: "Satisfied",
-  5: "Very Satisfied",
-};
-
-const likertshiftIconMap = {
-  1: Icons.sentiment_very_dissatisfied,
-  2: Icons.sentiment_dissatisfied,
-  3: Icons.sentiment_neutral,
-  4: Icons.sentiment_satisfied,
-  5: Icons.sentiment_very_satisfied,
-};
-
 class LikertshiftValueWidget extends StatelessWidget {
   final int value;
 
-  const LikertshiftValueWidget(this.value, {super.key});
+  LikertshiftValueWidget(this.value, {super.key});
+
+  final likertshiftValueMap = {
+    1: translate("map.likertshift_values.01_very_dissatisfying"),
+    2: translate("map.likertshift_values.02_dissatisfying"),
+    3: translate("map.likertshift_values.03_neutral"),
+    4: translate("map.likertshift_values.04_satisfying"),
+    5: translate("map.likertshift_values.05_very_satisfying"),
+  };
+
+  static const likertshiftIconMap = {
+    1: Icons.sentiment_very_dissatisfied,
+    2: Icons.sentiment_dissatisfied,
+    3: Icons.sentiment_neutral,
+    4: Icons.sentiment_satisfied,
+    5: Icons.sentiment_very_satisfied,
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -241,7 +242,7 @@ class LikertshiftValueWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Icon(likertshiftIconMap[value] ?? Icons.error),
-            Text(likertshiftValueMap[value] ?? "None", style: theme.textTheme.headlineSmall),
+            Text(likertshiftValueMap[value] ?? "null", style: theme.textTheme.headlineSmall),
             Text("[ $value ]", style: theme.textTheme.headlineSmall),
           ],
         ),
@@ -277,12 +278,12 @@ class LocationOffWidget extends StatelessWidget {
       child: OutlinedButton(
         style: buttonStyle,
         onPressed: LocationModel.requestLocationService,
-        child: const Wrap(
+        child: Wrap(
           crossAxisAlignment: WrapCrossAlignment.center,
           spacing: 4,
           children: [
-            Icon(Icons.error, size: 16),
-            Text("Location Service is disabled"),
+            const Icon(Icons.error, size: 16),
+            Text(translate("common.location_disabled")),
           ],
         ),
       ),

@@ -4,6 +4,7 @@ import "dart:io";
 import "package:flutter/material.dart";
 
 import "package:flutter_blue_plus/flutter_blue_plus.dart";
+import "package:flutter_translate/flutter_translate.dart";
 import "package:loading_animation_widget/loading_animation_widget.dart";
 import "package:provider/provider.dart";
 
@@ -20,8 +21,10 @@ class DevicesScreen extends StatelessWidget {
     final isLocationEnabled = context.select<LocationModel, bool?>((m) => m.isLocationEnabled);
 
     return Scaffold(
-      appBar:
-          AppBar(leading: const Icon(Icons.devices), title: const Text("Likertshift Devices")),
+      appBar: AppBar(
+        leading: const Icon(Icons.devices),
+        title: Text(translate("devices.title")),
+      ),
       body: switch (bluetoothModel.adapterState) {
         BluetoothAdapterState.unknown || BluetoothAdapterState.turningOff => Container(),
         BluetoothAdapterState.on || BluetoothAdapterState.turningOn => isLocationEnabled == null
@@ -122,7 +125,11 @@ class DeviceCardState extends State<DeviceCard> {
               await widget.device.connect();
             } on Exception {
               if (context.mounted) {
-                showSnackbarMessage(context, "Failed to connect to device.", success: false);
+                showSnackbarMessage(
+                  context,
+                  translate("devices.connection_error"),
+                  success: false,
+                );
               }
               setState(() {
                 isAvailable = false;
@@ -158,7 +165,17 @@ class ScanningIndicator extends StatelessWidget {
 class BluetoothOffScreen extends StatelessWidget {
   final BluetoothAdapterState adapterState;
 
-  const BluetoothOffScreen(this.adapterState, {super.key});
+  BluetoothOffScreen(this.adapterState, {super.key});
+
+  final adaptlerStateMap = {
+    BluetoothAdapterState.off: translate("common.off"),
+    BluetoothAdapterState.on: translate("common.on"),
+    BluetoothAdapterState.turningOff: translate("common.on"),
+    BluetoothAdapterState.turningOn: translate("common.off"),
+    BluetoothAdapterState.unauthorized: translate("devices.bluetooth_state.unauthorized"),
+    BluetoothAdapterState.unavailable: translate("devices.bluetooth_state.unavailable"),
+    BluetoothAdapterState.unknown: translate("devices.bluetooth_state.unknown"),
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -173,9 +190,15 @@ class BluetoothOffScreen extends StatelessWidget {
             Icons.bluetooth_disabled,
             size: 200,
           ),
-          Text("Bluetooth Adapter is ${adapterState.name}", style: theme.textTheme.titleMedium),
+          Text(
+            "${translate("devices.blueetooth_adapter_is")} ${adaptlerStateMap[adapterState]}",
+            style: theme.textTheme.titleMedium,
+          ),
           if (Platform.isAndroid)
-            const ElevatedButton(onPressed: FlutterBluePlus.turnOn, child: Text("TURN ON")),
+            ElevatedButton(
+              onPressed: FlutterBluePlus.turnOn,
+              child: Text(translate("common.turn_on").toUpperCase()),
+            ),
         ],
       ),
     );
@@ -199,10 +222,10 @@ class LocationOffScreen extends StatelessWidget {
             Icons.location_off,
             size: 200,
           ),
-          Text("Location Service is disabled", style: theme.textTheme.titleMedium),
-          const ElevatedButton(
+          Text(translate("common.location_disabled"), style: theme.textTheme.titleMedium),
+          ElevatedButton(
             onPressed: LocationModel.requestLocationService,
-            child: Text("TURN ON"),
+            child: Text(translate("common.turn_on").toUpperCase()),
           ),
         ],
       ),
