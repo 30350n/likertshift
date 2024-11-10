@@ -33,6 +33,12 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
   }
 
   @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     if (!context.watch<DemographicsModel>().isValid()) {
       return const Demographics();
