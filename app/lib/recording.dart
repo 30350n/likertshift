@@ -105,7 +105,7 @@ class RecordingModel with ChangeNotifier {
 
     for (String path in routePaths) {
       try {
-        _routes.add(Route.fromJson(json.decode(await rootBundle.loadString(path))));
+        _routes.add(Route.fromJson(this, json.decode(await rootBundle.loadString(path))));
         notifyListeners();
       } catch (_) {}
     }

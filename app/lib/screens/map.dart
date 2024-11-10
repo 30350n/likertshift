@@ -102,20 +102,29 @@ class MapScreenState extends State<MapScreen> {
               ),
               PolylineLayer(
                 polylines: [
-                  if (recordingModel.isRecording && activeRecording?.routePreset != null)
-                    Polyline(
-                      points: activeRecording!.routePreset!.points,
-                      color: Colors.orange.withOpacity(0.4),
-                      strokeWidth: 5,
-                      useStrokeWidthInMeter: true,
-                    ),
-                  if (recordingModel.isRecording)
+                  if (recordingModel.isRecording) ...[
+                    if (activeRecording?.routePreset != null)
+                      Polyline(
+                        points: activeRecording!.routePreset!.points,
+                        color: Colors.orange.withOpacity(0.4),
+                        strokeWidth: 5,
+                        useStrokeWidthInMeter: true,
+                      ),
                     Polyline(
                       points: activeRecording!.locations,
                       color: theme.colorScheme.onPrimaryFixedVariant,
                       strokeWidth: 3,
                       useStrokeWidthInMeter: true,
                     ),
+                  ] else
+                    ...recordingModel.routes.where((route) => route.isVisible).map(
+                          (route) => Polyline(
+                            points: route.points,
+                            color: Colors.primaries[route.hashCode % Colors.primaries.length]
+                                .withOpacity(0.8),
+                            strokeWidth: 5,
+                          ),
+                        ),
                 ],
               ),
               CircleLayer(

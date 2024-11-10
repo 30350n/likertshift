@@ -45,9 +45,24 @@ class RoutesScreen extends StatelessWidget {
                   .map(
                     (route) => Card(
                       child: ListTile(
+                        contentPadding: const EdgeInsets.only(left: 16, right: 6),
                         leading: Icon(route.icon),
                         title: Text(route.name),
-                        trailing: Text(route.lengthString),
+                        trailing: Wrap(
+                          crossAxisAlignment: WrapCrossAlignment.center,
+                          spacing: 8,
+                          children: [
+                            Text(route.lengthString),
+                            IconButton(
+                              icon: Icon(
+                                route.isVisible ? Icons.visibility : Icons.visibility_off,
+                              ),
+                              onPressed: () {
+                                route.isVisible = !route.isVisible;
+                              },
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   )
@@ -144,9 +159,18 @@ class RouteSelection extends StatelessWidget {
 }
 
 class Route {
+  final RecordingModel recordingModel;
   final String name;
   final IconData? icon;
   final List<LatLng> points;
+
+  bool _isVisible = false;
+  bool get isVisible => _isVisible;
+  set isVisible(value) {
+    _isVisible = value;
+    // ignore: invalid_use_of_protected_member, invalid_use_of_visible_for_testing_member
+    recordingModel.notifyListeners();
+  }
 
   String get id => name.replaceAll(" ", "_").toLowerCase();
 
@@ -155,9 +179,9 @@ class Route {
       ].fold(0, (p, c) => p + c);
   String get lengthString => "${(length * 0.001).toStringAsFixed(1)} km";
 
-  Route({required this.name, this.icon, required this.points});
+  Route(this.recordingModel, {required this.name, this.icon, required this.points});
 
-  Route.fromJson(Map<String, dynamic> json)
+  Route.fromJson(this.recordingModel, Map<String, dynamic> json)
       : name = json["name"] as String,
         icon = IconData(int.tryParse(json["icon"]) ?? 0xf0552, fontFamily: "MaterialIcons"),
         points = (json["coordinates"] as List<dynamic>)
