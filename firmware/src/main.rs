@@ -52,9 +52,24 @@ async fn main(spawner: Spawner) {
     let mut config = embassy_nrf::config::Config::default();
     config.gpiote_interrupt_priority = Priority::P2;
     config.time_interrupt_priority = Priority::P2;
-    let p = embassy_nrf::init(config);
+    let peripherals = embassy_nrf::init(config);
 
-    let mut led = Output::new(p.P0_26.degrade(), Level::High, OutputDrive::Standard);
+    let led_r = peripherals.P0_26;
+    let _led_g = peripherals.P0_30;
+    let _led_b = peripherals.P0_06;
+
+    let p1 = peripherals.P0_03;
+    let p2 = peripherals.P0_28;
+    let p3 = peripherals.P0_29;
+    let p4 = peripherals.P0_04;
+    let p5 = peripherals.P0_05;
+    let p6 = peripherals.P1_11;
+    let _p7 = peripherals.P1_12;
+    let _p8 = peripherals.P1_13;
+    let _p9 = peripherals.P1_14;
+    let _p10 = peripherals.P1_15;
+
+    let mut led = Output::new(led_r.degrade(), Level::High, OutputDrive::Standard);
 
     for _ in 0..2 {
         led.set_high();
@@ -115,13 +130,14 @@ async fn main(spawner: Spawner) {
         )
         .build();
 
-    let _output = Output::new(p.P0_02.degrade(), Level::High, OutputDrive::Standard);
-    let input5 = Input::new(p.P0_03.degrade(), Pull::Down);
-    let input4 = Input::new(p.P0_28.degrade(), Pull::Down);
-    let input3 = Input::new(p.P0_29.degrade(), Pull::Down);
-    let input2 = Input::new(p.P0_04.degrade(), Pull::Down);
-    let input1 = Input::new(p.P0_05.degrade(), Pull::Down);
-    let inputs = [input1, input2, input3, input4, input5];
+    let mut output = Output::new(p6.degrade(), Level::Low, OutputDrive::Standard);
+    let inputs = [
+        Input::new(p1.degrade(), Pull::None),
+        Input::new(p2.degrade(), Pull::None),
+        Input::new(p3.degrade(), Pull::None),
+        Input::new(p4.degrade(), Pull::None),
+        Input::new(p5.degrade(), Pull::None),
+    ];
 
     let mut value: u8 = 0;
 
@@ -143,11 +159,13 @@ async fn main(spawner: Spawner) {
             },
             ServerEvent::LikertshiftService(e) => match e {
                 LikertshiftServiceEvent::ValueWrite(_) => {
+                    output.set_high();
                     for (i, input) in inputs.iter().enumerate() {
                         if input.is_high() {
                             value = i as u8 + 1;
                         }
                     }
+                    output.set_low();
                     info!("position {}", value);
                     if let Err(e) = server.likertshift_service.value_notify(&conn, &value) {
                         info!("send notification error: {:?}", e);
