@@ -142,7 +142,7 @@ class _JsonFormState extends State<JsonForm> {
                   ),
                   onPressed: () async {
                     final formState = _formKey.currentState;
-                    if (formState == null || !formState.validate()) {
+                    if (formState == null || !formState.saveAndValidate()) {
                       return;
                     }
 
@@ -151,12 +151,7 @@ class _JsonFormState extends State<JsonForm> {
                     final directory = await getStorageDirectory();
                     final file = File("${directory.path}/$prefix$formId$suffix.json");
 
-                    await file.writeAsString(
-                      encoder.convert(
-                        formState.fields
-                            .map((fieldId, field) => MapEntry(fieldId, field.value)),
-                      ),
-                    );
+                    await file.writeAsString(encoder.convert(formState.value));
 
                     if (context.mounted) {
                       if (nextForm != null) {
