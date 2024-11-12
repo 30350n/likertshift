@@ -2,9 +2,11 @@ import "dart:convert";
 import "dart:io";
 
 import "package:flutter/foundation.dart";
+import "package:flutter/material.dart" hide Route;
 import "package:flutter/services.dart";
 
 import "package:latlong2/latlong.dart";
+import "package:likertshift/forms.dart";
 import "package:record/record.dart";
 
 import "package:likertshift/bluetooth.dart";
@@ -139,20 +141,35 @@ class RecordingModel with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> stopRecording() async {
+  Future<void> stopRecording(BuildContext context) async {
     if (!isRecording) {
       return;
     }
 
-    await _activeRecording!.stop();
-    if (_activeRecording!.method == RecordingMethod.audio) {
+    await activeRecording!.stop();
+    if (activeRecording!.method == RecordingMethod.audio) {
       await audioRecorder.stop();
     }
 
     locationModel.removeListener(onLocationUpdate);
-    _recordings.add(_activeRecording!);
+    _recordings.add(activeRecording!);
+
+    final prefix = activeRecording!.name;
+
     _activeRecording = null;
     notifyListeners();
+
+    if (context.mounted) {
+      await Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => JsonForm(
+            "tlx",
+            prefix: prefix,
+            nextForm: JsonForm("ueq_01_attractiveness", prefix: prefix),
+          ),
+        ),
+      );
+    }
   }
 
   void onLocationUpdate() {

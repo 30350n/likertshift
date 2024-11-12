@@ -35,7 +35,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const JsonForm("demographics"),
+          builder: (context) => const JsonForm("demographics", nextForm: JsonForm("bfi-10")),
           fullscreenDialog: true,
         ),
       );
@@ -61,7 +61,7 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
                 child: OutlinedButton.icon(
                   icon: const Icon(Icons.stop),
                   label: Text(translate("routes.recordings.stop")),
-                  onPressed: recordingModel.stopRecording,
+                  onPressed: () => recordingModel.stopRecording(context),
                 ),
               ),
             ],

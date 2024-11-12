@@ -13,7 +13,15 @@ class JsonForm extends StatefulWidget {
   final String? prefix;
   final String? suffix;
   final void Function(BuildContext context)? onSubmit;
-  const JsonForm(this.name, {super.key, this.prefix, this.suffix, this.onSubmit});
+  final Widget? nextForm;
+  const JsonForm(
+    this.name, {
+    super.key,
+    this.prefix,
+    this.suffix,
+    this.onSubmit,
+    this.nextForm,
+  });
 
   @override
   State<JsonForm> createState() => _JsonFormState();
@@ -48,6 +56,7 @@ class _JsonFormState extends State<JsonForm> {
                 prefix: widget.prefix,
                 suffix: widget.suffix,
                 onSubmit: widget.onSubmit,
+                nextForm: widget.nextForm,
               )
             : null;
 
@@ -155,11 +164,17 @@ class _JsonFormState extends State<JsonForm> {
 
                     if (context.mounted) {
                       if (nextForm != null) {
-                        await Navigator.of(context)
-                            .pushReplacement(MaterialPageRoute(builder: (_) => nextForm));
-                      } else if (widget.onSubmit != null) {
-                        widget.onSubmit!(context);
+                        await Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(builder: (_) => nextForm),
+                        );
+                      } else if (widget.nextForm != null) {
+                        await Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(builder: (_) => widget.nextForm!),
+                        );
                       } else {
+                        if (widget.onSubmit != null) {
+                          widget.onSubmit!(context);
+                        }
                         Navigator.of(context).pop();
                       }
                     }
