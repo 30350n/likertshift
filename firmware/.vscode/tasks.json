@@ -5,18 +5,47 @@
             "label": "Cargo Build (debug)",
             "type": "shell",
             "command": "cargo build",
-            "group": "build",
+            "group": "build"
         },
         {
             "label": "Cargo Build (release)",
             "type": "shell",
             "command": "cargo build --release",
+            "group": "build"
+        },
+        {
+            "label": "Upload Firmware (debug) (DFU)",
+            "dependsOn": "Cargo Build (debug)",
+            "type": "shell",
+            "command": "bash \"${workspaceFolder}/.vscode/upload_firmware_dfu.sh\" \"${workspaceFolder}/target/thumbv7em-none-eabihf/debug/likertshift-firmware\" /dev/${input:serialPort}",
             "group": "build",
         },
         {
-            "label": "Flash S140 SoftDevice to nRF52840",
+            "label": "Upload Firmware (release) (DFU)",
+            "dependsOn": "Cargo Build (release)",
             "type": "shell",
-            "command": "bash ${workspaceFolder}/softdevices/flash.sh",
+            "command": "bash \"${workspaceFolder}/.vscode/upload_firmware_dfu.sh\" \"${workspaceFolder}/target/thumbv7em-none-eabihf/release/likertshift-firmware\" /dev/${input:serialPort}",
+            "group": "build",
         },
+        {
+            "label": "Upload S140 SoftDevice (probe-rs)",
+            "type": "shell",
+            "command": "bash \"${workspaceFolder}/softdevices/upload_softdevice_probe-rs.sh\"",
+            "problemMatcher": [],
+        },
+        {
+            "label": "Upload S140 SoftDevice (DFU)",
+            "type": "shell",
+            "command": "bash \"${workspaceFolder}/softdevices/upload_softdevice_dfu.sh\" /dev/${input:serialPort}",
+            "problemMatcher": [],
+        },
+    ],
+    "inputs": [
+        {
+            "id": "serialPort",
+            "type": "promptString",
+            "default": "ttyACM0",
+            "description": "Serial Port",
+        }
     ],
 }

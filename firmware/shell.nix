@@ -13,6 +13,7 @@ pkgs.mkShell {
                 "rust-analyzer"
             ];
         })
+        adafruit-nrfutil
         cargo
         cargo-udeps
         probe-rs
