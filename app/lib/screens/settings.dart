@@ -110,6 +110,20 @@ class SettingsScreen extends StatelessWidget {
               },
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: ElevatedButton(
+              child: Text("UEQ+", style: theme.textTheme.titleMedium),
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        const JsonForm("ueq_01_attractiveness", prefix: "debug"),
+                  ),
+                );
+              },
+            ),
+          ),
         ],
       ),
     );

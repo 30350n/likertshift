@@ -1,0 +1,45 @@
+{
+    "id": "ueq_04_hardware_safety",
+    "title": "translate('forms.ueq.04_hardware_safety.title')",
+    "note": "translate('forms.ueq.method_note')",
+    "text": "translate('forms.ueq.04_hardware_safety.text')",
+    "next_form": "ueq_05_social_acceptance",
+    "fields": [
+        {
+            "id": "threatening_harmless",
+            "fieldType": {
+                "type": "LikertScale",
+                "steps": 5,
+                "negativeAnswer": "translate('forms.ueq.04_hardware_safety.threatening')",
+                "positiveAnswer": "translate('forms.ueq.04_hardware_safety.harmless')"
+            }
+        },
+        {
+            "id": "hazardous_to_health_not_hazardous_to_health",
+            "fieldType": {
+                "type": "LikertScale",
+                "steps": 5,
+                "negativeAnswer": "translate('forms.ueq.04_hardware_safety.hazardous_to_health')",
+                "positiveAnswer": "translate('forms.ueq.04_hardware_safety.not_hazardous_to_health')"
+            }
+        },
+        {
+            "id": "damaging_not_damaging",
+            "fieldType": {
+                "type": "LikertScale",
+                "steps": 5,
+                "negativeAnswer": "translate('forms.ueq.04_hardware_safety.damaging')",
+                "positiveAnswer": "translate('forms.ueq.04_hardware_safety.not_damaging')"
+            }
+        },
+        {
+            "id": "likely_to_cause_collision_unlikely_to_cause_collision",
+            "fieldType": {
+                "type": "LikertScale",
+                "steps": 5,
+                "negativeAnswer": "translate('forms.ueq.04_hardware_safety.likely_to_cause_collision')",
+                "positiveAnswer": "translate('forms.ueq.04_hardware_safety.unlikely_to_cause_collision')"
+            }
+        }
+    ]
+}

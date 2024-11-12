@@ -4,7 +4,8 @@
         "location_disabled": "Location Service is disabled",
         "submit": "Submit",
         "off": "Off",
-        "on": "On"
+        "on": "On",
+        "next": "Next"
     },
     "map": {
         "title": "Map",
@@ -126,6 +127,69 @@
             "frustration": {
                 "label": "Frustration",
                 "note": "How insecure, discouraged, irritated, stressed, and annoyed were you?"
+            }
+        },
+        "ueq": {
+            "method_note": "The 'method' refers to the method used to Rate the Travel Experience while Cycling.",
+            "01_attractiveness": {
+                "title": "Attractiveness (UEQ+)",
+                "text": "In my opinion, the method is generally:",
+                "annoying": "Annoying",
+                "enjoyable": "Enjoyable",
+                "bad": "Bad",
+                "good": "Good",
+                "unpleasant": "Unpleasant",
+                "pleasant": "Pleasant",
+                "unfriendly": "Unfriendly",
+                "friendly": "Friendly"
+            },
+            "02_efficiency": {
+                "title": "Efficiency (UEQ+)",
+                "text": "To rate my Travel Experience, I consider the method as:",
+                "slow": "Slow",
+                "fast": "Fast",
+                "inefficient": "Inefficient",
+                "efficient": "Efficient",
+                "impractical": "Impractical",
+                "practical": "Practical",
+                "cluttered": "Cluttered",
+                "organized": "Organized"
+            },
+            "03_intuitive_use": {
+                "title": "Intuitive Use (UEQ+)",
+                "text": "In my opinion, using the method is:",
+                "difficult": "Difficult",
+                "easy": "Easy",
+                "illogical": "Illogical",
+                "logical": "Logical",
+                "not_plausible": "Not Plausible",
+                "plausible": "Plausible",
+                "inconclusive": "Inconclusive",
+                "conclusive": "Conclusive"
+            },
+            "04_hardware_safety": {
+                "title": "Hardware Safety (UEQ+)",
+                "text": "I find the effect of the method on my cycling to be:",
+                "threatening": "Threatening",
+                "harmless": "Harmless",
+                "hazardous_to_health": "Hazardous To Health",
+                "not_hazardous_to_health": "Not Hazardous To Health",
+                "damaging": "Damaging",
+                "not_damaging": "Not Damaging",
+                "likely_to_cause_collision": "Likely To Cause Collision",
+                "unlikely_to_cause_collision": "Unlikely To Cause Collision"
+            },
+            "05_social_acceptance": {
+                "title": "Social Acceptance (UEQ+)",
+                "text": "In my opinion, using this method in public makes me feel:",
+                "judged_by_others": "Judged By Others",
+                "approved_by_others": "Approved By Others",
+                "rejected_by_others": "Rejected By Others",
+                "accepted_by_others": "Accepted By Others",
+                "embarrased": "Embarrased",
+                "proud": "Proud",
+                "uncomfortable": "Uncomfortable",
+                "comfortable": "Comfortable"
             }
         }
     }

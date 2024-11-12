@@ -12,7 +12,8 @@ class JsonForm extends StatefulWidget {
   final String name;
   final String? prefix;
   final String? suffix;
-  const JsonForm(this.name, {super.key, this.prefix, this.suffix});
+  final void Function(BuildContext context)? onSubmit;
+  const JsonForm(this.name, {super.key, this.prefix, this.suffix, this.onSubmit});
 
   @override
   State<JsonForm> createState() => _JsonFormState();
@@ -39,6 +40,16 @@ class _JsonFormState extends State<JsonForm> {
         final formTitle = translate(form["title"] as String);
         final formNote = (form["note"] as String?)?.transformed(translate);
         final formText = (form["text"] as String?)?.transformed(translate);
+
+        final nextFormId = form["next_form"] as String?;
+        final nextForm = nextFormId != null
+            ? JsonForm(
+                nextFormId,
+                prefix: widget.prefix,
+                suffix: widget.suffix,
+                onSubmit: widget.onSubmit,
+              )
+            : null;
 
         final formFields = [];
         for (final field in form["fields"] as List<dynamic>) {
@@ -124,7 +135,11 @@ class _JsonFormState extends State<JsonForm> {
                   padding: EdgeInsets.symmetric(vertical: 2),
                 ),
                 ElevatedButton(
-                  child: Text(translations.translate("common.submit").toUpperCase()),
+                  child: Text(
+                    translations
+                        .translate(nextForm == null ? "common.submit" : "common.next")
+                        .toUpperCase(),
+                  ),
                   onPressed: () async {
                     final formState = _formKey.currentState;
                     if (formState == null || !formState.validate()) {
@@ -144,7 +159,14 @@ class _JsonFormState extends State<JsonForm> {
                     );
 
                     if (context.mounted) {
-                      Navigator.of(context).pop();
+                      if (nextForm != null) {
+                        await Navigator.of(context)
+                            .pushReplacement(MaterialPageRoute(builder: (_) => nextForm));
+                      } else if (widget.onSubmit != null) {
+                        widget.onSubmit!(context);
+                      } else {
+                        Navigator.of(context).pop();
+                      }
                     }
                   },
                 ),

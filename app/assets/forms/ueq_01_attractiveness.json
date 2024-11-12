@@ -1,0 +1,45 @@
+{
+    "id": "ueq_01_attractiveness",
+    "title": "translate('forms.ueq.01_attractiveness.title')",
+    "note": "translate('forms.ueq.method_note')",
+    "text": "translate('forms.ueq.01_attractiveness.text')",
+    "next_form": "ueq_02_efficiency",
+    "fields": [
+        {
+            "id": "annoying_enjoyable",
+            "fieldType": {
+                "type": "LikertScale",
+                "steps": 5,
+                "negativeAnswer": "translate('forms.ueq.01_attractiveness.annoying')",
+                "positiveAnswer": "translate('forms.ueq.01_attractiveness.enjoyable')"
+            }
+        },
+        {
+            "id": "bad_good",
+            "fieldType": {
+                "type": "LikertScale",
+                "steps": 5,
+                "negativeAnswer": "translate('forms.ueq.01_attractiveness.bad')",
+                "positiveAnswer": "translate('forms.ueq.01_attractiveness.good')"
+            }
+        },
+        {
+            "id": "unpleasant_pleasant",
+            "fieldType": {
+                "type": "LikertScale",
+                "steps": 5,
+                "negativeAnswer": "translate('forms.ueq.01_attractiveness.unpleasant')",
+                "positiveAnswer": "translate('forms.ueq.01_attractiveness.pleasant')"
+            }
+        },
+        {
+            "id": "unfriendly_friendly",
+            "fieldType": {
+                "type": "LikertScale",
+                "steps": 5,
+                "negativeAnswer": "translate('forms.ueq.01_attractiveness.unfriendly')",
+                "positiveAnswer": "translate('forms.ueq.01_attractiveness.friendly')"
+            }
+        }
+    ]
+}

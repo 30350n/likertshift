@@ -4,7 +4,8 @@
         "location_disabled": "Gerätestandort nicht verfügbar",
         "submit": "Speichern",
         "off": "Aus",
-        "on": "An"
+        "on": "An",
+        "next": "Weiter"
     },
     "map": {
         "title": "Karte",
@@ -126,6 +127,69 @@
             "frustration": {
                 "label": "Frustration",
                 "note": "Wie unsicher, entmutigt, irritiert, gestresst und verärgert fühlten Sie sich während der Aufgabe?"
+            }
+        },
+        "ueq": {
+            "method_note": "Die 'Methode' bezieht sich auf die Methode die Sie benutzt haben um Ihr Reiseerlebnis während des Fahrradfahrens zu bewerten.",
+            "01_attractiveness": {
+                "title": "Attraktivität (UEQ+)",
+                "text": "Insgesamt empfinde ich die Methode als:",
+                "annoying": "Unerfreulich",
+                "enjoyable": "Erfreulich",
+                "bad": "Schlecht",
+                "good": "Gut",
+                "unpleasant": "Unangenehm",
+                "pleasant": "Angenehm",
+                "unfriendly": "Unsympathisch",
+                "friendly": "Sympathisch"
+            },
+            "02_efficiency": {
+                "title": "Effizienz (UEQ+)",
+                "text": "Zur Bewertung meines Reiseerlebnisses empfinde ich die Methode als:",
+                "slow": "Langsam",
+                "fast": "Schnell",
+                "inefficient": "Ineffizient",
+                "efficient": "Effizient",
+                "impractical": "Unpragmatisch",
+                "practical": "Pragmatisch",
+                "cluttered": "Überladen",
+                "organized": "Aufgeräumt"
+            },
+            "03_intuitive_use": {
+                "title": "Intuitive Bedienung (UEQ+)",
+                "text": "Die Bedienung der Methode wirkt auf mich:",
+                "difficult": "Mühevoll",
+                "easy": "Mühelos",
+                "illogical": "Unlogisch",
+                "logical": "Logisch",
+                "not_plausible": "Nicht Einleuchtend",
+                "plausible": "Einleuchtend",
+                "inconclusive": "Nicht Schlüssig",
+                "conclusive": "Schlüssig"
+            },
+            "04_hardware_safety": {
+                "title": "Hardware Sicherheit (UEQ+)",
+                "text": "Ich empfinde den Einfluss der Methode auf mein Fahrradfahren als:",
+                "threatening": "Bedrohlich",
+                "harmless": "Harmlos",
+                "hazardous_to_health": "Gesundheitsgefährdend",
+                "not_hazardous_to_health": "Nicht Gesundheitsgefährdend",
+                "damaging": "Schädigend",
+                "not_damaging": "Nicht Schädigend",
+                "likely_to_cause_collision": "Kollisionsbegünstigend",
+                "unlikely_to_cause_collision": "Nicht Kollisionsbegünstigend"
+            },
+            "05_social_acceptance": {
+                "title": "Soziale Akzeptanz (UEQ+)",
+                "text": "Meiner Meinung nach fühle ich mich wenn ich die Methode in der Öffentlichkeit verwende:",
+                "judged_by_others": "Von Anderen Negativ Beurteilt",
+                "approved_by_others": "Von Anderen Anerkannt",
+                "rejected_by_others": "Von Anderen Zurückgewiesen",
+                "accepted_by_others": "Von Anderen Akzeptiert",
+                "embarrased": "Peinlich Berührt",
+                "proud": "Stolz",
+                "uncomfortable": "Unwohl",
+                "comfortable": "Wohl"
             }
         }
     }

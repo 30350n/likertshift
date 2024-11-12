@@ -1,0 +1,44 @@
+{
+    "id": "ueq_05_social_acceptance",
+    "title": "translate('forms.ueq.05_social_acceptance.title')",
+    "note": "translate('forms.ueq.method_note')",
+    "text": "translate('forms.ueq.05_social_acceptance.text')",
+    "fields": [
+        {
+            "id": "judged_by_others_approved_by_others",
+            "fieldType": {
+                "type": "LikertScale",
+                "steps": 5,
+                "negativeAnswer": "translate('forms.ueq.05_social_acceptance.judged_by_others')",
+                "positiveAnswer": "translate('forms.ueq.05_social_acceptance.approved_by_others')"
+            }
+        },
+        {
+            "id": "rejected_by_others_accepted_by_others",
+            "fieldType": {
+                "type": "LikertScale",
+                "steps": 5,
+                "negativeAnswer": "translate('forms.ueq.05_social_acceptance.rejected_by_others')",
+                "positiveAnswer": "translate('forms.ueq.05_social_acceptance.accepted_by_others')"
+            }
+        },
+        {
+            "id": "embarrased_proud",
+            "fieldType": {
+                "type": "LikertScale",
+                "steps": 5,
+                "negativeAnswer": "translate('forms.ueq.05_social_acceptance.embarrased')",
+                "positiveAnswer": "translate('forms.ueq.05_social_acceptance.proud')"
+            }
+        },
+        {
+            "id": "uncomfortable_comfortable",
+            "fieldType": {
+                "type": "LikertScale",
+                "steps": 5,
+                "negativeAnswer": "translate('forms.ueq.05_social_acceptance.uncomfortable')",
+                "positiveAnswer": "translate('forms.ueq.05_social_acceptance.comfortable')"
+            }
+        }
+    ]
+}

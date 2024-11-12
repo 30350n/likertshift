@@ -1,0 +1,45 @@
+{
+    "id": "ueq_02_efficiency",
+    "title": "translate('forms.ueq.02_efficiency.title')",
+    "note": "translate('forms.ueq.method_note')",
+    "text": "translate('forms.ueq.02_efficiency.text')",
+    "next_form": "ueq_03_intuitive_use",
+    "fields": [
+        {
+            "id": "slow_fast",
+            "fieldType": {
+                "type": "LikertScale",
+                "steps": 5,
+                "negativeAnswer": "translate('forms.ueq.02_efficiency.slow')",
+                "positiveAnswer": "translate('forms.ueq.02_efficiency.fast')"
+            }
+        },
+        {
+            "id": "inefficient_efficient",
+            "fieldType": {
+                "type": "LikertScale",
+                "steps": 5,
+                "negativeAnswer": "translate('forms.ueq.02_efficiency.inefficient')",
+                "positiveAnswer": "translate('forms.ueq.02_efficiency.efficient')"
+            }
+        },
+        {
+            "id": "impractical_practical",
+            "fieldType": {
+                "type": "LikertScale",
+                "steps": 5,
+                "negativeAnswer": "translate('forms.ueq.02_efficiency.impractical')",
+                "positiveAnswer": "translate('forms.ueq.02_efficiency.practical')"
+            }
+        },
+        {
+            "id": "cluttered_organized",
+            "fieldType": {
+                "type": "LikertScale",
+                "steps": 5,
+                "negativeAnswer": "translate('forms.ueq.02_efficiency.cluttered')",
+                "positiveAnswer": "translate('forms.ueq.02_efficiency.organized')"
+            }
+        }
+    ]
+}

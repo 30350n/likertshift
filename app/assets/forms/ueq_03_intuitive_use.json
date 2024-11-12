@@ -1,0 +1,45 @@
+{
+    "id": "ueq_03_intuitive_use",
+    "title": "translate('forms.ueq.03_intuitive_use.title')",
+    "note": "translate('forms.ueq.method_note')",
+    "text": "translate('forms.ueq.03_intuitive_use.text')",
+    "next_form": "ueq_04_hardware_safety",
+    "fields": [
+        {
+            "id": "difficult_easy",
+            "fieldType": {
+                "type": "LikertScale",
+                "steps": 5,
+                "negativeAnswer": "translate('forms.ueq.03_intuitive_use.difficult')",
+                "positiveAnswer": "translate('forms.ueq.03_intuitive_use.easy')"
+            }
+        },
+        {
+            "id": "illogical_logical",
+            "fieldType": {
+                "type": "LikertScale",
+                "steps": 5,
+                "negativeAnswer": "translate('forms.ueq.03_intuitive_use.illogical')",
+                "positiveAnswer": "translate('forms.ueq.03_intuitive_use.logical')"
+            }
+        },
+        {
+            "id": "not_plausible_plausible",
+            "fieldType": {
+                "type": "LikertScale",
+                "steps": 5,
+                "negativeAnswer": "translate('forms.ueq.03_intuitive_use.not_plausible')",
+                "positiveAnswer": "translate('forms.ueq.03_intuitive_use.plausible')"
+            }
+        },
+        {
+            "id": "inconclusive_conclusive",
+            "fieldType": {
+                "type": "LikertScale",
+                "steps": 5,
+                "negativeAnswer": "translate('forms.ueq.03_intuitive_use.inconclusive')",
+                "positiveAnswer": "translate('forms.ueq.03_intuitive_use.conclusive')"
+            }
+        }
+    ]
+}
