@@ -84,6 +84,17 @@ class _JsonFormState extends State<JsonForm> {
                 customValue: (fieldTypeBlob["customValue"] as String?)?.transformed(translate),
                 customLabel: (fieldTypeBlob["customLabel"] as String?)?.transformed(translate),
               );
+            case "LikertScale":
+              formField = LikertScaleField(
+                id: fieldId,
+                label: fieldLabel,
+                note: fieldNote,
+                steps: fieldTypeBlob["steps"] as int?,
+                subdivisions: fieldTypeBlob["subdivisions"] as int?,
+                signed: fieldTypeBlob["signed"] as bool?,
+                negativeDescription: translate(fieldTypeBlob["negativeAnswer"] as String),
+                positiveDescription: translate(fieldTypeBlob["positiveAnswer"] as String),
+              );
             default:
               continue;
           }
@@ -247,6 +258,82 @@ class _CustomEnumFieldState extends State<CustomEnumField> {
             name: "${widget.id}_custom",
             decoration: InputDecoration(label: Text(customLabel)),
           ),
+      ],
+    );
+  }
+}
+
+class LikertScaleField extends StatelessWidget {
+  final String id;
+  final String? label;
+  final String? note;
+  final int? steps;
+  final int? subdivisions;
+  final bool? signed;
+  final String negativeDescription;
+  final String positiveDescription;
+
+  const LikertScaleField({
+    super.key,
+    required this.id,
+    this.label,
+    this.note,
+    this.steps,
+    this.subdivisions,
+    this.signed,
+    required this.negativeDescription,
+    required this.positiveDescription,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final steps = this.steps ?? 5;
+    final signed = this.signed ?? false;
+
+    final trackColor = theme.colorScheme.surfaceContainerHigh;
+    final tickMarkColor = theme.colorScheme.onSurface.withValues(alpha: 0.4);
+
+    return Wrap(
+      children: [
+        if (label != null) Text(label!, style: theme.textTheme.titleMedium),
+        SliderTheme(
+          data: theme.sliderTheme.copyWith(
+            activeTrackColor: trackColor,
+            activeTickMarkColor: tickMarkColor,
+            inactiveTrackColor: trackColor,
+            inactiveTickMarkColor: tickMarkColor,
+            trackHeight: steps <= 7 ? 20 : 8,
+            thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 8),
+          ),
+          child: FormBuilderSlider(
+            name: id,
+            decoration: InputDecoration(
+              label: Text(
+                note ?? "",
+                style: theme.textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w300),
+              ),
+            ),
+            minValueWidget: (_) => Expanded(
+              flex: 20,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Text(negativeDescription),
+              ),
+            ),
+            maxValueWidget: (_) => Expanded(
+              flex: 20,
+              child: Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: Text(positiveDescription, textAlign: TextAlign.right),
+              ),
+            ),
+            initialValue: signed ? 0 : (steps ~/ 2) + 1,
+            min: signed ? -(steps - 1) / 2 : 1,
+            divisions: (steps - 1) * (subdivisions ?? 1),
+            max: signed ? (steps - 1) / 2 : steps.toDouble(),
+          ),
+        ),
       ],
     );
   }

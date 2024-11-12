@@ -75,6 +75,58 @@
                 "other": "Divers",
                 "other_gender": "Divers"
             }
+        },
+        "bfi-10": {
+            "title": "BFI-10 Persönlichkeitstest",
+            "note": "Inwieweit treffen die folgenden Aussagen auf Sie zu?",
+            "description": " ",
+            "disagree": "Trifft nicht zu",
+            "agree": "Trifft zu",
+            "questions": {
+                "01": "Ich bin eher zurückhaltend, reserviert.",
+                "02": "Ich schenke anderen leicht Vetrauen, glaube an das Gute im Menschen.",
+                "03": "Ich bin bequem, neige zur Faulheit.",
+                "04": "Ich bin entspannt, lasse mich durch Stress nicht aus der Ruhe bringen.",
+                "05": "Ich habe nur wenig künstlerisches Interesse.",
+                "06": "Ich gehe aus mir heraus, bin gesellig.",
+                "07": "Ich neige dazu, andere zu kritisieren.",
+                "08": "Ich erledige Aufgaben grüdnlich.",
+                "09": "Ich werde leicht nervös und unsicher.",
+                "10": "Ich habe eine aktive Vorstellungskraft, bin fantasievoll."
+            }
+        },
+        "tlx": {
+            "title": "Task Load Index",
+            "note": "Die 'Aufgabe' bezieht sich auf das Bewerten des Reiseerlebnisses während des Fahrradfahrens.",
+            "note2": "Es gibt keine richtigen oder falschen Antworten. Wenn etwas unklar ist, folgen Sie Ihrer Intuition.",
+            "very_low": "Sehr Gering",
+            "very_high": "Sehr Hoch",
+            "perfect": "Gut",
+            "failure": "Schlecht",
+            "mental_demand": {
+                "label": "Geistige Anforderung",
+                "note": "Wie viel geistige Anstrengung war bei der Aufgabe erforderlich?"
+            },
+            "physical_demand": {
+                "label": "Körperliche Anforderung",
+                "note": "Wie viel körperliche Aktivität war erforderlich?"
+            },
+            "temporal_demand": {
+                "label": "Zeitlliche Anforderung",
+                "note": "Wie viel Zeitdruck empfanden Sie hinsichtlich der Häufigkeit, mit der die Aufgabe auftrat?"
+            },
+            "performance": {
+                "label": "Leistung",
+                "note": "Wie erfolgreich haben Sie Ihrer Meinung nach die gegebene Aufgabe erfüllt?"
+            },
+            "effort": {
+                "label": "Anstrengung",
+                "note": "Wie hart mussten Sie arbeiten, um Ihren Grad an Aufgabenerfüllung zu erreichen?"
+            },
+            "frustration": {
+                "label": "Frustration",
+                "note": "Wie unsicher, entmutigt, irritiert, gestresst und verärgert fühlten Sie sich während der Aufgabe?"
+            }
         }
     }
 }

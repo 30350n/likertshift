@@ -84,6 +84,32 @@ class SettingsScreen extends StatelessWidget {
               },
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: ElevatedButton(
+              child: Text(translate("forms.bfi-10.title"), style: theme.textTheme.titleMedium),
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const JsonForm("bfi-10", prefix: "debug"),
+                  ),
+                );
+              },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: ElevatedButton(
+              child: Text(translate("forms.tlx.title"), style: theme.textTheme.titleMedium),
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => const JsonForm("tlx", prefix: "debug"),
+                  ),
+                );
+              },
+            ),
+          ),
         ],
       ),
     );

@@ -1,0 +1,85 @@
+{
+    "id": "tlx",
+    "title": "translate('forms.tlx.title')",
+    "note": "translate('forms.tlx.note')\n\ntranslate('forms.tlx.note2')",
+    "fields": [
+        {
+            "id": "mental_demand",
+            "label": "translate('forms.tlx.mental_demand.label')",
+            "note": "translate('forms.tlx.mental_demand.note')",
+            "fieldType": {
+                "type": "LikertScale",
+                "steps": 11,
+                "subdivisions": 2,
+                "signed": true,
+                "negativeAnswer": "translate('forms.tlx.very_low')",
+                "positiveAnswer": "translate('forms.tlx.very_high')"
+            }
+        },
+        {
+            "id": "physical_demand",
+            "label": "translate('forms.tlx.physical_demand.label')",
+            "note": "translate('forms.tlx.physical_demand.note')",
+            "fieldType": {
+                "type": "LikertScale",
+                "steps": 11,
+                "subdivisions": 2,
+                "signed": true,
+                "negativeAnswer": "translate('forms.tlx.very_low')",
+                "positiveAnswer": "translate('forms.tlx.very_high')"
+            }
+        },
+        {
+            "id": "temporal_demand",
+            "label": "translate('forms.tlx.temporal_demand.label')",
+            "note": "translate('forms.tlx.temporal_demand.note')",
+            "fieldType": {
+                "type": "LikertScale",
+                "steps": 11,
+                "subdivisions": 2,
+                "signed": true,
+                "negativeAnswer": "translate('forms.tlx.very_low')",
+                "positiveAnswer": "translate('forms.tlx.very_high')"
+            }
+        },
+        {
+            "id": "performance",
+            "label": "translate('forms.tlx.performance.label')",
+            "note": "translate('forms.tlx.performance.note')",
+            "fieldType": {
+                "type": "LikertScale",
+                "steps": 11,
+                "subdivisions": 2,
+                "signed": true,
+                "negativeAnswer": "translate('forms.tlx.perfect')",
+                "positiveAnswer": "translate('forms.tlx.failure')"
+            }
+        },
+        {
+            "id": "effort",
+            "label": "translate('forms.tlx.effort.label')",
+            "note": "translate('forms.tlx.effort.note')",
+            "fieldType": {
+                "type": "LikertScale",
+                "steps": 11,
+                "subdivisions": 2,
+                "signed": true,
+                "negativeAnswer": "translate('forms.tlx.very_low')",
+                "positiveAnswer": "translate('forms.tlx.very_high')"
+            }
+        },
+        {
+            "id": "frustration",
+            "label": "translate('forms.tlx.frustration.label')",
+            "note": "translate('forms.tlx.frustration.note')",
+            "fieldType": {
+                "type": "LikertScale",
+                "steps": 11,
+                "subdivisions": 2,
+                "signed": true,
+                "negativeAnswer": "translate('forms.tlx.very_low')",
+                "positiveAnswer": "translate('forms.tlx.very_high')"
+            }
+        }
+    ]
+}

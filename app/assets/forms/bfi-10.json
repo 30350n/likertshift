@@ -1,0 +1,108 @@
+{
+    "id": "bfi-10",
+    "title": "translate('forms.bfi-10.title')",
+    "note": "translate('forms.bfi-10.note')",
+    "text": "translate('forms.bfi-10.description')",
+    "fields": [
+        {
+            "id": "question_01",
+            "label": "translate('forms.bfi-10.questions.01')",
+            "fieldType": {
+                "type": "LikertScale",
+                "steps": 5,
+                "negativeAnswer": "translate('forms.bfi-10.disagree')",
+                "positiveAnswer": "translate('forms.bfi-10.agree')"
+            }
+        },
+        {
+            "id": "question_02",
+            "label": "translate('forms.bfi-10.questions.02')",
+            "fieldType": {
+                "type": "LikertScale",
+                "steps": 5,
+                "negativeAnswer": "translate('forms.bfi-10.disagree')",
+                "positiveAnswer": "translate('forms.bfi-10.agree')"
+            }
+        },
+        {
+            "id": "question_03",
+            "label": "translate('forms.bfi-10.questions.03')",
+            "fieldType": {
+                "type": "LikertScale",
+                "steps": 5,
+                "negativeAnswer": "translate('forms.bfi-10.disagree')",
+                "positiveAnswer": "translate('forms.bfi-10.agree')"
+            }
+        },
+        {
+            "id": "question_04",
+            "label": "translate('forms.bfi-10.questions.04')",
+            "fieldType": {
+                "type": "LikertScale",
+                "steps": 5,
+                "negativeAnswer": "translate('forms.bfi-10.disagree')",
+                "positiveAnswer": "translate('forms.bfi-10.agree')"
+            }
+        },
+        {
+            "id": "question_05",
+            "label": "translate('forms.bfi-10.questions.05')",
+            "fieldType": {
+                "type": "LikertScale",
+                "steps": 5,
+                "negativeAnswer": "translate('forms.bfi-10.disagree')",
+                "positiveAnswer": "translate('forms.bfi-10.agree')"
+            }
+        },
+        {
+            "id": "question_06",
+            "label": "translate('forms.bfi-10.questions.06')",
+            "fieldType": {
+                "type": "LikertScale",
+                "steps": 5,
+                "negativeAnswer": "translate('forms.bfi-10.disagree')",
+                "positiveAnswer": "translate('forms.bfi-10.agree')"
+            }
+        },
+        {
+            "id": "question_07",
+            "label": "translate('forms.bfi-10.questions.07')",
+            "fieldType": {
+                "type": "LikertScale",
+                "steps": 5,
+                "negativeAnswer": "translate('forms.bfi-10.disagree')",
+                "positiveAnswer": "translate('forms.bfi-10.agree')"
+            }
+        },
+        {
+            "id": "question_08",
+            "label": "translate('forms.bfi-10.questions.08')",
+            "fieldType": {
+                "type": "LikertScale",
+                "steps": 5,
+                "negativeAnswer": "translate('forms.bfi-10.disagree')",
+                "positiveAnswer": "translate('forms.bfi-10.agree')"
+            }
+        },
+        {
+            "id": "question_09",
+            "label": "translate('forms.bfi-10.questions.09')",
+            "fieldType": {
+                "type": "LikertScale",
+                "steps": 5,
+                "negativeAnswer": "translate('forms.bfi-10.disagree')",
+                "positiveAnswer": "translate('forms.bfi-10.agree')"
+            }
+        },
+        {
+            "id": "question_10",
+            "label": "translate('forms.bfi-10.questions.10')",
+            "fieldType": {
+                "type": "LikertScale",
+                "steps": 5,
+                "negativeAnswer": "translate('forms.bfi-10.disagree')",
+                "positiveAnswer": "translate('forms.bfi-10.agree')"
+            }
+        }
+    ]
+}

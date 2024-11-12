@@ -75,6 +75,58 @@
                 "other": "Other",
                 "other_gender": "Other Gender"
             }
+        },
+        "bfi-10": {
+            "title": "BFI-10 Personality Test",
+            "note": "How well do the following statements describe your personality?",
+            "description": "I see myself as someone who ...",
+            "disagree": "Disagree",
+            "agree": "Agree",
+            "questions": {
+                "10": "... has an active imagination",
+                "01": "... is reserved",
+                "02": "... is generally trusting",
+                "03": "... tends to be lazy",
+                "04": "... is relaxed, handles stress",
+                "05": "... has few artistic interests",
+                "06": "... is outgoing, sociable",
+                "07": "... tends to find fault with others",
+                "08": "... does a thorough job",
+                "09": "... gets nervous easily"
+            }
+        },
+        "tlx": {
+            "title": "Task Load Index",
+            "note": "The 'task' refers to Rating the Travel Experience while Cycling.",
+            "note2": "There are no right or wrong answers. If something is not entirely clear, follow your intuition.",
+            "very_low": "Very Low",
+            "very_high": "Very High",
+            "perfect": "Perfect",
+            "failure": "Failure",
+            "mental_demand": {
+                "label": "Mental Demand",
+                "note": "How mentally demanding was the task?"
+            },
+            "physical_demand": {
+                "label": "Physical Demand",
+                "note": "How physically demanding was the task?"
+            },
+            "temporal_demand": {
+                "label": "Temporal Demand",
+                "note": "How hurried or rushed was the pace of the task?"
+            },
+            "performance": {
+                "label": "Performance",
+                "note": "How successful were you in accomplishing what you were asked to do?"
+            },
+            "effort": {
+                "label": "Effort",
+                "note": "How hard did you have to work to accomplish your level of performance?"
+            },
+            "frustration": {
+                "label": "Frustration",
+                "note": "How insecure, discouraged, irritated, stressed, and annoyed were you?"
+            }
         }
     }
 }
