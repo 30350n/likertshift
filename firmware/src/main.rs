@@ -3,6 +3,7 @@
 
 use defmt_rtt as _;
 use embassy_nrf as _;
+use embassy_time::Timer;
 use panic_probe as _;
 
 use core::mem;
@@ -52,6 +53,16 @@ async fn main(spawner: Spawner) {
     config.gpiote_interrupt_priority = Priority::P2;
     config.time_interrupt_priority = Priority::P2;
     let p = embassy_nrf::init(config);
+
+    let mut led = Output::new(p.P0_26.degrade(), Level::High, OutputDrive::Standard);
+
+    for _ in 0..2 {
+        led.set_high();
+        Timer::after_millis(100).await;
+        led.set_low();
+        Timer::after_millis(100).await;
+    }
+    led.set_high();
 
     let config = nrf_softdevice::Config {
         clock: Some(raw::nrf_clock_lf_cfg_t {
