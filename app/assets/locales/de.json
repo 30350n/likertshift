@@ -61,7 +61,8 @@
             "dark": "Dunkel",
             "system": "System"
         },
-        "debug_forms": "Formulare (Debug)"
+        "debug_forms": "Formulare (Debug)",
+        "export_data_and_reset": "Daten Exportieren & App Zurücksetzen"
     },
     "forms": {
         "custom": "Anderes",

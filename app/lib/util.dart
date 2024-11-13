@@ -17,6 +17,11 @@ Future<Directory> getRecordingDirectory() async {
   return Directory("${parent.path}/recordings").create();
 }
 
+Future<Directory> getResultsDirectory() async {
+  final parent = await getStorageDirectory();
+  return Directory("${parent.path}/results").create();
+}
+
 extension CapitalizeExtension on String {
   String capitalize() {
     if (isEmpty) {

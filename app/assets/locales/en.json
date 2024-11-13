@@ -61,7 +61,8 @@
             "dark": "Dark",
             "system": "System"
         },
-        "debug_forms": "Debug Forms"
+        "debug_forms": "Debug Forms",
+        "export_data_and_reset": "Export Collected Data and Reset App"
     },
     "forms": {
         "custom": "Custom",

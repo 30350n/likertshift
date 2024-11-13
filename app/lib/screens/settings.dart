@@ -1,3 +1,7 @@
+import "dart:io";
+
+import "package:archive/archive_io.dart";
+import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 import "package:flutter_translate/flutter_translate.dart";
 
@@ -6,6 +10,7 @@ import "package:likertshift/forms.dart";
 
 import "package:likertshift/system_navigation_bar.dart";
 import "package:likertshift/util.dart";
+import "package:restart_app/restart_app.dart";
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -62,6 +67,16 @@ class SettingsScreen extends StatelessWidget {
                   updateSystemNavigationBarTheme();
                 }
               },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: ElevatedButton(
+              onPressed: exportDataAndReset,
+              child: Text(
+                translate("settings.export_data_and_reset"),
+                style: theme.textTheme.titleMedium,
+              ),
             ),
           ),
           ListTile(
@@ -127,5 +142,32 @@ class SettingsScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  static Future<void> exportDataAndReset() async {
+    final resultsDirectory = await getResultsDirectory();
+    final dataDirectory = await getStorageDirectory();
+
+    final name = "participant-data-${shortHash(DateTime.now())}";
+    final archive = ZipFileEncoder()..create("${resultsDirectory.path}/$name.zip");
+    await dataDirectory.list().forEach(
+      (entry) async {
+        switch (entry.statSync().type) {
+          case FileSystemEntityType.directory:
+            if (entry.path == resultsDirectory.path) {
+              return;
+            }
+            return archive
+                .addDirectory(Directory(entry.path), followLinks: false)
+                .then((_) => entry.delete(recursive: true));
+          case FileSystemEntityType.file:
+            return archive.addFile(File(entry.path)).then((_) => entry.delete());
+          default:
+        }
+      },
+    );
+    archive.closeSync();
+
+    await Restart.restartApp();
   }
 }
