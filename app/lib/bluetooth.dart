@@ -13,7 +13,7 @@ const knownDevices = [
 ];
 
 class BluetoothModel with ChangeNotifier {
-  static final Guid serviceUUID = Guid.fromString("9e7312e0-2354-11eb-9f10-fbc30a621337");
+  static final Guid serviceUUID = Guid.fromString("b2a286dc-4521-5305-9f2a-42b070088000");
 
   late StreamSubscription<BluetoothAdapterState> _adapterStateSubscription;
   BluetoothAdapterState _adapterState = BluetoothAdapterState.unknown;

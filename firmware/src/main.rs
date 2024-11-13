@@ -126,7 +126,7 @@ async fn main(spawner: Spawner) {
     static SCAN_DATA: LegacyAdvertisementPayload = LegacyAdvertisementBuilder::new()
         .services_128(
             ServiceList::Complete,
-            &[0xb2a286dc_4521_5305_9f2a_42b070088001_u128.to_le_bytes()],
+            &[0xb2a286dc_4521_5305_9f2a_42b070088000_u128.to_le_bytes()],
         )
         .build();
 
