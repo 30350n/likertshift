@@ -11,6 +11,7 @@ import "package:provider/provider.dart";
 import "package:vector_math/vector_math.dart" hide Colors;
 
 import "package:likertshift/api-keys/maptiler.dart" as maptiler;
+import "package:likertshift/colors.dart";
 import "package:likertshift/bluetooth.dart";
 import "package:likertshift/location.dart";
 import "package:likertshift/recording.dart";
@@ -39,6 +40,8 @@ class MapScreenState extends State<MapScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final appColors = theme.extension<AppColors>();
+
     final locationModel = context.watch<LocationModel>();
     final recordingModel = context.watch<RecordingModel>();
     final activeRecording = recordingModel.activeRecording;
@@ -99,26 +102,35 @@ class MapScreenState extends State<MapScreen> {
                     if (activeRecording?.routePreset != null)
                       Polyline(
                         points: activeRecording!.routePreset!.points,
-                        color: Colors.orange.withValues(alpha: 0.4),
-                        strokeWidth: 5,
-                        useStrokeWidthInMeter: true,
+                        color: appColors?.activeRouteColor ?? Colors.orange,
+                        strokeWidth: 10,
                       ),
                     Polyline(
                       points: activeRecording!.locations,
-                      color: theme.colorScheme.onPrimaryFixedVariant,
-                      strokeWidth: 3,
-                      useStrokeWidthInMeter: true,
+                      color: appColors?.pastRouteColor ?? Colors.blueAccent,
+                      strokeWidth: 15,
                     ),
                   ] else
                     ...recordingModel.routes.where((route) => route.isVisible).map(
                           (route) => Polyline(
                             points: route.points,
-                            color: Colors.primaries[route.hashCode % Colors.primaries.length]
-                                .withValues(alpha: 0.8),
+                            color: route.color,
                             strokeWidth: 5,
                           ),
                         ),
                 ],
+              ),
+              MarkerLayer(
+                markers: recordingModel.isRecording
+                    ? [
+                        if (recordingModel.activeRecording!.routePreset != null)
+                          recordingModel.activeRecording!.routePreset!
+                              .getStartMarker(color: appColors?.activeRouteColor),
+                      ]
+                    : recordingModel.routes
+                        .where((route) => route.isVisible)
+                        .map((route) => route.getStartMarker())
+                        .toList(),
               ),
               CircleLayer(
                 circles: [
@@ -136,7 +148,7 @@ class MapScreenState extends State<MapScreen> {
                       point: locationModel.currentLocation!,
                       radius: 6,
                       borderStrokeWidth: 1.5,
-                      color: theme.colorScheme.onPrimaryFixedVariant,
+                      color: Colors.blue,
                       borderColor: Colors.white,
                     ),
                 ],

@@ -1,6 +1,7 @@
 import "package:flutter/material.dart";
 
 import "package:flutter_form_builder/flutter_form_builder.dart";
+import "package:flutter_map/flutter_map.dart";
 import "package:flutter_translate/flutter_translate.dart";
 import "package:form_builder_validators/form_builder_validators.dart";
 import "package:latlong2/latlong.dart";
@@ -185,6 +186,9 @@ class Route {
 
   String get id => name.replaceAll(" ", "_").toLowerCase();
 
+  Color get color =>
+      Colors.primaries[hashCode % Colors.primaries.length].withValues(alpha: 0.75);
+
   double get length => [
         for (int i in Iterable.generate(points.length - 1)) points[i].distanceTo(points[i + 1]),
       ].fold(0, (p, c) => p + c);
@@ -198,4 +202,23 @@ class Route {
         points = (json["coordinates"] as List<dynamic>)
             .map((coordinates) => LatLng(coordinates[1], coordinates[0]))
             .toList();
+
+  static const startMarkerSize = 64.0;
+  Marker getStartMarker({Color? color}) {
+    return Marker(
+      alignment: Alignment.center,
+      width: startMarkerSize,
+      height: startMarkerSize,
+      point: points.first,
+      child: Transform.rotate(
+        angle: points[0].mercatorAngleTo(points[1]),
+        child: Icon(
+          Icons.arrow_drop_up_rounded,
+          size: startMarkerSize,
+          color: color ?? this.color.withValues(alpha: 1),
+          grade: 4,
+        ),
+      ),
+    );
+  }
 }

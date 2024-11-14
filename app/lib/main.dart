@@ -55,9 +55,9 @@ class App extends StatelessWidget {
   });
 
   static final lightTheme = ThemeData.light(useMaterial3: true)
-      .copyWith(extensions: [const AppColors.fromBrightness(Brightness.light)]);
+      .copyWith(extensions: [AppColors.fromBrightness(Brightness.light)]);
   static final darkTheme = ThemeData.dark(useMaterial3: true)
-      .copyWith(extensions: [const AppColors.fromBrightness(Brightness.dark)]);
+      .copyWith(extensions: [AppColors.fromBrightness(Brightness.dark)]);
 
   @override
   Widget build(BuildContext context) {
