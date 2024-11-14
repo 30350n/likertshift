@@ -76,6 +76,11 @@
                 "female": "Female",
                 "other": "Other",
                 "other_gender": "Other Gender"
+            },
+            "handedness": {
+                "label": "Handedness",
+                "left_handed": "Left Handed",
+                "right_handed": "Right Handed"
             }
         },
         "bfi-10": {

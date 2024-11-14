@@ -20,6 +20,17 @@
                 "customValue": "translate('forms.demographics.gender.other')",
                 "customLabel": "translate('forms.demographics.gender.other_gender')"
             }
+        },
+        {
+            "id": "handedness",
+            "label": "translate('forms.demographics.handedness.label')",
+            "fieldType": {
+                "type": "Enum",
+                "values": [
+                    "translate('forms.demographics.handedness.left_handed')",
+                    "translate('forms.demographics.handedness.right_handed')"
+                ]
+            }
         }
     ]
 }
