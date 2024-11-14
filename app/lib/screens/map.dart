@@ -238,6 +238,10 @@ class LikertshiftValueWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final textStyle = theme.textTheme.headlineSmall?.copyWith(
+      fontWeight: FontWeight.w500,
+      fontSize: theme.textTheme.headlineSmall!.fontSize! * 1.08,
+    );
 
     return Card(
       color: theme.colorScheme.primaryContainer,
@@ -247,9 +251,9 @@ class LikertshiftValueWidget extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Icon(likertshiftIconMap[value] ?? Icons.error),
-            Text(likertshiftValueMap[value] ?? "null", style: theme.textTheme.headlineSmall),
-            Text("[ $value ]", style: theme.textTheme.headlineSmall),
+            Icon(likertshiftIconMap[value] ?? Icons.error, size: 30),
+            Text(likertshiftValueMap[value] ?? "null", style: textStyle),
+            Text("[ $value ]", style: textStyle),
           ],
         ),
       ),
@@ -288,7 +292,7 @@ class LocationOffWidget extends StatelessWidget {
           crossAxisAlignment: WrapCrossAlignment.center,
           spacing: 4,
           children: [
-            const Icon(Icons.error, size: 16),
+            Icon(Icons.error, size: 16, color: color),
             Text(translate("common.location_disabled")),
           ],
         ),
