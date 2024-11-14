@@ -186,7 +186,7 @@ class Route {
   String get id => name.replaceAll(" ", "_").toLowerCase();
 
   double get length => [
-        for (int i in Iterable.generate(points.length - 1)) points[i].distance(points[i + 1]),
+        for (int i in Iterable.generate(points.length - 1)) points[i].distanceTo(points[i + 1]),
       ].fold(0, (p, c) => p + c);
   String get lengthString => "${(length * 0.001).toStringAsFixed(1)} km";
 

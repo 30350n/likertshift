@@ -12,6 +12,7 @@ import "package:likertshift/api-keys/maptiler.dart" as maptiler;
 import "package:likertshift/bluetooth.dart";
 import "package:likertshift/location.dart";
 import "package:likertshift/recording.dart";
+import "package:likertshift/util.dart";
 
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
@@ -32,7 +33,6 @@ class MapScreenState extends State<MapScreen> {
   bool followRotation = false;
 
   static const minFollowRotationDistance = 1.0;
-  static final upVector = Vector2(0, 1);
 
   @override
   Widget build(BuildContext context) {
@@ -48,14 +48,17 @@ class MapScreenState extends State<MapScreen> {
       });
     }
 
-    if (followLocation && locationModel.currentLocation != null) {
-      mapController.move(locationModel.currentLocation!, mapController.camera.zoom);
+    final currentLocation = locationModel.currentLocation;
+    final previousLocation = locationModel.previousLocation;
+
+    if (followLocation && currentLocation != null) {
+      mapController.move(currentLocation, mapController.camera.zoom);
     }
 
-    final direction = locationModel.direction();
-    final distance = locationModel.distance();
-    if (followRotation && direction != null && (distance ?? 0) > minFollowRotationDistance) {
-      mapController.rotate(degrees(direction.angleToSigned(upVector)));
+    if (followRotation && currentLocation != null && previousLocation != null) {
+      if (previousLocation.distanceTo(currentLocation) >= minFollowRotationDistance) {
+        mapController.rotate(-degrees(previousLocation.mercatorAngleTo(currentLocation)));
+      }
     }
 
     final activeDevice =

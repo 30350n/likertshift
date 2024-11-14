@@ -35,10 +35,9 @@ extension CapitalizeExtension on String {
   }
 }
 
-const earthRadius = 6378137.0;
-
 extension LatLngExtension on LatLng {
-  double distance(LatLng other) {
+  static const earthRadius = 6378137.0;
+  double distanceTo(LatLng other) {
     final cosLat = cos(radians(latitude));
     final cosLatOther = cos(radians(other.latitude));
     final cosLatDelta = cos(radians(other.latitude - latitude));
@@ -51,6 +50,15 @@ extension LatLngExtension on LatLng {
 
   Vector2 mercator() {
     return Vector2(radians(longitude), log(tan(pi / 4 + radians(latitude) / 2)));
+  }
+
+  Vector2 mercatorDirectionTo(LatLng other) {
+    return (other.mercator() - mercator()).normalized();
+  }
+
+  static final upVector = Vector2(0, 1);
+  double mercatorAngleTo(LatLng other) {
+    return mercatorDirectionTo(other).angleToSigned(upVector);
   }
 }
 
