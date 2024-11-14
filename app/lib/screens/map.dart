@@ -91,19 +91,6 @@ class MapScreenState extends State<MapScreen> {
                     theme.brightness == Brightness.light ? maptilerUrlLight : maptilerUrlDark,
                 userAgentPackageName: "com.github.u30350n.likertshift",
               ),
-              SafeArea(
-                child: GestureDetector(
-                  child: Compass(isLocked: followRotation),
-                  onLongPress: () {
-                    setState(() {
-                      followRotation = !followRotation;
-                      if (!followRotation) {
-                        mapController.rotate(0);
-                      }
-                    });
-                  },
-                ),
-              ),
               PolylineLayer(
                 polylines: [
                   if (recordingModel.isRecording) ...[
@@ -152,16 +139,31 @@ class MapScreenState extends State<MapScreen> {
                     ),
                 ],
               ),
+              SafeArea(
+                child: Column(
+                  children: [
+                    if (activeDevice && likertshiftValue != null)
+                      LikertshiftValueWidget(likertshiftValue),
+                    Stack(
+                      children: [
+                        if (!locationModel.isLocationEnabled) const LocationOffWidget(),
+                        GestureDetector(
+                          child: Compass(isLocked: followRotation),
+                          onLongPress: () {
+                            setState(() {
+                              followRotation = !followRotation;
+                              if (!followRotation) {
+                                mapController.rotate(0);
+                              }
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
             ],
-          ),
-          SafeArea(
-            child: Column(
-              children: [
-                if (!locationModel.isLocationEnabled) const LocationOffWidget(),
-                if (activeDevice && likertshiftValue != null)
-                  LikertshiftValueWidget(likertshiftValue),
-              ],
-            ),
           ),
         ],
       ),
@@ -196,6 +198,7 @@ class Compass extends StatelessWidget {
   Widget build(BuildContext context) {
     return MapCompass(
       rotationOffset: -45,
+      onPressed: isLocked ? () {} : null,
       icon: Stack(
         children: [
           Icon(CupertinoIcons.compass, color: Colors.red.shade600, size: 40),
