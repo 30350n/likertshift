@@ -1,3 +1,5 @@
+import "dart:math";
+
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 
@@ -144,6 +146,8 @@ class MapScreenState extends State<MapScreen> {
                   children: [
                     if (activeDevice && likertshiftValue != null)
                       LikertshiftValueWidget(likertshiftValue),
+                    if (recordingModel.activeRecording?.method == RecordingMethod.audio)
+                      const AudioRecordingWidget(),
                     Stack(
                       children: [
                         if (!locationModel.isLocationEnabled) const LocationOffWidget(),
@@ -294,6 +298,46 @@ class LocationOffWidget extends StatelessWidget {
           children: [
             Icon(Icons.error, size: 16, color: color),
             Text(translate("common.location_disabled")),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class AudioRecordingWidget extends StatelessWidget {
+  const AudioRecordingWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return Card(
+      color: theme.colorScheme.primaryContainer,
+      margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Selector<RecordingModel, double?>(
+              selector: (_, recordingModel) => recordingModel.audioAmplitudeNormalized,
+              builder: (_, amplitude, __) => Stack(
+                alignment: Alignment.center,
+                children: [
+                  const Icon(Icons.circle_outlined, size: 32),
+                  if (amplitude != null)
+                    Icon(
+                      Icons.circle,
+                      size: max(amplitude, 0.2) / 0.8 * 6.0 + 14.0,
+                    )
+                  else
+                    const Icon(Icons.close, size: 24),
+                ],
+              ),
+            ),
+            Text("Recording Audio ...", style: theme.textTheme.headlineSmall),
+            const Icon(Icons.circle, color: Colors.transparent),
           ],
         ),
       ),

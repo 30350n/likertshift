@@ -1,5 +1,8 @@
+import "dart:async";
+import "dart:collection";
 import "dart:convert";
 import "dart:io";
+import "dart:math";
 
 import "package:flutter/foundation.dart";
 import "package:flutter/material.dart" hide Route;
@@ -80,6 +83,20 @@ class RecordingModel with ChangeNotifier {
 
   final audioRecorder = AudioRecorder();
 
+  static const _audioAmplitudeSamples = 64;
+  final ListQueue<double> _audioAmplitudeMemory = ListQueue(_audioAmplitudeSamples);
+  StreamSubscription<Amplitude>? _audioAmplitudeSubscription;
+  double? _audioAmplitude;
+  double? get audioAmplitude => _audioAmplitude;
+  double? get audioAmplitudeNormalized {
+    if (_audioAmplitude == null) {
+      return null;
+    }
+    final amplitudeMin = _audioAmplitudeMemory.reduce(min);
+    final amplitudeMax = _audioAmplitudeMemory.reduce(max);
+    return (_audioAmplitude! - amplitudeMin) / (amplitudeMax - amplitudeMin);
+  }
+
   final List<Recording> _recordings = [];
   List<Recording> get recordings => List.unmodifiable(_recordings);
 
@@ -134,6 +151,16 @@ class RecordingModel with ChangeNotifier {
         recordConfig,
         path: "${(await getRecordingDirectory()).path}/${recording.name}.flac",
       );
+      _audioAmplitudeSubscription = audioRecorder.onAmplitudeChanged(Durations.short2).listen(
+        (amplitude) {
+          _audioAmplitude = amplitude.current;
+          if (_audioAmplitudeMemory.length >= _audioAmplitudeSamples) {
+            _audioAmplitudeMemory.removeFirst();
+          }
+          _audioAmplitudeMemory.addLast(amplitude.current);
+          notifyListeners();
+        },
+      );
     }
 
     _activeRecording = recording;
@@ -147,7 +174,12 @@ class RecordingModel with ChangeNotifier {
     }
 
     await activeRecording!.stop();
+
     if (activeRecording!.method == RecordingMethod.audio) {
+      await _audioAmplitudeSubscription?.cancel();
+      _audioAmplitudeSubscription = null;
+      _audioAmplitude = null;
+      _audioAmplitudeMemory.clear();
       await audioRecorder.stop();
     }
 
