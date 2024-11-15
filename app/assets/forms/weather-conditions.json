@@ -1,0 +1,32 @@
+{
+    "id": "weather-conditions",
+    "title": "translate('forms.weather-conditions.title')",
+    "fields": [
+        {
+            "id": "precipation",
+            "label": "translate('forms.weather-conditions.precipation.label')",
+            "fieldType": {
+                "type": "CustomEnum",
+                "values": [
+                    "translate('forms.weather-conditions.precipation.none')",
+                    "translate('forms.weather-conditions.precipation.rain')",
+                    "translate('forms.weather-conditions.precipation.snow')"
+                ],
+                "customLabel": "translate('forms.weather-conditions.other')"
+            }
+        },
+        {
+            "id": "ground_condition",
+            "label": "translate('forms.weather-conditions.ground-condition.label')",
+            "fieldType": {
+                "type": "CustomEnum",
+                "values": [
+                    "translate('forms.weather-conditions.ground-condition.normal')",
+                    "translate('forms.weather-conditions.ground-condition.wet')",
+                    "translate('forms.weather-conditions.ground-condition.snowy')"
+                ],
+                "customLabel": "translate('forms.weather-conditions.other')"
+            }
+        }
+    ]
+}

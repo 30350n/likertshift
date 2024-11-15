@@ -5,7 +5,8 @@
         "submit": "Speichern",
         "off": "Aus",
         "on": "An",
-        "next": "Weiter"
+        "next": "Weiter",
+        "done": "Fertig"
     },
     "map": {
         "title": "Karte",
@@ -30,11 +31,12 @@
                     "title": "Aufnahme Methode",
                     "01_device": "Likertshift Gerät",
                     "02_audio": "Audio",
-                    "03_manual": "Manuel (Karte)"
+                    "03_manual": "Manuelles Markieren (Karte)"
                 },
                 "start": "Aufnahme Starten"
             },
-            "stop": "Aufnahmen Beenden"
+            "stop": "Aufnahmen Beenden",
+            "manual_mapping_task": "Bitte bewerten Sie jetzt Ihre Reisezufriedenheit, indem Sie verschiedene Sektionen auf der bereitgestellten Karte markieren."
         }
     },
     "devices": {
@@ -196,6 +198,22 @@
                 "proud": "Stolz",
                 "uncomfortable": "Unwohl",
                 "comfortable": "Wohl"
+            }
+        },
+        "weather-conditions": {
+            "title": "Witterungsverhätnisse",
+            "other": "Andere",
+            "precipation": {
+                "label": "Niederschlag",
+                "none": "Kein Niederschlag",
+                "rain": "Regen",
+                "snow": "Schnee"
+            },
+            "ground-condition": {
+                "label": "Boden",
+                "normal": "Normal",
+                "wet": "Nass",
+                "snowy": "Schneebedeckt"
             }
         }
     }

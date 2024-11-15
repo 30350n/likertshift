@@ -5,7 +5,8 @@
         "submit": "Submit",
         "off": "Off",
         "on": "On",
-        "next": "Next"
+        "next": "Next",
+        "done": "Done"
     },
     "map": {
         "title": "Map",
@@ -34,7 +35,8 @@
                 },
                 "start": "Start Recording"
             },
-            "stop": "Stop Recording"
+            "stop": "Stop Recording",
+            "manual_mapping_task": "Please rate your Travel Experience by marking different sections on the provided printout of the route now."
         }
     },
     "devices": {
@@ -196,6 +198,22 @@
                 "proud": "Proud",
                 "uncomfortable": "Uncomfortable",
                 "comfortable": "Comfortable"
+            }
+        },
+        "weather-conditions": {
+            "title": "Weather Conditions",
+            "other": "Other",
+            "precipation": {
+                "label": "Precipation",
+                "none": "None",
+                "rain": "Rain",
+                "snow": "Snow"
+            },
+            "ground-condition": {
+                "label": "Ground Condition",
+                "normal": "Normal",
+                "wet": "Wet",
+                "snowy": "Snowy"
             }
         }
     }

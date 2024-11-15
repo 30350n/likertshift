@@ -8,6 +8,7 @@ import "package:flutter/foundation.dart";
 import "package:flutter/material.dart" hide Route;
 import "package:flutter/services.dart";
 
+import "package:flutter_translate/flutter_translate.dart";
 import "package:latlong2/latlong.dart";
 import "package:likertshift/forms.dart";
 import "package:record/record.dart";
@@ -186,19 +187,21 @@ class RecordingModel with ChangeNotifier {
     locationModel.removeListener(onLocationUpdate);
     _recordings.add(activeRecording!);
 
+    final recordingMethod = activeRecording!.method;
     final prefix = activeRecording!.name;
 
     _activeRecording = null;
     notifyListeners();
 
+    final ueq = JsonForm("ueq_01_attractiveness", prefix: prefix);
+    final tlx = JsonForm("tlx", prefix: prefix, nextForm: ueq);
+    final weatherConditions = JsonForm("weather-conditions", prefix: prefix, nextForm: tlx);
     if (context.mounted) {
       await Navigator.of(context).push(
         MaterialPageRoute(
-          builder: (context) => JsonForm(
-            "tlx",
-            prefix: prefix,
-            nextForm: JsonForm("ueq_01_attractiveness", prefix: prefix),
-          ),
+          builder: (context) => recordingMethod == RecordingMethod.mapping
+              ? ManualMappingScreen(nextForm: weatherConditions)
+              : weatherConditions,
         ),
       );
     }
@@ -215,5 +218,47 @@ class RecordingModel with ChangeNotifier {
       activeRecording?.addPoint(location, data);
     }
     notifyListeners();
+  }
+}
+
+class ManualMappingScreen extends StatelessWidget {
+  final Widget? nextForm;
+
+  const ManualMappingScreen({super.key, this.nextForm});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(translate("routes.recordings.options.method.03_manual")),
+          automaticallyImplyLeading: false,
+        ),
+        body: SeperatedListView(
+          children: [
+            Text(
+              translate("routes.recordings.manual_mapping_task"),
+              style: theme.textTheme.titleMedium,
+            ),
+            const Padding(padding: EdgeInsets.symmetric(vertical: 4)),
+            ElevatedButton(
+              child: Text(translate("common.done").toUpperCase()),
+              onPressed: () {
+                if (nextForm != null) {
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (_) => nextForm!),
+                  );
+                } else {
+                  Navigator.of(context).pop();
+                }
+              },
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
