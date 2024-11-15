@@ -103,12 +103,12 @@ class MapScreenState extends State<MapScreen> {
                       Polyline(
                         points: activeRecording!.routePreset!.points,
                         color: appColors?.activeRouteColor ?? Colors.orange,
-                        strokeWidth: 10,
+                        strokeWidth: 9,
                       ),
                     Polyline(
                       points: activeRecording!.locations,
                       color: appColors?.pastRouteColor ?? Colors.blueAccent,
-                      strokeWidth: 15,
+                      strokeWidth: 14,
                     ),
                   ] else
                     ...recordingModel.routes.where((route) => route.isVisible).map(
@@ -125,7 +125,7 @@ class MapScreenState extends State<MapScreen> {
                     ? [
                         if (recordingModel.activeRecording!.routePreset != null)
                           recordingModel.activeRecording!.routePreset!
-                              .getStartMarker(color: appColors?.activeRouteColor),
+                              .getStartMarker(color: appColors?.activeRouteColor, size: 100),
                       ]
                     : recordingModel.routes
                         .where((route) => route.isVisible)
@@ -134,15 +134,6 @@ class MapScreenState extends State<MapScreen> {
               ),
               CircleLayer(
                 circles: [
-                  if (recordingModel.isRecording && activeRecording?.routePreset != null)
-                    CircleMarker(
-                      point: recordingModel.activeRecording!.routePreset!.points[0],
-                      radius: 10,
-                      borderStrokeWidth: 3,
-                      borderColor: Colors.orange.withValues(alpha: 0.8),
-                      color: Colors.white.withValues(alpha: 0.2),
-                      useRadiusInMeter: true,
-                    ),
                   if (locationModel.isLocationEnabled && locationModel.currentLocation != null)
                     CircleMarker(
                       point: locationModel.currentLocation!,

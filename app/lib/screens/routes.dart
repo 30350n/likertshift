@@ -203,18 +203,18 @@ class Route {
             .map((coordinates) => LatLng(coordinates[1], coordinates[0]))
             .toList();
 
-  static const startMarkerSize = 64.0;
-  Marker getStartMarker({Color? color}) {
+  Marker getStartMarker({Color? color, double? size}) {
+    final markerSize = size ?? 64;
     return Marker(
       alignment: Alignment.center,
-      width: startMarkerSize,
-      height: startMarkerSize,
+      width: markerSize,
+      height: markerSize,
       point: points.first,
       child: Transform.rotate(
         angle: points[0].mercatorAngleTo(points[1]),
         child: Icon(
           Icons.arrow_drop_up_rounded,
-          size: startMarkerSize,
+          size: markerSize,
           color: color ?? this.color.withValues(alpha: 1),
           grade: 4,
         ),
