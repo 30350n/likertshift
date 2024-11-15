@@ -180,16 +180,14 @@ class BluetoothOffScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
     return Center(
       child: Wrap(
         direction: Axis.vertical,
         crossAxisAlignment: WrapCrossAlignment.center,
         spacing: 15,
         children: [
-          const Icon(
-            Icons.bluetooth_disabled,
-            size: 200,
-          ),
+          const Icon(Icons.bluetooth_disabled, size: 200),
           Text(
             "${translate("devices.blueetooth_adapter_is")} ${adaptlerStateMap[adapterState]}",
             style: theme.textTheme.titleMedium,
@@ -218,10 +216,7 @@ class LocationOffScreen extends StatelessWidget {
         crossAxisAlignment: WrapCrossAlignment.center,
         spacing: 15,
         children: [
-          const Icon(
-            Icons.location_off,
-            size: 200,
-          ),
+          const Icon(Icons.location_off, size: 200),
           Text(translate("common.location_disabled"), style: theme.textTheme.titleMedium),
           ElevatedButton(
             onPressed: LocationModel.requestLocationService,

@@ -25,10 +25,10 @@
             "title": "Aufnahmen",
             "new_hint": "Neue Aufnahme Starten",
             "options": {
-                "title": "Aufnahme Optionen",
+                "title": "Aufnahmeoptionen",
                 "route_preset": "Vorgegebene Route",
                 "method": {
-                    "title": "Aufnahme Methode",
+                    "title": "Aufnahmemethode",
                     "01_device": "Likertshift Gerät",
                     "02_audio": "Audio",
                     "03_manual": "Manuelles Markieren (Karte)"

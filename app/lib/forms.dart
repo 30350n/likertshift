@@ -140,9 +140,7 @@ class _JsonFormState extends State<JsonForm> {
                   ),
                 if (formText != null) Text(formText, style: theme.textTheme.titleMedium),
                 ...formFields,
-                const Padding(
-                  padding: EdgeInsets.symmetric(vertical: 2),
-                ),
+                const Padding(padding: EdgeInsets.symmetric(vertical: 2)),
                 ElevatedButton(
                   child: Text(
                     translations

@@ -1,11 +1,11 @@
 import "package:flutter/material.dart";
-import "package:flutter_translate/flutter_translate.dart";
 
 import "package:flutter_blue_plus/flutter_blue_plus.dart";
-import "package:likertshift/forms.dart";
+import "package:flutter_translate/flutter_translate.dart";
 import "package:provider/provider.dart";
 
 import "package:likertshift/bluetooth.dart";
+import "package:likertshift/forms.dart";
 import "package:likertshift/recording.dart";
 import "package:likertshift/screens/devices.dart";
 import "package:likertshift/screens/map.dart";
@@ -36,7 +36,6 @@ class HomeState extends State<Home> with SingleTickerProviderStateMixin {
         context,
         MaterialPageRoute(
           builder: (context) => const JsonForm("demographics", nextForm: JsonForm("bfi-10")),
-          fullscreenDialog: true,
         ),
       );
     });
