@@ -72,7 +72,7 @@ class SettingsScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 12),
             child: ElevatedButton(
-              onPressed: exportDataAndReset,
+              onPressed: () => exportDataAndReset(context),
               child: Text(
                 translate("settings.export_data_and_reset"),
                 style: theme.textTheme.titleMedium,
@@ -144,11 +144,12 @@ class SettingsScreen extends StatelessWidget {
     );
   }
 
-  static Future<void> exportDataAndReset() async {
+  static Future<void> exportDataAndReset(BuildContext context) async {
     final resultsDirectory = await getResultsDirectory();
     final dataDirectory = await getStorageDirectory();
 
-    final name = "participant-data-${shortHash(DateTime.now())}";
+    final participantId = shortHash(DateTime.now());
+    final name = "participant-data-$participantId";
     final archive = ZipFileEncoder()..create("${resultsDirectory.path}/$name.zip");
     await dataDirectory.list().forEach(
       (entry) async {
@@ -168,6 +169,49 @@ class SettingsScreen extends StatelessWidget {
     );
     archive.closeSync();
 
-    await Restart.restartApp();
+    if (context.mounted) {
+      await Navigator.of(context)
+          .push(MaterialPageRoute(builder: (_) => ResetScreen(participantId)));
+    }
+  }
+}
+
+class ResetScreen extends StatelessWidget {
+  final String participantId;
+
+  const ResetScreen(this.participantId, {super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    return PopScope(
+      canPop: false,
+      child: Scaffold(
+        body: Center(
+          child: Wrap(
+            direction: Axis.vertical,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            spacing: 15,
+            children: [
+              const Icon(Icons.celebration, size: 200),
+              Text(
+                translate("settings.reset_screen.thanks_for_participating"),
+                style: theme.textTheme.titleMedium,
+              ),
+              Text(
+                "${translate("settings.reset_screen.participant_id")} $participantId",
+                style: theme.textTheme.titleSmall,
+              ),
+              if (Platform.isAndroid)
+                ElevatedButton(
+                  onPressed: Restart.restartApp,
+                  child: Text(translate("settings.reset_screen.reset_app").toUpperCase()),
+                ),
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

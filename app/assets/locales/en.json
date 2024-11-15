@@ -64,7 +64,12 @@
             "system": "System"
         },
         "debug_forms": "Debug Forms",
-        "export_data_and_reset": "Export Collected Data and Reset App"
+        "export_data_and_reset": "Export Collected Data and Reset App",
+        "reset_screen": {
+            "thanks_for_participating": "That's it.\nThanks a lot for participating in this study!",
+            "participant_id": "Participant ID:",
+            "reset_app": "Reset App"
+        }
     },
     "forms": {
         "custom": "Custom",

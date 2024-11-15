@@ -64,7 +64,12 @@
             "system": "System"
         },
         "debug_forms": "Formulare (Debug)",
-        "export_data_and_reset": "Daten Exportieren & App Zurücksetzen"
+        "export_data_and_reset": "Daten Exportieren & App Zurücksetzen",
+        "reset_screen": {
+            "thanks_for_participating": "Das wars.\nVielen Dank für Ihre Teilnahme an dieser Studie!",
+            "participant_id": "Teilnehmer ID:",
+            "reset_app": "App Zurücksetzen"
+        }
     },
     "forms": {
         "custom": "Anderes",
