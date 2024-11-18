@@ -79,8 +79,8 @@
             "age": "Alter",
             "gender": {
                 "label": "Geschlecht",
-                "male": "Male",
-                "female": "Female",
+                "male": "Männlich",
+                "female": "Weiblich",
                 "other": "Divers",
                 "other_gender": "Divers"
             },
@@ -104,7 +104,7 @@
                 "05": "Ich habe nur wenig künstlerisches Interesse.",
                 "06": "Ich gehe aus mir heraus, bin gesellig.",
                 "07": "Ich neige dazu, andere zu kritisieren.",
-                "08": "Ich erledige Aufgaben grüdnlich.",
+                "08": "Ich erledige Aufgaben gründlich.",
                 "09": "Ich werde leicht nervös und unsicher.",
                 "10": "Ich habe eine aktive Vorstellungskraft, bin fantasievoll."
             }

@@ -21,10 +21,11 @@ void main() async {
   final locationModel = await LocationModel.create();
 
   final localizationDelegate = await LocalizationDelegate.create(
-    fallbackLocale: "en",
-    supportedLocales: ["en", "de"],
+    fallbackLocale: "de",
+    supportedLocales: ["de", "en"],
     basePath: "assets/locales/",
   );
+  await localizationDelegate.changeLocale(localeFromString("de"));
 
   runApp(
     LocalizedApp(
