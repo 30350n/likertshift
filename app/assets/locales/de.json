@@ -69,7 +69,8 @@
             "thanks_for_participating": "Das wars.\nVielen Dank für Ihre Teilnahme an dieser Studie!",
             "participant_id": "Teilnehmer ID:",
             "reset_app": "App Zurücksetzen"
-        }
+        },
+        "record_interview": "Interview Aufnehmen"
     },
     "forms": {
         "custom": "Anderes",

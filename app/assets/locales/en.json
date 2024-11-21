@@ -69,7 +69,8 @@
             "thanks_for_participating": "That's it.\nThanks a lot for participating in this study!",
             "participant_id": "Participant ID:",
             "reset_app": "Reset App"
-        }
+        },
+        "record_interview": "Record Interview"
     },
     "forms": {
         "custom": "Custom",

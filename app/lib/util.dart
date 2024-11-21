@@ -22,6 +22,34 @@ Future<Directory> getResultsDirectory() async {
   return Directory("${parent.path}/results").create();
 }
 
+String uniquePath(String path) {
+  final file = File(path);
+  if (!file.existsSync()) {
+    return path;
+  }
+  final nameRegex = RegExp(r"^" + file.stem + r"_(\d+)\" + file.suffix + r"$");
+  final maxIndex = file.parent
+      .listSync()
+      .map((entry) => nameRegex.firstMatch(entry.name)?.group(1))
+      .whereType<String>()
+      .map(int.parse)
+      .fold(0, max);
+
+  return "${file.parent.path}/${file.stem}_${maxIndex + 1}${file.suffix}";
+}
+
+extension BaseNameExtension on FileSystemEntity {
+  String get name => uri.pathSegments.last;
+  String get stem => (name.split(".")..removeLast()).join(".");
+  String get suffix => name.contains(".") ? ".${name.split(".").last}" : "";
+}
+
+extension PrettyDurationExtension on Duration {
+  String pretty() {
+    return toString().substring(inHours > 0 ? 0 : 2).split(".").first.replaceAll(":", " : ");
+  }
+}
+
 extension CapitalizeExtension on String {
   String capitalize() {
     if (isEmpty) {

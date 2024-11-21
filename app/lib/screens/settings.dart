@@ -1,9 +1,11 @@
+import "dart:async";
 import "dart:io";
 
 import "package:archive/archive_io.dart";
 import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
 import "package:flutter_translate/flutter_translate.dart";
+import "package:record/record.dart";
 
 import "package:adaptive_theme/adaptive_theme.dart";
 import "package:likertshift/forms.dart";
@@ -67,6 +69,20 @@ class SettingsScreen extends StatelessWidget {
                   updateSystemNavigationBarTheme();
                 }
               },
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => const InterviewScreen()),
+                );
+              },
+              child: Text(
+                translate("settings.record_interview"),
+                style: theme.textTheme.titleMedium,
+              ),
             ),
           ),
           Padding(
@@ -208,6 +224,140 @@ class ResetScreen extends StatelessWidget {
                   onPressed: Restart.restartApp,
                   child: Text(translate("settings.reset_screen.reset_app").toUpperCase()),
                 ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class InterviewScreen extends StatefulWidget {
+  const InterviewScreen({super.key});
+
+  @override
+  State<InterviewScreen> createState() => _InterviewScreenState();
+}
+
+class _InterviewScreenState extends State<InterviewScreen> {
+  late StreamSubscription<RecordState> recordStateSubscription;
+  RecordState recordState = RecordState.stop;
+
+  final audioRecorder = AudioRecorder();
+
+  Timer? timer;
+  DateTime? startTime;
+  Duration recordingDuration = Duration.zero;
+
+  @override
+  void initState() {
+    super.initState();
+
+    recordStateSubscription = audioRecorder.onStateChanged().listen((state) {
+      setState(() {
+        recordState = state;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    recordStateSubscription.cancel();
+    timer?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
+    final iconButtonStyle = ButtonStyle(
+      shape: const WidgetStatePropertyAll(CircleBorder()),
+      padding: const WidgetStatePropertyAll(EdgeInsets.all(18)),
+      backgroundColor: WidgetStatePropertyAll(theme.colorScheme.surfaceContainerHigh),
+      foregroundColor: WidgetStatePropertyAll(theme.colorScheme.onSurfaceVariant),
+      iconColor: WidgetStatePropertyAll(theme.colorScheme.onSurfaceVariant),
+      iconSize: const WidgetStatePropertyAll(28),
+    );
+
+    final totalRecordingDuration = startTime != null
+        ? recordingDuration + DateTime.now().difference(startTime!)
+        : recordingDuration;
+
+    return PopScope(
+      canPop: recordState == RecordState.stop,
+      child: Scaffold(
+        appBar: AppBar(title: const Text("Interview")),
+        body: Center(
+          child: Wrap(
+            spacing: 16,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: [
+              if (recordState == RecordState.stop)
+                ElevatedButton(
+                  style: iconButtonStyle,
+                  child: const Icon(Icons.mic),
+                  onPressed: () async {
+                    if (!await audioRecorder.hasPermission()) {
+                      return;
+                    }
+
+                    const recordConfig = RecordConfig(
+                      encoder: AudioEncoder.flac,
+                      autoGain: true,
+                      numChannels: 1,
+                    );
+                    await audioRecorder.start(
+                      recordConfig,
+                      path: uniquePath("${(await getStorageDirectory()).path}/interview.flac"),
+                    );
+
+                    startTime = DateTime.now();
+                    recordingDuration = Duration.zero;
+                    timer = Timer.periodic(const Duration(seconds: 1), (_) {
+                      setState(() {});
+                    });
+                  },
+                )
+              else ...[
+                ElevatedButton(
+                  style: iconButtonStyle.copyWith(
+                    backgroundColor: const WidgetStatePropertyAll(Colors.red),
+                    iconColor: WidgetStatePropertyAll(Colors.grey.shade200),
+                  ),
+                  onPressed: () {
+                    timer?.cancel();
+                    audioRecorder.stop();
+                  },
+                  child: const Icon(Icons.stop),
+                ),
+                if (recordState == RecordState.pause)
+                  ElevatedButton(
+                    style: iconButtonStyle,
+                    onPressed: () {
+                      audioRecorder.resume();
+                      startTime = DateTime.now();
+                    },
+                    child: const Icon(Icons.play_arrow),
+                  )
+                else
+                  ElevatedButton(
+                    style: iconButtonStyle,
+                    onPressed: () {
+                      audioRecorder.pause();
+                      recordingDuration += DateTime.now().difference(startTime!);
+                      startTime = null;
+                    },
+                    child: const Icon(Icons.pause),
+                  ),
+                SizedBox(
+                  width: totalRecordingDuration.inHours > 0 ? 80 : 64,
+                  child: Text(
+                    totalRecordingDuration.pretty(),
+                    style: theme.textTheme.titleMedium,
+                  ),
+                ),
+              ],
             ],
           ),
         ),
