@@ -9,6 +9,7 @@ import "package:archive/archive_io.dart";
 import "package:flutter_translate/flutter_translate.dart";
 import "package:record/record.dart";
 import "package:restart_app/restart_app.dart";
+import "package:wakelock_plus/wakelock_plus.dart";
 
 import "package:likertshift/forms.dart";
 import "package:likertshift/system_navigation_bar.dart";
@@ -302,6 +303,8 @@ class _InterviewScreenState extends State<InterviewScreen> {
                       return;
                     }
 
+                    await WakelockPlus.enable();
+
                     const recordConfig = RecordConfig(
                       encoder: AudioEncoder.flac,
                       autoGain: true,
@@ -325,9 +328,10 @@ class _InterviewScreenState extends State<InterviewScreen> {
                     backgroundColor: const WidgetStatePropertyAll(Colors.red),
                     iconColor: WidgetStatePropertyAll(Colors.grey.shade200),
                   ),
-                  onPressed: () {
+                  onPressed: () async {
                     timer?.cancel();
-                    audioRecorder.stop();
+                    await audioRecorder.stop();
+                    await WakelockPlus.disable();
                   },
                   child: const Icon(Icons.stop),
                 ),

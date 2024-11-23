@@ -11,6 +11,7 @@ import "package:flutter/services.dart";
 import "package:flutter_translate/flutter_translate.dart";
 import "package:latlong2/latlong.dart";
 import "package:record/record.dart";
+import "package:wakelock_plus/wakelock_plus.dart";
 
 import "package:likertshift/bluetooth.dart";
 import "package:likertshift/forms.dart";
@@ -140,6 +141,8 @@ class RecordingModel with ChangeNotifier {
       return;
     }
 
+    await WakelockPlus.enable();
+
     final recording = Recording(routePreset: routePreset, method: method);
     await recording.start();
     if (method == RecordingMethod.audio) {
@@ -189,6 +192,8 @@ class RecordingModel with ChangeNotifier {
 
     final recordingMethod = activeRecording!.method;
     final prefix = activeRecording!.name;
+
+    await WakelockPlus.disable();
 
     _activeRecording = null;
     notifyListeners();
