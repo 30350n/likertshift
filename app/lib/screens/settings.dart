@@ -1,18 +1,18 @@
 import "dart:async";
 import "dart:io";
 
-import "package:archive/archive_io.dart";
 import "package:flutter/foundation.dart";
 import "package:flutter/material.dart";
-import "package:flutter_translate/flutter_translate.dart";
-import "package:record/record.dart";
 
 import "package:adaptive_theme/adaptive_theme.dart";
-import "package:likertshift/forms.dart";
+import "package:archive/archive_io.dart";
+import "package:flutter_translate/flutter_translate.dart";
+import "package:record/record.dart";
+import "package:restart_app/restart_app.dart";
 
+import "package:likertshift/forms.dart";
 import "package:likertshift/system_navigation_bar.dart";
 import "package:likertshift/util.dart";
-import "package:restart_app/restart_app.dart";
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
