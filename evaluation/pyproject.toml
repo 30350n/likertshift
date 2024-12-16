@@ -1,0 +1,29 @@
+[project]
+name = "evaluation"
+version = "0.1"
+requires-python = "==3.11.*"
+readme = "README.md"
+dependencies = [
+    "openai-whisper>=20240930",
+    "torch>=2.5.1",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.8.3",
+]
+
+[tool.pyright]
+reportMissingTypeStubs = "none"
+reportUnusedCallResult = "none"
+reportUnknownMemberType = "information"
+
+[tool.ruff]
+line-length = 100
+
+[[tool.uv.index]]
+name = "pytorch"
+url = "https://download.pytorch.org/whl/cu124"
+
+[tool.uv.sources]
+torch = { index = "pytorch" }
