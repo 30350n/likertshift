@@ -1,0 +1,8 @@
+{
+    "mental_demand": 1.5,
+    "physical_demand": 0.5,
+    "temporal_demand": 1.5,
+    "performance": -2.0,
+    "effort": -0.5,
+    "frustration": 1.0
+}

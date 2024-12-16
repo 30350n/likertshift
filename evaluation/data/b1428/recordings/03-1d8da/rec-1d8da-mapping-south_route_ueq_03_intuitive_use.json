@@ -1,0 +1,6 @@
+{
+    "difficult_easy": 1.0,
+    "illogical_logical": 4.0,
+    "not_plausible_plausible": 4.0,
+    "inconclusive_conclusive": 5.0
+}

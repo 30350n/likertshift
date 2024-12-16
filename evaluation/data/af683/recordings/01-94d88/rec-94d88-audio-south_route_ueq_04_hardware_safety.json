@@ -1,0 +1,6 @@
+{
+    "threatening_harmless": 5.0,
+    "hazardous_to_health_not_hazardous_to_health": 4.0,
+    "damaging_not_damaging": 5.0,
+    "likely_to_cause_collision_unlikely_to_cause_collision": 4.0
+}
