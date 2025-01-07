@@ -9,6 +9,7 @@
 	english,
 	fleqn,
 	final,
+	bibliography=totoc,
 	]{scrartcl}
     
 % PACKAGES FOR THE INSTITUTSVORLAGE
@@ -56,11 +57,11 @@
 \mitverteidigung % entfernen, falls keine Verteidigung erfolgt
 \makeTitel
 
+\pagenumbering{gobble}  % page numbers invisible for Abstract, TOC and filler pages
 \input{chapters/00_abstract.tex}
 \newpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%_TABLE_OF_CONTENTS_%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\pagenumbering{gobble}  % page numbers invisible for TOC and filler pages
 \tableofcontents
 \cleardoublepage    % deactivate for one-sided printing
 %\newpage           % activate for one-sided printing
