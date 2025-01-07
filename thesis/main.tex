@@ -6,19 +6,19 @@
 	12pt,
 	% twoside,    % + BCOR darunter: für doppelseitigen Druck aktivieren, sonst beide deaktivieren
 	% BCOR=5mm,   % Dicke der Bindung berücksichtigen (Copyshop fragen, wie viel das ist)
-	ngerman,
+	english,
 	fleqn,
 	final,
 	]{scrartcl}
     
 % PACKAGES FOR THE INSTITUTSVORLAGE
 \usepackage[utf8]{inputenc}
-\usepackage[ngerman]{babel}
-\usepackage[unicode=true]{hyperref} % label, references, websites and crosslinks in PDF
+\usepackage[english]{babel}
+\usepackage[unicode=true,hidelinks]{hyperref} % label, references, websites and crosslinks in PDF
 \usepackage{setspace} % für Elemente der Titelseite
 \usepackage{tikz} % für Elemente der Titelseite
 \usepackage{tabularx} % für Elemente der Titelseite
-\usepackage[draft=false,babel,tracking=true,kerning=true,spacing=true]{microtype} % optischer Randausgleich
+\usepackage[draft=false,babel,tracking=true,kerning=true,spacing=true,verbose=silent]{microtype} % optischer Randausgleich
 \microtypesetup{nopatch={footnote}} % disable footnote microtype warning
 % PACKAGES FOR USING THIS PREBUILD STUCTURE
 \usepackage{csquotes}   % better quote style for biblatex
