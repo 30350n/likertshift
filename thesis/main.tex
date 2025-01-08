@@ -44,11 +44,24 @@
 \usepackage{enumitem}
 \setitemize{label=\textbf{-},itemsep=0.3em,topsep=0.5em,parsep=0.2em,partopsep=0em}
 \usepackage{eurosym}
+\usepackage{xfrac}
 
 \addto\extrasenglish{
     \def\sectionautorefname{Section}
     \def\subsectionautorefname{Section}
 }
+
+\makeatletter
+\newcommand*{\citetext}[2]{%
+    \hyper@@link[cite]{}{cite.#1}{\emph{#2} \cite{#1}}%
+}
+\makeatother
+
+\makeatletter
+\newcommand*{\footnoteurl}[1]{%
+    \footnote{\hspace{.25em}\url{#1}}%
+}
+\makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%_TITLE_PAGE_%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}

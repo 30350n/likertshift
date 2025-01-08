@@ -28,29 +28,55 @@ In \autoref{subsec:discussion_design_requirements} we analyze how well our final
 
 \subsubsection{Initial Design Decisions}
 
+\subsubsection*{Mounting}
+
+Previous research on input interfaces that can be used while cycling showed that participants strongly preferred solutions that allowed them to keep both hands on the handlebars \cite{gesturing_on_the_handlebars,no_need_to_stop,text_me_if_you_can}.
+Studies on smartphone usage while cycling also confirmed that even removing one hand from the handlebars increases risk, especially when performing actions that require increased mental effort \cite{mobile_phone_use_while_cycling}.
+
+Thus, we determined that the device should be mounted directly to the handlebars, close to the natural grip area of the bicycle.
+
+\subsubsection*{Off-the-shelf or Custom Built}
+
+The primary advantage of using off-the-shelf electromechanical components for the mechanism of the device is reliability - most components specify a life expectancy in their respective datasheets - which supports \ref{drq:robust}.
+However, this conflicts with \ref{drq:affordable} and \ref{drq:easy_to_reproduce}, as standard versions of the required components (potentiometers, multipole switches or digital encoders) are challenging to fit into the available space and more specialized variants of these components are often difficult and expensive to source.
+As an example, the center-space potentiometer used by \citetext{brotate_and_tribike}{Wo\'{z}niak et al.} in their “Brotate” control device would not only take up \sfrac{1}{4} of our budget set in \ref{drq:affordable}, but has also been marked as “Not Recommended for New Designs”\footnoteurl{https://www.digikey.com/en/products/detail/EWV-YG9U04B14/3163176} by the manufacturer, making its future availability uncertain.
+
+To ensure building and using our device is both affordable and accessible, we decided to rely solely on widely available standard mechanical components (e.g., screws, nuts, bearing balls, springs) and to use Fused Deposition Modeling (FDM) 3D printing to create large parts of the mechanism.
+FDM 3D printing is the most widely used additive manufacturing technique and enables us to quickly iterate on our designs while producing low-cost parts that can be easily reproduced \cite{additive_manufacturing}.
+
+\bigbreak\noindent
+\textit{%
+    Note: We also briefly explored utilizing existing commercially available interfaces, such as electronic gearshifts or electronic throttles for e-bikes, but ultimately decided against using such an off-the-shelf solution as they do not meet our design requirements.
+}
+
 \subsubsection*{Continuous or Discrete Scale}
 
-As discussed in \autoref{sec:motivation}, our prototype device should enable users to communicate their Travel Experience on a simple one-dimensional scale.
-We need to decide whether this scale should be continuous or consist of discrete steps.
-
-Theoretically, we would be able to capture more precise data with a continuous scale than with a discrete one.
-However, since our use case is recording Travel Experience data - which is highly subjective - recorded values will vary significantly between different users.
-So to obtain meaningful results, any recorded Travel Experience data must be averaged across a reasonably large pool of different users.
+As proposed in \autoref{sec:motivation}, our prototype should allow cyclists to communicate their subjective experiences by providing a rating on a simple one-dimensional scale.
+Theoretically, a continuous scale could capture more precise data than a discrete one.
+However, since our use case is recording subjective ratings, recorded values are likely to vary significantly between users, so to obtain meaningful results, any recorded data must be averaged across a reasonably large pool of users.
 Therefore, a continuous input scale would not provide a substantial benefit for our specific use case.
 
 This decision also directly influences the electromechanical design of the device.
-Choosing to design a continuous scale would force us to either use a variable resistor (potentiometer) or a high resolution digital encoder.
-In contrast, working with discrete steps would suggest the use of a rotary switch or multiple mechanical buttons.
+Choosing to design a continuous scale would force us to utilize components such as variable resistors (potentiometers) or high-resolution digital encoders.
+In contrast, a discrete scale would suggest the use of rotary switches or multiple mechanical buttons.
 
-Due to the missing benefit of a continuous scale and our previous decision to use a custom-built mechanism, we decided on a discrete scale, because we think this will be easier to implement using our chosen methods.
+Due to the lack of benefit from a continuous scale and our previous decision to use a custom-built mechanism, we decided on a discrete scale, as this is easier to implement using our chosen methods.
 
-\cite{gesturing_on_the_handlebars} \cite{no_need_to_stop} \cite{text_me_if_you_can} \cite{brotate_and_tribike}
+\subsubsection{Implementation}
 
-\begin{itemize}
-    \item potentiometers vs. rotary switches vs. buttons
-    \item brotate and tribike \cite{brotate_and_tribike}
-    \item advantages/disadvantages of using our own hardware design (cost, reliability, availability, obsolete components)
-\end{itemize}
+Based on our previous design decisions and set requirements, we developed a prototype resembling a standard bicycle twist gearshift.
+It can be mounted directly on the handlebars in combination with a shortened bicycle grip, allowing users to control the device by twisting it without removing their hands from the handlebars.
+Users can rate their subjective experience during cycling on a scale with multiple discrete positions that the device snaps into.
+We 3D printed all custom parts on a Voron 2.4 3D printer out of PETG filament, but any decently calibrated consumer FDM 3D printer should be able to produce them.
+
+To perform our initial evaluation, we decided to use a simple five-point Likert scale, with each position corresponding to the level of the cyclists' current travel satisfaction.
+Based on this we also decided on a name for our prototype: “LikertShift”.
+
+\bigbreak\noindent
+We used FreeCAD\footnoteurl{https://www.freecad.org/} (a parametric modelling software) in combination with OpenSCAD\footnoteurl{https://openscad.org/} (a code-based solid modelling software) for the mechanical design of our prototype. Both programs qualify as free and open-source software (FOSS), ensuring the design is accessible and modifiable by future contributors without requiring expensive software licenses.
+The design was created parametrically, allowing for parameters like the number of discrete positions or their spacing to be easily adjusted.
+
+All parts have been designed specifically for FDM 3D printing, with a particular print orientation in mind and don't require any additional support structures when printing.
 
 \subsection{Electrical Design and Firmware}
 
