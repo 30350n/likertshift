@@ -26,6 +26,24 @@ In \autoref{subsec:discussion_design_requirements} we analyze how well our final
 
 \subsection{Mechanical Design}
 
+\subsubsection{Initial Design Decisions}
+
+\subsubsection*{Continuous or Discrete Scale}
+
+As discussed in \autoref{sec:motivation}, our prototype device should enable users to communicate their Travel Experience on a simple one-dimensional scale.
+We need to decide whether this scale should be continuous or consist of discrete steps.
+
+Theoretically, we would be able to capture more precise data with a continuous scale than with a discrete one.
+However, since our use case is recording Travel Experience data - which is highly subjective - recorded values will vary significantly between different users.
+So to obtain meaningful results, any recorded Travel Experience data must be averaged across a reasonably large pool of different users.
+Therefore, a continuous input scale would not provide a substantial benefit for our specific use case.
+
+This decision also directly influences the electromechanical design of the device.
+Choosing to design a continuous scale would force us to either use a variable resistor (potentiometer) or a high resolution digital encoder.
+In contrast, working with discrete steps would suggest the use of a rotary switch or multiple mechanical buttons.
+
+Due to the missing benefit of a continuous scale and our previous decision to use a custom-built mechanism, we decided on a discrete scale, because we think this will be easier to implement using our chosen methods.
+
 \cite{gesturing_on_the_handlebars} \cite{no_need_to_stop} \cite{text_me_if_you_can} \cite{brotate_and_tribike}
 
 \begin{itemize}
