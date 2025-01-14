@@ -1,9 +1,34 @@
 \section{Motivation}\label{sec:motivation}
 
-\begin{itemize}
-    \item Motivation for recording Travel Experience / Satisfaction
-    \item Use cases \cite{what_if_your_car_would_care}
-    \item Different methods
-    \item Emotion recognition \cite{facial_emotion_recognition} \cite{vemotion} \cite{affective_automotive_user_interfaces} \cite{happy_or_scared} \cite{emotion_sensing_for_ebike_safety} \cite{driver_emotion_recognition_survey} \cite{towards_empathetic_car_interfaces}
-    \item Differentiation of "ground-truth-methods"
-\end{itemize}
+Recent works in the HCI space have been exploring detecting drivers' emotions while operating vehicles and understanding their effects.
+Many of them specifically focus on negative emotional extremes, such as anger and sadness \cite{driver_emotion_recognition_survey}, as these not only lead to an increased number of driving errors \cite{dont_cry_while_youre_driving} but can also encourage more risky behaviors like speeding \cite{negative_or_positive,frequency_determinants_and_consequences}.
+
+Consequently, there is also a growing interest in developing affective user interfaces that can utilize said emotions to enhance user satisfaction and traffic safety.
+Examples of such affective user interfaces include route planners that do not only offer the fastest routes but also ones that evoke more positive emotions in drivers \cite{what_if_your_car_would_care}, voice assistants that adapt their tone empathically \cite{affective_automotive_user_interfaces,emotional_adaptive_vehicle_user_interfaces}, or even systems that prevent operation altogether if the driver is deemed incapable of operating the vehicle \cite{affective_automotive_user_interfaces}.
+\citetext{towards_empathetic_car_interfaces}{Zepf et al.} also investigated what situations during driving trigger certain emotions and categorized them, recommending measures to mitigate those that negatively impact driving performance.
+
+Many of these studies, particularly real-world ones, rely on real-time audio-based self-reporting to obtain their results \cite{towards_empathetic_car_interfaces,vemotion,frequency_determinants_and_consequences}.
+In an automotive context, this method is practical, as microphones can easily be mounted inside vehicles, which provide an environment with a generally well-predictable noise floor.
+Automatic voice processing can then be used to obtain the desired data \cite{vemotion}.
+
+\bigbreak\noindent
+While most of this research has focused on travel by car, the ongoing shift toward sustainable transportation, especially in urban areas, has generated significant interest in expanding it to other modes of individual transportation, most notably cycling.
+
+Similar to automotive contexts, data on cyclists' subjective experiences can be used to improve traffic safety, infrastructure planning \cite{the_influence_of_noise,emotion_sensing_for_ebike_safety}, as well as the overall experience and satisfaction of cyclists, thereby engaging more people in a more sustainable and healthy mode of transportation \cite{exploring_the_casual_effects,health_benefits_of_cycling,happy_or_scared}.
+
+Personalized route planning, for example, gains even more significance in the context of cycling, as there is not only a larger variance in road conditions and types of bicycle paths but also in cyclists' preferences concerning them.
+For instance, some cyclists may prefer riding only on well-maintained, flat asphalt roads, while others might actually enjoy more rugged, off-road paths.
+To properly detect and differentiate between triggers (e.g., weather, road condition, traffic) affecting the subjective experience of cyclists while riding, subjective real-time ratings must be consolidated with accurate time and location data, as well as external contextual data \cite{cycling_subjective_experience}.
+
+Multiple recent large reviews have found that existing studies predominantly rely on retrospective surveys and interviews as methods to evaluate cyclists' subjective experiences \cite{cycling_subjective_experience,physiological_measures_of_bicyclists,methods_used_to_capture}.
+\citetext{cycling_subjective_experience}{Zhang et al.} also claim that recently, there has been a growing interest in utilizing more mobile methods capable of capturing real-time data during cycling.
+
+Methods that try to predict cyclists' emotions from contextual information such as driving behavior, weather, or traffic could also provide such real-time data.
+\citetext{vemotion}{Bethge et al.} demonstrated that emotion recognition models based on contextual data can even outperform traditional techniques like facial expression recognition.
+However, creating mathematical models or training machine learning models like this still requires obtaining ground-truth data from study participants in the first place, underlining the need for better self-reporting methods once again \cite{detecting_stress,vemotion,happy_or_scared}.
+
+\bigbreak\noindent
+We argue that data obtained from retrospective methods often lacks the required detail, while live recording methods, namely mobile audio self-reporting, have been directly adopted from automotive research on the subject but are unsuitable for cycling due to social and environmental factors.
+Thus, to advance this field and enable researchers to collect real-time ground-truth data on cyclists' subjective experiences more effectively, we want to develop a new method using an electromechanical device that allows cyclists to self-report values on a simple one-dimensional scale.
+
+We start by reviewing related work on digital control devices for cycling and existing real-time methods for recording cyclists' subjective experiences. From this, we derive a set of design requirements that guide the development of our prototype. Finally, we conduct a field study comparing our prototype to existing real-time recording methods, evaluate its performance, and discuss our results and how they could affect future research in the field.
