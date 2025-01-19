@@ -3,7 +3,7 @@ name = "evaluation"
 version = "0.1"
 requires-python = "==3.11.*"
 readme = "README.md"
-dependencies = ["numpy", "folium", "openai-whisper", "torch"]
+dependencies = ["folium", "matplotlib", "numpy", "openai-whisper", "scipy", "torch"]
 
 [dependency-groups]
 dev = ["ruff"]
