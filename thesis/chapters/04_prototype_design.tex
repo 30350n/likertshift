@@ -1,5 +1,8 @@
 \section{Prototype Design}\label{sec:prototype_design}
 
+This section describes our process designing the electromechanical prototype.
+We outline a set of design requirements to adhere to, then describe our design decisions and implementation. We also provide an overview of our electrical design and required firmware, as well as the frontend we created for it.
+
 \subsection{Design Requirements}
 
 To streamline the design of our prototype and to ensure its usefulness to other researchers in future work, we established the following design requirements:
@@ -55,7 +58,6 @@ As proposed in \autoref{sec:motivation}, our prototype should allow cyclists to 
 Theoretically, a continuous scale could capture more precise data than a discrete one.
 However, since our use case is recording subjective ratings, recorded values are likely to vary significantly between users, so to obtain meaningful results, any recorded data must be averaged across a reasonably large pool of users.
 Therefore, a continuous input scale would not provide a substantial benefit for our specific use case.
-
 This decision also directly influences the electromechanical design of the device.
 Choosing to design a continuous scale would force us to utilize components such as variable resistors (potentiometers) or high-resolution digital encoders.
 In contrast, a discrete scale would suggest the use of rotary switches or multiple mechanical buttons.
@@ -64,7 +66,7 @@ Due to the lack of benefit from a continuous scale and our previous decision to 
 
 \subsubsection{Implementation}
 
-Based on our previous design decisions and set requirements, we developed a prototype resembling a standard bicycle twist gearshift.
+Based on our previous design decisions and set requirements, we developed a prototype, as shown in \autoref{fig:likertshift}, resembling a standard bicycle twist gearshift.
 It can be mounted directly on the handlebars in combination with a shortened bicycle grip, allowing users to control the device by twisting it without removing their hands from the handlebars.
 Users can rate their subjective experience during cycling on a scale with multiple discrete positions that the device snaps into.
 We 3D printed all custom parts on a Voron 2.4 3D printer out of PETG filament, but any decently calibrated consumer FDM 3D printer should be able to produce them.
@@ -73,24 +75,304 @@ To perform our initial evaluation, we decided to use a simple five-point Likert 
 Based on this we also decided on a name for our prototype: “LikertShift”.
 
 \bigbreak\noindent
+\textit{%
+    Note: We choose PETG because it is a common, easy-to-print material, but has a higher glass transition temperature $(Tg)$ than PLA. For use in the summer or warmer climates, we recommend using an engineering material with an even higher $Tg$ like ABS or Nylon.
+}
+
+\begin{figure}[!htb]
+    \centering
+    \begin{subfigure}{.3333\textwidth}
+        \centering
+        \includegraphics[width=.9\linewidth]{images/likertshift_freecad.jpg}
+        \caption{CAD model}
+    \end{subfigure}%
+    \begin{subfigure}{.3333\textwidth}
+        \centering
+        \includegraphics[width=.9\linewidth]{images/likertshift_assembled.jpg}
+        \caption{Fully assembled}
+    \end{subfigure}%
+    \begin{subfigure}{.3333\textwidth}
+        \centering
+        \includegraphics[width=.9\linewidth]{images/likertshift_mounted.jpg}
+        \caption{Mounted to the handlebars}
+        \label{subfig:likertshift_mounted}
+    \end{subfigure}
+    \caption{The final LikertShift prototype}
+    \label{fig:likertshift}
+\end{figure}
+
+\noindent
+To mount the prototype, the device is split in half and utilizes a simple clamping mechanism, similar to ones used for commercial bike accessories, to fix it to the handlebars.
+We tried to add some texture to the clamping surface (see \autoref{subfig:cad_clamping_surface}), to reduce the necessary clamping pressure, but had mixed results with this.
+The best solution to stop unwanted rotations and movements has been to apply a piece of masking tape to the handlebars at the desired mounting location.
+
+We modeled a cavity to allow the application of a label sticker to mark the value of each discrete step and also added small markers to indicate the position that is currently selected.
+The markers are 3D printed with a different filament color to improve visibility.
+We also used a combination of CAD modeled indents, as well as the so-called “Fuzzy skin” feature in our slicer\footnoteurl{https://help.prusa3d.com/article/fuzzy-skin_246186} to add some texture to the grip area (see \autoref{subfig:slicer_textured_grip_area}).
+This could be improved by utilizing multi-material 3D printing techniques and printing parts of it in more “grippy” materials like TPU, but we decided against such an approach, because multi-material 3D printing either requires special multi-toolhead printers or generates a lot of wasted material.
+
+To satisfy \ref{drq:robust} and \ref{drq:easy_to_reproduce} we designed the device to be fully integrated, without requiring any external power.
+\autoref{subfig:cad_pcb_compartment} shows the electronics compartment which houses the main Microcontroller board, as well as a button-cell battery to supply power to the electronics (see \autoref{subsec:electronics}).
+
+\begin{figure}[!htb]
+    \centering
+    \begin{minipage}{.3333\textwidth}
+        \centering
+        \includegraphics[width=.9\linewidth]{images/cad_clamping_surface.jpg}
+        \caption{Clamping surface}
+        \label{subfig:cad_clamping_surface}
+    \end{minipage}%
+    \begin{minipage}{.3333\textwidth}
+        \centering
+        \includegraphics[width=.9\linewidth]{images/cad_grip_texture.jpg}
+        \caption{Grip area}
+        \label{subfig:slicer_textured_grip_area}
+    \end{minipage}%
+    \begin{minipage}{.3333\textwidth}
+        \centering
+        \includegraphics[width=.9\linewidth]{images/cad_pcb_compartment.jpg}
+        \caption{PCB compartment}
+        \label{subfig:cad_pcb_compartment}
+    \end{minipage}
+\end{figure}
+
+\noindent
 We used FreeCAD\footnoteurl{https://www.freecad.org/} (a parametric modelling software) in combination with OpenSCAD\footnoteurl{https://openscad.org/} (a code-based solid modelling software) for the mechanical design of our prototype. Both programs qualify as free and open-source software (FOSS), ensuring the design is accessible and modifiable by future contributors without requiring expensive software licenses.
 The design was created parametrically, allowing for parameters like the number of discrete positions or their spacing to be easily adjusted.
-
 All parts have been designed specifically for FDM 3D printing, with a particular print orientation in mind and don't require any additional support structures when printing.
 
-\subsection{Electrical Design and Firmware}
+\subsubsection{Mechanism}\label{subsec:mechanism}
 
-\begin{itemize}
-    \item BLE
-    \item MCU choice (softdevices conformity)
-    \item battery runtime analysis
-\end{itemize}
+\def\rotator{\textsf{Rotator}\xspace}
+\def\rotatorhead{\textsf{Rotator-head}\xspace}
+
+The prototype uses a simple rotary switching mechanism.
+When the outer \rotator gets rotated, it pulls the \rotatorhead along a ramped track (see \autoref{fig:cad_ramped_track}).
+The \rotatorhead show in \autoref{fig:cad_rotator_head} consists of a \SI{4}{mm} steel bearing ball that is socketed into a 3D printed part and gets pushed into the track by a spring.
+It is constraint to only move along the rotation axis by $\sim\SI{5}{\mm}$ to be able to overcome the ramps.
+This way, the mechanism automatically snaps into the depressions between the ramps.
+
+At the bottom of the depressions are nickel-plated neodymium magnets which are being used as the switching contacts while the \rotatorhead acts as the contactor.
+M3 button head screws are used to clamp and connect cables to the contactor and switching contacts.
+As the cable that goes to the \rotatorhead experiences lots of movement and thus relatively high stress, we used special FEP insulated wire\footnoteurl{https://shop.helukabel.com/de-en/heluflon-fep-6y-m25511/20271} made for the use in cable chains for it.
+For the contacts we used standard PVC insulated wire.
+This setup results in a total contact resistance of $\sim\SI{10}{\ohm}$, which is well within useable range for our purposes.
+
+\begin{figure}[!htb]
+    \centering
+    \begin{minipage}{.3333\textwidth}
+        \centering
+        \includegraphics[width=.9\linewidth]{images/cad_ramped_track.jpg}
+        \caption{Ramped track}
+        \label{fig:cad_ramped_track}
+    \end{minipage}%
+    \begin{minipage}{.3333\textwidth}
+        \centering
+        \includegraphics[width=.9\linewidth]{images/cad_rotator_head.jpg}
+        \caption{\rotatorhead}
+        \label{fig:cad_rotator_head}
+    \end{minipage}%
+    \begin{minipage}{.3333\textwidth}
+        \centering
+        \includegraphics[width=.9\linewidth]{images/likertshift_pcb.jpg}
+        \caption{Assembled PCB}
+        \label{fig:likertshift_pcb}
+    \end{minipage}
+\end{figure}
+
+\noindent
+
+\subsection{Electronics}\label{subsec:electronics}
+
+\subsubsection{Microcontroller Choice}
+
+For data acquisition and communication we wanted to use the nRF52 series Microcontroller Units (MCUs) because of their exceptionally low-power usage, Bluetooth Low Energy (BLE) capabilities and wide availability\footnoteurl{https://docs.nordicsemi.com/category/nrf-52-series}.
+Specifically, for our prototype we decided to use a relatively affordable (\ref{drq:affordable}) nRF52840 based development board by Seeed Studio\footnoteurl{https://wiki.seeedstudio.com/XIAO_BLE/}.
+Using a development board allowed us to skip many electrical design challenges and to test the working principle of our prototype on a solderless breadboard.
+
+\subsubsection{Power}
+
+To satisfy \ref{drq:robust} and \ref{drq:easy_to_reproduce} we designed our device to be fully integrated and enclosed.
+Due to the given space-constraints by our mechanical design it is only powered by a standard CR2032 button cell battery.
+Under optimal conditions, it should be able to power our device for at least 1--2 years.
+We did not optimize our firmware to achieve this kind of power usage though (see \ref{subsec:firmware}).
+
+\subsubsection{Printed Circuit Board (PCB)}
+
+To minimize wiring and to keep the electronics tightly integrated, we designed a simple breakout-PCB (see \autoref{fig:likertshift_pcb}) that holds the MCU development board and a battery holder and exposes solder pads that allow easy connection of the contactors described in \ref{subsec:mechanism}.
+The solder pads allow connecting of up to ten such contactors, so it can be used with variants of the device with up to nine discrete positions.
+The solder pads connect directly to the MCUs' General-Purpose Input/Output (GPIO) pins, as well as a high-impedance pull-down resistors to hold the logic state to $0V$ when not in use.
+
+The two-layer PCB design was implemented using the KiCad Electronics Design Automation Suite (KiCad EDA) and is optimized for affordable manufacturing with design rules allowing for comparably high production tolerances.
+The KiCad EDA also qualifies as FOSS.
+
+\subsubsection{Firmware}\label{subsec:firmware}
+
+\def\gpiohigh{\textsf{HIGH}\xspace}
+
+When powered up, the prototype starts to advertise itself, broadcasting its name and that it is ready to accept connections.
+Once a central device, the smartphone in our case, initiates a connection, the prototype hosts a Generic Attribute (GATT) server providing two services, a custom “LikertShift” service to retrieve the currently selected switch position and a battery service to retrieve the current battery level.
+Both services each offer a one-byte characteristic that can be read by the central device.
+
+When the LikertShift characteristic gets read, first the GPIO pin connected to the contactor at the \rotatorhead gets set to a \gpiohigh state ($\sim\SI{3.3}{V}$) then each of the pins connected to the switching contacts gets read, checking for a matching \gpiohigh state.
+Finally, the detected position gets sent back to the central device, as a value from \mbox{$1$ -- $n_{positions}$}.
+There are two special cases here:
+\vspace*{-0.5em}
+\begin{enumerate}[label=(\roman*),itemsep=0em]
+    \item No switching contact is set to a \gpiohigh state.\\
+        This can happen if the service gets read while the prototype is currently being moved from one position to another. In this case the service will return a value of $0$. How exactly this state should be handled is left to the software running of the central device.
+    \item Multiple switching contacts are set to a \gpiohigh state.\\
+        This should not happen during normal operation. In this case the service returns the position corresponding to the last GPIO pin read.
+\end{enumerate}
+\vspace*{-0.5em}
+\noindent
+When the battery characteristic gets read, the battery voltage is measured by the MCUs onboard Analog to Digital Converter (ADC).
+Then, the measured voltage gets linearized and scaled to a value from $0$ -- $255$ and sent back to the central device.
+\bigbreak\noindent
+The firmware is written in Rust\footnoteurl{https://www.rust-lang.org/} using Embassy\footnoteurl{https://embassy.dev/} (a framework for embedded applications).
 
 \subsection{Frontend Design}
 
-\begin{itemize}
-    \item reusability
-    \item BLE interfacing (communication "protocol")
-    \item language/framework choice?
-    \item UI design?
+To view and record ratings using the LikertShift we need a frontend that can connect to it via BLE and talk to our firmware to retrieve the currently selected position.
+Because we also want to record location data simultaneously and the LikertShift hardware does not possess GPS recording capabilities, we decided to implement this frontend as a smartphone app.
+This way, we can also extend it to query other information, relevant for our evaluation, from study participants.
+
+\subsubsection{Features}
+
+The base implementation of the app allows users to:
+
+\begin{itemize}[itemsep=0em]
+    \item connect to nearby LikertShift devices and display their currently selected rating.
+    \item record GPS locations and LikertShift ratings along arbitrary travel routes.
+    \item view their current location and travelled route on a 2D map.
 \end{itemize}
+
+\noindent
+We later extended the app for performing our own field-study.
+We took great care to make it as customizable and reusable as possible, so other researchers could reuse it to replicate our results or perform their own studies.
+Thus, we added the ability for researchers to:
+
+\begin{itemize}[itemsep=0em]
+    \item inquire basic demographic information from study participants.
+    \item predefine routes that participants should follow along and display them in the map view in addition to the actual travelled route.
+    \item add custom surveys that appear when participants finish recording a route.
+    \item record audio interviews.
+    \item bundle up and export all recorded data to a single \texttt{ZIP} archive and reset the app back to a default state.
+\end{itemize}
+
+\noindent
+Surveys and routes can be defined in a human-readable \texttt{JSON} format, so minimal programming knowledge is required to customize the app.
+For evaluating the LikertShift in our own field-study we also added the ability to use the other recording methods described in \autoref{subsec:recording_methods}.
+
+\subsubsection{Implementation Details}
+
+\def\mapscreen{\textsf{Map Screen}\xspace}
+\def\routesscreen{\textsf{Routes Screen}\xspace}
+\def\devicesscreen{\textsf{Devices Screen}\xspace}
+\def\settingsscreen{\textsf{Settings Screen}\xspace}
+
+The app is divided into four main screens which can be switched between by using the bottom bar.
+When it gets started for the first time, the user is presented with a demographics form to fill-in (see \autoref{subfig:app_demographics_form}).
+All form and survey data gets saved locally in a human-readable \texttt{JSON} format.
+
+\begin{figure}[!htb]
+    \centering
+    %\captionsetup{format=plain,justification=centering,labelsep=newline}
+    \begin{subfigure}{.25\textwidth}
+        \centering
+        \includegraphics[width=.8666\linewidth]{images/app_map_screen.jpg}
+        \caption{\mapscreen}
+        \label{subfig:app_map_screen}
+    \end{subfigure}%
+    \begin{subfigure}{.25\textwidth}
+        \centering
+        \includegraphics[width=.8666\linewidth]{images/app_routes_screen.jpg}
+        \caption{\routesscreen}
+        \label{subfig:app_routes_screen}
+    \end{subfigure}%
+    \begin{subfigure}{.25\textwidth}
+        \centering
+        \includegraphics[width=.8666\linewidth]{images/app_devices_screen.jpg}
+        \caption{\devicesscreen}
+        \label{subfig:app_devices_screen}
+    \end{subfigure}%
+    \begin{subfigure}{.25\textwidth}
+        \centering
+        \includegraphics[width=.8666\linewidth]{images/app_settings_screen.jpg}
+        \caption{\settingsscreen}
+        \label{subfig:app_settings_screen}
+    \end{subfigure}
+    \caption{An overview of the four main app pages}
+\end{figure}
+
+\subsubsection*{Map Screen}
+
+The \mapscreen displays the users current location and surroundings on a 2D map (see \autoref{subfig:app_map_screen}).
+It can be moved and rotated using standard touch gestures.
+The user can press the bottom-right toggle to make the map automatically follow the current location and long-press the compass to lock the rotation to the current movement direction.
+If the user starts a recording, the \mapscreen will also display the travelled route, as well as the preset route, if one was selected.
+Additionally, if a LikertShift device is connected, the \mapscreen will also display the devices' currently selected numeric rating and a description of its meaning.
+Routes from the \routesscreen can also be previewed on the \mapscreen.
+
+\subsubsection*{Routes Screen and Route Recording}
+
+The \routesscreen is divided into two tabs, showing the available route presets and past recordings respectively (see \autoref{subfig:app_routes_screen}).
+Route presets can be previewed using the “Eye” buttons and new recordings can be started using the \raisebox{0.1em}{\textbf{+}} button.
+
+When starting a new recording the user has to select a recording method and optionally a route preset.
+Then, whenever the app receives a location update (every $\sim1$--$\SI{5}{s}$), a new data point will be added to the recording, containing the new location, the time elapsed since starting the recording and the current rating value by the active LikertShift device, if available.
+This data is then immediately written to a new line in a \texttt{CSV} file, to prevent data loss in case of app crashes or battery run out.
+A recording can be stopped at any time by pressing the “Stop Recording” button that will appear above the main navigation bar.
+Once a recording is finished, the user can be presented with various forms and surveys (see \autoref{subfig:app_tlx_survey} for an example we used in our field-study).
+
+\subsubsection*{Devices Screen}
+
+The \devicesscreen allows discovering of and connecting to nearby LikertShift devices (see \autoref{subfig:app_devices_screen}).
+It displays a list of currently advertising and already known devices.
+A new connection can be established by selecting one of the devices from the list.
+Only one device can be connected to at any time.
+If a connection gets established successfully, its Bluetooth icon lights up, signaling that its currently connected.
+During connection, the LikertShift device is queried for its currently selected rating value every \SI{500}{ms} (this update rate can be easily adjusted).
+Invalid ratings (see \autoref{subsec:firmware}) are ignored, so the previous rating is kept.
+
+\subsubsection*{Settings Screen}
+
+The apps' language and color theme can be adjusted in the \settingsscreen (see \autoref{subfig:app_settings_screen}).
+It has been fully translated to English and German for use in our field-study.
+Additionally, it allows navigating to the \textsf{Interview Recording Screen}, which offers a simple interface to start, pause and stop recording an audio interview (see \autoref{subfig:app_interview_recorder}).
+Recorded audio interviews will also be saved locally as losslessly encoded \texttt{FLAC} files.
+Finally, the \settingsscreen offers a button to “Export collected Data and Reset the App” which will bundle all recorded data into a single \texttt{ZIP} file and store it locally, under a randomly generated participant ID.
+Said ID will then be reported back to the user, and the app will be reset (see \autoref{subfig:app_data_export}).
+
+\begin{figure}[!htb]
+    \centering
+    \begin{subfigure}{.25\textwidth}
+        \centering
+        \includegraphics[width=.8666\linewidth]{images/app_demographics_form.jpg}
+        \caption{Demographics form}
+        \label{subfig:app_demographics_form}
+    \end{subfigure}%
+    \begin{subfigure}{.25\textwidth}
+        \centering
+        \includegraphics[width=.8666\linewidth]{images/app_tlx_survey.jpg}
+        \caption{TLX survey}
+        \label{subfig:app_tlx_survey}
+    \end{subfigure}%
+    \begin{subfigure}{.25\textwidth}
+        \centering
+        \includegraphics[width=.8666\linewidth]{images/app_interview_recorder.jpg}
+        \caption{Interview recorder}
+        \label{subfig:app_interview_recorder}
+    \end{subfigure}%
+    \begin{subfigure}{.25\textwidth}
+        \centering
+        \includegraphics[width=.8666\linewidth]{images/app_reset_screen.jpg}
+        \caption{Data export}
+        \label{subfig:app_data_export}
+    \end{subfigure}
+    \caption{Contextual screens}
+\end{figure}
+
+\noindent
+The app is written using the Flutter\footnoteurl{https://flutter.dev/} framework and Dart\footnoteurl{https://dart.dev/} programming language.
+While we only tested and used our app on Android devices, the multi-platform nature of Flutter should also allow it to run on iOS powered devices with minimal modifications.
