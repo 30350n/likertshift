@@ -56,10 +56,6 @@ def evaluate(directory: Path):
     cronbachs = np.empty(ys.shape)
     participant_means: NDArray[np.float64] = np.zeros((len(UEQ_SCALES), len(METHODS), 18))
 
-    tlx_ys = np.empty(len(METHODS))
-    tlx_errors = np.empty(len(METHODS))
-    tlx_participant_means: NDArray[np.float64] = np.zeros((len(METHODS), 18))
-
     for i, method in enumerate(METHODS):
         print(
             method.upper().ljust(PAD)
@@ -94,29 +90,6 @@ def evaluate(directory: Path):
                 + f"     {interval[0]: .3f}  - {interval[1]: .3f}    {cronbach: .3f}"
             )
 
-        tlx_pattern = f"*/recordings/*/rec-*-{method}-*_tlx.json"
-        tlx_arrays = [load_json(path) for path in directory.glob(tlx_pattern)]
-        tlx_data = np.vstack(tlx_arrays)
-        tlx_data = (tlx_data + 10.0) * 5.0
-
-        tlx_n = tlx_data.shape[0]
-        tlx_mean = np.mean(tlx_data)
-        tlx_variance = np.var(tlx_data)
-        tlx_stddev = np.std(tlx_data)
-        tlx_interval = confidence_interval(0.05, tlx_data)
-        tlx_cronbach = cronbach_alpha(tlx_data)
-
-        tlx_participant_means[i] = np.mean(tlx_data, axis=1)
-
-        tlx_ys[i] = tlx_mean
-        tlx_errors[i] = (tlx_interval[1] - tlx_interval[0]) / 2
-
-        tlx_name = "task load index:".ljust(PAD)
-        print(
-            f"{tlx_name}  {tlx_mean:.3f}    {tlx_variance:.3f}  {tlx_stddev:.2f}  {tlx_n:2}"
-            + f"     {tlx_interval[0]:.3f}  - {tlx_interval[1]:.3f}    {tlx_cronbach: .3f}"
-        )
-
         print()
 
     WILLCOXON_VARIANTS = "  ".join(
@@ -138,18 +111,6 @@ def evaluate(directory: Path):
             + f"{wilcoxon_ps[0]:.6f}      {wilcoxon_ps[1]:.6f}      {wilcoxon_ps[2]:.6f}"
         )
 
-    tlx_friedman_p = cast(float, stats.friedmanchisquare(*tlx_participant_means).pvalue)
-    tlx_wilcoxon_ps = [
-        cast(float, stats.wilcoxon(tlx_participant_means[i1], tlx_participant_means[i2]).pvalue)  # pyright: ignore[reportAttributeAccessIssue]
-        for i1, i2 in combinations(range(3), 2)
-    ]
-    tlx_name = "task load index:".ljust(PAD)
-    print(
-        f"{tlx_name}  {tlx_friedman_p:.6f}      "
-        + f"{tlx_wilcoxon_ps[0]:.6f}      {tlx_wilcoxon_ps[1]:.6f}      {tlx_wilcoxon_ps[2]:.6f}"
-    )
-    print()
-
     TITLES = [" ".join(word.capitalize() for word in scale.split("_")) for scale in UEQ_SCALES]
     PASTEL1 = colormaps["Pastel1"]
     COLORS: list[TypeAnyColorType] = [PASTEL1.colors[1], PASTEL1.colors[0], PASTEL1.colors[4]]  # pyright: ignore[reportAttributeAccessIssue]
@@ -161,9 +122,9 @@ def evaluate(directory: Path):
     )
 
     axes: list[Axes]
-    fig, axes = plt.subplots(1, len(UEQ_SCALES) + 1, figsize=(15, 6))
+    fig, axes = plt.subplots(1, len(UEQ_SCALES), figsize=(10.15, 6), sharey=True)
 
-    for i, (scale, ax, title) in enumerate(zip(UEQ_SCALES, axes[:-1], TITLES)):
+    for i, (scale, ax, title) in enumerate(zip(UEQ_SCALES, axes, TITLES)):
         for j, (method, color, hatch, label) in enumerate(zip(METHODS, COLORS, HATCHES, LABELS)):
             ax.bar(
                 j,
@@ -183,24 +144,6 @@ def evaluate(directory: Path):
         p_text = f"$p={friedman_ps[i]:.3f}$" if friedman_ps[i] >= 0.001 else "$p<0.001$"
         ax.text(0.5, -0.06, p_text, ha="center", size=12, transform=ax.transAxes)
 
-    for j, (method, color, hatch, label) in enumerate(zip(METHODS, COLORS, HATCHES, LABELS)):
-        axes[-1].bar(
-            j,
-            tlx_ys[j],
-            yerr=tlx_errors[j],
-            color=color,
-            hatch=hatch,
-            label=label,
-            **BAR_KWARGS,  # pyright: ignore[reportArgumentType]
-        )
-    axes[-1].set_title("Task Load Index")
-    axes[-1].set_xticks([])
-    axes[-1].set_xlim(-1, len(METHODS))
-    axes[-1].set_ylim(0, 100)
-    axes[-1].text(
-        0.5, -0.05, f"$p={tlx_friedman_p:.3f}$", ha="center", size=12, transform=axes[-1].transAxes
-    )
-
     handles, labels = axes[-1].get_legend_handles_labels()
     fig.legend(
         handles,
@@ -212,8 +155,8 @@ def evaluate(directory: Path):
         columnspacing=2,
     )
 
-    plt.tight_layout(rect=(0, 0.05, 0.97, 1))
-    plt.savefig("eval_questionnaires.pdf")
+    plt.tight_layout(rect=(0, 0.05, 0.96, 1))
+    plt.savefig("eval_ueq.pdf")
 
 
 if __name__ == "__main__":
