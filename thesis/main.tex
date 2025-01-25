@@ -60,6 +60,12 @@
 \makeatother
 
 \makeatletter
+\newcommand*{\citetextnoref}[2]{%
+    \hyper@@link[cite]{}{cite.#1}{\emph{#2}}%
+}
+\makeatother
+
+\makeatletter
 \newcommand*{\footnoteurl}[1]{%
     \footnote{\hspace{.25em}\url{#1}}%
 }

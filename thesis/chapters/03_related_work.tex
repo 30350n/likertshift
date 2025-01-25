@@ -1,11 +1,97 @@
 \section{Related Work}\label{sec:related_work}
 
-
-\cite{cycling_subjective_experience}
-
-\subsection{Digital Control Devices for Bicycles}
-
-\cite{brotate_and_tribike}
 \subsection{Methods for Recording \CSE}
 
+In this section we provide an overview of methods used to record \CSE.
+We focus on methods that allow fine-grained recording of \CSE on subsections of a longer route, so either live-recording methods or retrospective methods that utilize a high-level of detail.
+Research using such methods largely focuses on measuring risk/safety, especially during passing events and general stress/comfort during cycling.
+There is a great focus on inferring these metrics from biosensory data and individual driving behavior.
+
+\subsubsection{Audio Recording}
+
+\citetext{thinking_aloud_on_the_road}{McIlroy et al.} and \citetext{sensory_indiscipline_and_affect}{Jones} took a similar approach by utilizing audio diaries, letting participants freely reflect their thoughts and emotions by “thinking out loud” during their ride.
+\emph{McIlroy et al.} utilized this method to not only record data of cyclists but also car drivers and motorcyclists, making all of them navigate the same, predefined route, to gain an understanding of affective differences between the groups.
+Through thorough coding of the recorded data and an elaborate analysis, they found that cyclists' exhibited increased emotional arousal, compared to the other groups, which was highly influenced by the road surface quality.
+\emph{Jones}, in contrast, took a more natural approach, asking participants to record their diaries during their commute, while also recording GPS locations.
+\emph{Jones} then used this data to compare cyclists' sensory load depending on the space they traversed.
+
+Other works using speech-based methods, include ones by \citetext{evaluation_models_for_cyclists_perception}{Yamanaka et al.} and \citetext{physiological_responses_to_urban_design}{Rybarczyk et al.}, who both used mobile audio recordings as a baseline to develop models that infer cyclists' comfort levels from sensory data.
+Both works used sensors attached to the bicycle to record speed, acceleration, and vibration data to develop classical regression models.
+\citetextnoref{evaluation_models_for_cyclists_perception}{Yamanaka et al.} also recorded braking and steering behavior, while \citetextnoref{physiological_responses_to_urban_design}{Rybarczyk et al.} relied on additional biosensory heart rate data.
+The two of them also performed similar evaluations, subdividing routes into smaller segments to link discomfort with specific sections, like slopes, intersections or unclear pathways.
+\citetextnoref{evaluation_models_for_cyclists_perception}{Yamanaka et al.} required participants to perform five numerical ratings, on different measures, per segment, while \citetextnoref{physiological_responses_to_urban_design}{Rybarczyk et al.} only instructed participants to state when they feel particularly uncomfortable.
+
+\subsubsection{Interceptive Interviews}
+
+\citetext{gendered_perceptions_of_cycling_safety}{Graystone et al.} performed a number of interceptive surveys, stopping cyclists' in traffic, most of them while commuting and asking them to fill in a short questionnaire.
+They used their gathered data to investigate the effect of self-identified gender on cyclists' safety perceptions and found that cyclists' who identify as women reported significantly higher concerns regarding verbal abuse from car drivers.
+
+Using a similar methodology, \citetext{same_questions_different_answers}{Kazemzadeh et al.} compared in-traffic interceptive surveys with retrospective, online ones.
+Their conclusion was that while both methods produced similar results on a spatially broader level, cyclists' perceptions towards the specific spots they were surveyed in varied drastically, with online surveys being answered more positively and optimistically.
+They speculate that this could be because interceptive in-traffic questionnaires apply a certain pressure on cyclists, highlighting the effects of different data acquisition methods on \CSE.
+
+\subsubsection{Mapping}
+
+\citetext{using_mental_mapping}{Manton et al.} used a retrospective mental mapping approach to compare cyclists' subjective risk assessments to an objectively performed risk analysis, performed by evaluating the transport infrastructure.
+Participants had to color code segments of a previously driven, mentally mapped cycling route on a paper map, according to their perceived risk.
+When comparing this data against the objective one, \citetextnoref{using_mental_mapping}{Manton et al.} found, only partial alignment between the two datasets, highlighting the difference between perception and reality.
+They conclude, that their mapping method is highly useful for obtaining risk assessment data, highlighting its potential for participation by the general public.
+
+\citetext{mapping_the_emotional_experience}{Meenar et al.} went a step further and used a similar method to identify and map arbitrary emotions of cyclists.
+In contrast to the work by \citetextnoref{using_mental_mapping}{Manton et al.}, they did not provide participants with a printed map, but instead relied on them sketching out their route with added commentary on specific section.
+These sketches were then combined to create a color coded, emotional map, summarizing the experiences of multiple participants and evaluated by transportation planners, who confirmed their usefulness.
+This work highlights that recorded data on cyclists' emotions, with a high degree of spatial detail, can be used to improve transportation planning and overall traffic safety.
+
+
+\subsubsection{Physical Devices}
+
+Works by \citetext{using_naturalistic_data}{Dozza et al.} and \citetext{subjective_experiences_of_bicyclists}{Beck et al.} used a digital push-button, mounted to the handlebars to enable cyclists to record critical incidents during their ride, providing more detailed information on them at a later point in time.
+Both studies were performed in a very naturalistic setting, as they let participants use their modified bicycles for a period of up to two weeks, only analyzing the recorded incidents afterward.
+\citetextnoref{using_naturalistic_data}{Dozza et al.} used this data to compare incidents of traditional bicycles and electric bicycles and their causes.
+\citetextnoref{subjective_experiences_of_bicyclists}{Beck et al.} on the other hand specifically focused on analyzing cyclists' perceived risk induced by passing vehicles and the effect the passing distance has on it.
+Various works by \citetext{analysis_of_overtaking_manuvers,drivers_and_cyclists_safety_perceptions}{López et al.} also investigated \CSE during overtaking maneuvers, but instead of using a single button to signal high-risk situations, they built a custom device with five buttons, that allow cyclists' to submit a risk-rating on a five point scale.
+They then used this data in combination with measured passing distances to construct a regression model and discuss its usefulness for automated driving applications or improved safety systems.
+
+\subsection{Digital Control Devices for Bicycles}\label{subsec:digital_control_devices}
+
+Next, we look at previous works on the development of digital control devices for bicycles, to gather key takeaways on our physical prototype design to optimize it for safety and usability.
+
+\subsubsection{Physical Control Devices}
+
+To explore new paradigms for smartphone control during cycling, \citetext{no_need_to_stop}{Hochleitner et al.} conducted a study, letting participants explore movements for smartphone control, without restrictions, on a bicycle trainer.
+They observed that participants highly preferred keeping their hands on the handlebars at all times, while only executing small movements with their fingers.
+Based on these results, they conducted a second field-study, comparing different three smartphone interaction methods: using physical buttons on the handlebars, a wristband that detects quick twists of the wrist and directly interacting with the smartphones' touchscreen.
+This confirmed their previous findings, as participants exhibited significantly lower physical demand and frustration when using the physical buttons, in comparison to the other methods.
+
+These findings match with observations by \citetext{brotate_and_tribike}{Woźniak et al.}, who developed an evaluated two different physical control devices for smartphone control.
+Both were attached to the handlebars, next to the grip-area, but one presented users with a simple three button interface, while the other one largely relied on rotation control, featuring only a single button.
+They evaluated their two prototypes against each other in a field-study and found that the rotation based device allowed participants to maintain significantly more lateral control of their bicycles, compared to the one using buttons, as it did not require them to change their grip position while operating.
+
+Further, \citetext{text_me_if_you_can}{Matviienko et al.} investigated text input methods that could be used during cycling, comparing one-handed smartphone use with midair gestures and a set of ten physical buttons below the handlebars in a simulated, indoor environment.
+They noted that while the physical buttons, exerted a higher mental load on participants, they allowed participants to keep their hands on the handlebars, making the physical buttons overall less distracting in comparison to the other methods.
+
+\subsubsection{Gesture Based Controls}
+
+Finally, we briefly looked into control methods that rely solely on gestures.
+An analysis conducted by \citetext{gesturing_on_the_handlebars}{Caon et al.}, similar to the previously discussed work by \citetextnoref{no_need_to_stop}{Hochleitner et al.}, investigated finding gestures that could be performed during cycling, suitable for smartphone control.
+They focused on comparing the frequency of fingers used for said gestures and categorized different kinds movements to conclude that the most convenient gestures seem to be pressing motions with the thumb and index finger.
+It should be noted that this study was conducted using road bikes though, which require a very different grip position from ordinary city bikes, so its unclear whether their findings are applicable to general bicycle control.
+
+In contrast to this theoretical approach, only observing possible gestures without actually implementing an interface that utilizes them, \citetext{bike_gesture}{Tan et al.} built a wearable, glove like prototype, able to detect such gestures.
+While using their prototype resulted in a similar response time, compared to using physical input devices, they only observed a 92\% accuracy of gesture recognition, which could lead to increased frustration.
+
 \subsection{Research Questions}
+
+While researchers have utilized many methods to record and classify \CSE, little to no effort has been made to compare said methods against each other.
+Furthermore, the effects that these methods have on the very experience they are meant to record, have largely been disregarded.
+We believe that employing, intuitive, easy-to-use, physical devices to record \CSE, would minimize these effects.
+Thus, to enable further research into this topic, we want to design an electromechanical device, which mimics the functionality of previous devices (such as the one by \citetextnoref{analysis_of_overtaking_manuvers}{López et al.}) while optimizing its safety and usability by employing findings from the field of \hyperref[subsec:digital_control_devices]{\textsf{Digital Control Devices for Bicycles}}.
+
+\bigbreak\noindent
+In this thesis we describe our design process creating this device and evaluate it in a field-study to answer the following research questions:
+
+\vspace{-0.5em}
+\begin{enumerate}[label=\textsf{Q\arabic*:}, left=1em .. 3em]
+    \item How do different methods to record cyclists' subjective experiences affect their rating behavior?
+    \item What are cyclists' preferences regarding methods to record their subjective experiences?
+\end{enumerate}
