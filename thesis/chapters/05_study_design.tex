@@ -5,26 +5,26 @@ This section describes how we went about designing this study.
 
 \subsection{Recording Methods}\label{subsec:recording_methods}
 
-Our method using the “LikertShift” device works by recording its currently selected value, whenever we receive a new GPS location.
+Our method using the \likertshift device works by recording its currently selected value, whenever we receive a new GPS location.
 Thus, a selected value remains valid until the users selects a new one, and we receive their next GPS location, so a new rating gets recorded whenever they notice a change in their subjective experience and remains valid, onwards from that point in time, until they adjust the rating again.
 This allows users to choose a rating frequency they consider appropriate by themselves.
 
 We selected two methods from our survey of the related work we regard as suitable to compare against our method and adjusted them, to allow for a fair comparison.
-The first one, referred to as “Audio Recording” from now on, is taken from the work of \citetext{evaluation_models_for_cyclists_perception}{Yamanaka et al.}, who captured audio data while cycling and required participants to rate pre-defined route-segments using multiple measures on scales from 1 to 5.
+The first one, referred to as \audiorecording from now on, is taken from the work of \citetext{evaluation_models_for_cyclists_perception}{Yamanaka et al.}, who captured audio data while cycling and required participants to rate pre-defined route-segments using multiple measures on scales from 1 to 5.
 We adjusted it to only used one measure and also let participants perform ratings on arbitrary route segments, in contrast to pre-defined ones.
-The second method, referred to as “Mapping” is the one proposed by \citetext{using_mental_mapping}{Manton et al.}, who let participants color code segments of a previously driven route, based on their risk assessment.
+The second method, referred to as \mapping is the one proposed by \citetext{using_mental_mapping}{Manton et al.}, who let participants color code segments of a previously driven route, based on their risk assessment.
 In our study, we provided participants with a printed map, picturing the route they drove and let them divide it into multiple segments themselves, assigning a numerical rating to each segment, instead of color coding it.
 
 \subsubsection*{Choosing a Measure}
 
 We had to take great care to select a suitable measure, so we could compare the data collected by different participants and the different methods against each other.
-This is inherently difficult, as cyclists' subjective experiences are arguably very subjective and will thus vary drastically from participant to participant.
+This is inherently difficult, as cyclists' subjective experiences are arguably very subjective and will therefore vary drastically from participant to participant.
 
 As mentioned in the introduction to \autoref{sec:related_work}, most works rely on risk/safety and stress/comfort measures to quantify \CSE.
 The advantage of using risk/safety would be its independence from many external factors and high dependence on the chosen route.
 Constructing a route with highly varying risk factors would be comparatively easy, but deliberately placing participants in high-risk environments would be extremely unethical, which led us to quickly dismiss that approach.
 Letting participants rate their comfort level or travel satisfaction comes with its own set of challenges though.
-Overall comfort level depends on a lot of actors, such as participants initial mood, their experience in riding a bicycle, but also external factors such as weather, traffic, or surrounding scenery of the route.
+Overall comfort level depends on a lot of factors, such as participants initial mood, their experience in riding a bicycle, but also external factors such as weather, traffic, or surrounding scenery of the route.
 To be able to properly compare our recorded datasets against each other, we needed to find a way to eliminate as many of these factors as possible.
 
 As findings by \citetext{thinking_aloud_on_the_road}{McIlroy et al.} revealed the high impact of road surface quality on cyclists overall comfort and satisfaction with their travel, we decided to limit our measure to this, using the metric of “Travel satisfaction, based on the road” as the \CSE measure that participants have to use to rate segments of the route.
@@ -142,7 +142,6 @@ For each of these combinations, we first explained the method used to participan
 Once done, participants drove the respective route and after submitting their ratings, also filled in our prepared questionnaires in the \likertshift app.
 During the ride, a smartphone was mounted to the bicycle, in between the handlebars (\autoref{fig:smartphone_holder}), running the \likertshift app which displayed the route participants had to follow and recorded the required data.
 After all three combinations were completed, we finished by carrying out our interview.
-Finally, each participant received a compensation of \euro10.00 for their efforts.
 
 % linewidth_factor = 1 - (1 / (30 * textwidth_factor))
 % textwidth_factor ~ 4/7 (adjusted by hand)
@@ -164,6 +163,6 @@ Finally, each participant received a compensation of \euro10.00 for their effort
 
 \subsubsection*{Safety Precautions}
 
-To ensure each participants' safety, the researcher conducting the study followed them on their routes, retaining a save distance, with another bicycle.
+To ensure each participants' safety, the researcher conducting the study followed them on their routes, retaining a safe distance, with another bicycle.
 Participants were further told to not look at the route on the smartphone for extended periods of time and to focus their attention on the road in front of them and to stop and get in contact with the researcher if a problem occurred, but to otherwise ignore them.
 They were also told to only drive at a conservative, safe speed.

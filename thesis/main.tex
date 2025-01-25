@@ -44,6 +44,7 @@
 \usepackage{enumitem}
 \setitemize{label=\textbf{-},itemsep=0.3em,topsep=0.5em,parsep=0.2em,partopsep=0em}
 \usepackage{eurosym}
+\usepackage{multirow}
 \usepackage{siunitx}
 \usepackage{xfrac}
 \usepackage{xspace}
@@ -51,6 +52,7 @@
 \addto\extrasenglish{
     \def\sectionautorefname{Section}
     \def\subsectionautorefname{Section}
+    \def\subsubsectionautorefname{Section}
 }
 
 \makeatletter
@@ -73,13 +75,17 @@
 
 \def\CSE{CSE\xspace}
 
+\def\likertshift{\textsf{LikertShift}\xspace}
+\def\audiorecording{\textsf{Audio Recording}\xspace}
+\def\mapping{\textsf{Mapping}\xspace}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%_TITLE_PAGE_%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
 
 % Beispielhafte Nutzung der Vorlage für die Titelseite (bitte anpassen):
 \input{Institutsvorlage}
 
-\titel{Likertshift - an input device for monitoring Travel Experience while cycling} % Titel der Arbeit
+\titel{LikertShift - An Input Device for Recording Cycling Subjective Experiences} % Titel der Arbeit
 \typ{Bachelorarbeit} % Typ der Arbeit:  Diplomarbeit, Masterarbeit, Bachelorarbeit
 \grad{Bachelor of Science (B. Sc.)} % erreichter Akademischer Grad
     % z.B.: Master of Science (M. Sc.), Master of Education (M. Ed.), Bachelor of Science (B. Sc.), Bachelor of Arts (B. A.)
@@ -95,6 +101,7 @@
 \newpage
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%_TABLE_OF_CONTENTS_%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setcounter{tocdepth}{2}
 \tableofcontents
 \cleardoublepage    % deactivate for one-sided printing
 %\newpage           % activate for one-sided printing

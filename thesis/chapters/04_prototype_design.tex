@@ -24,9 +24,6 @@ To streamline the design of our prototype and to ensure its usefulness to other 
         The prototype device should be able to be manufactured and assembled using standard tools commonly available in most research laboratories.
 \end{enumerate}
 
-\noindent
-In \autoref{subsec:discussion_design_requirements} we analyze how well our final prototype device meets these requirements based on the results gathered from our field study.
-
 \subsection{Mechanical Design}
 
 \subsubsection{Initial Design Decisions}
@@ -72,7 +69,7 @@ Users can rate their subjective experience during cycling on a scale with multip
 We 3D printed all custom parts on a Voron 2.4 3D printer out of PETG filament, but any decently calibrated consumer FDM 3D printer should be able to produce them.
 
 To perform our initial evaluation, we decided to use a simple five-point Likert scale, with each position corresponding to the level of the cyclists' current travel satisfaction.
-Based on this we also decided on a name for our prototype: “LikertShift”.
+Based on this we also decided on a name for our prototype: \likertshift.
 
 \bigbreak\noindent
 \textit{%
@@ -148,8 +145,8 @@ All parts have been designed specifically for FDM 3D printing, with a particular
 
 The prototype uses a simple rotary switching mechanism.
 When the outer \rotator gets rotated, it pulls the \rotatorhead along a ramped track (see \autoref{fig:cad_ramped_track}).
-The \rotatorhead show in \autoref{fig:cad_rotator_head} consists of a \SI{4}{mm} steel bearing ball that is socketed into a 3D printed part and gets pushed into the track by a spring.
-It is constraint to only move along the rotation axis by $\sim\SI{5}{\mm}$ to be able to overcome the ramps.
+The \rotatorhead, shown in \autoref{fig:cad_rotator_head}, consists of a \SI{4}{mm} steel bearing ball that is socketed into a 3D printed part and gets pushed into the track by a spring.
+It is constrained to only move along the rotation axis by $\sim\SI{5}{\mm}$ to be able to overcome the ramps.
 This way, the mechanism automatically snaps into the depressions between the ramps.
 
 At the bottom of the depressions are nickel-plated neodymium magnets which are being used as the switching contacts while the \rotatorhead acts as the contactor.
@@ -184,6 +181,10 @@ This setup results in a total contact resistance of $\sim\SI{10}{\ohm}$, which i
 
 \subsection{Electronics}\label{subsec:electronics}
 
+This section describes our electronics design, as well as microcontroller choice and power requirements.
+For retrieving data from the prototype to our frontend (see \autoref{subsec:frontend_design}), we decided to use the Bluetooth Low Energy (BLE) network, as it offers low-power operation, is supported by most modern smartphones and does not require stationary access points to function.
+We also only need very short-range communication capabilities, as the user is always situated right next to our device.
+
 \subsubsection{Microcontroller Choice}
 
 For data acquisition and communication we wanted to use the nRF52 series Microcontroller Units (MCUs) because of their exceptionally low-power usage, Bluetooth Low Energy (BLE) capabilities and wide availability\footnoteurl{https://docs.nordicsemi.com/category/nrf-52-series}.
@@ -208,13 +209,13 @@ The KiCad EDA also qualifies as FOSS.
 
 \subsubsection{Firmware}\label{subsec:firmware}
 
-\def\gpiohigh{\textsf{HIGH}\xspace}
+\def\gpiohigh{\texttt{HIGH}\xspace}
 
-When powered up, the prototype starts to advertise itself, broadcasting its name and that it is ready to accept connections.
-Once a central device, the smartphone in our case, initiates a connection, the prototype hosts a Generic Attribute (GATT) server providing two services, a custom “LikertShift” service to retrieve the currently selected switch position and a battery service to retrieve the current battery level.
+When powered up, the prototype starts to advertise itself via BLE, broadcasting its name and that it is ready to accept connections.
+Once a central device, the smartphone in our case, initiates a connection, the prototype hosts a Generic Attribute (GATT) server providing two services, a custom \likertshift service to retrieve the currently selected switch position and a battery service to retrieve the current battery level.
 Both services each offer a one-byte characteristic that can be read by the central device.
 
-When the LikertShift characteristic gets read, first the GPIO pin connected to the contactor at the \rotatorhead gets set to a \gpiohigh state ($\sim\SI{3.3}{V}$) then each of the pins connected to the switching contacts gets read, checking for a matching \gpiohigh state.
+When the \likertshift characteristic gets read, first the GPIO pin connected to the contactor at the \rotatorhead gets set to a \gpiohigh state ($\sim\SI{3.3}{V}$) then each of the pins connected to the switching contacts gets read, checking for a matching \gpiohigh state.
 Finally, the detected position gets sent back to the central device, as a value from \mbox{$1$ -- $n_{positions}$}.
 There are two special cases here:
 \vspace*{-0.5em}
@@ -228,13 +229,15 @@ There are two special cases here:
 \noindent
 When the battery characteristic gets read, the battery voltage is measured by the MCUs onboard Analog to Digital Converter (ADC).
 Then, the measured voltage gets linearized and scaled to a value from $0$ -- $255$ and sent back to the central device.
+
 \bigbreak\noindent
 The firmware is written in Rust\footnoteurl{https://www.rust-lang.org/} using Embassy\footnoteurl{https://embassy.dev/} (a framework for embedded applications).
 
-\subsection{Frontend Design}
+\newpage
+\subsection{Frontend Design}\label{subsec:frontend_design}
 
-To view and record ratings using the LikertShift we need a frontend that can connect to it via BLE and talk to our firmware to retrieve the currently selected position.
-Because we also want to record location data simultaneously and the LikertShift hardware does not possess GPS recording capabilities, we decided to implement this frontend as a smartphone app.
+To view and record ratings using the \likertshift we need a frontend that can connect to it via BLE and talk to our firmware to retrieve the currently selected position.
+Because we also want to record location data simultaneously and the \likertshift hardware does not possess GPS recording capabilities, we decided to implement this frontend as a smartphone app.
 This way, we can also extend it to query other information, relevant for our evaluation, from study participants.
 
 \subsubsection{Features}
@@ -242,8 +245,8 @@ This way, we can also extend it to query other information, relevant for our eva
 The base implementation of the app allows users to:
 
 \begin{itemize}[itemsep=0em]
-    \item connect to nearby LikertShift devices and display their currently selected rating.
-    \item record GPS locations and LikertShift ratings along arbitrary travel routes.
+    \item connect to nearby \likertshift devices and display their currently selected rating.
+    \item record GPS locations and \likertshift ratings along arbitrary travel routes.
     \item view their current location and travelled route on a 2D map.
 \end{itemize}
 
@@ -262,9 +265,9 @@ Thus, we added the ability for researchers to:
 
 \noindent
 Surveys and routes can be defined in a human-readable \texttt{JSON} format, so minimal programming knowledge is required to customize the app.
-For evaluating the LikertShift in our own field-study we also added the ability to use the other recording methods described in \autoref{subsec:recording_methods}.
+For evaluating the \likertshift in our own field-study we also added the ability to use the other recording methods described in \autoref{subsec:recording_methods}.
 
-\subsubsection{Implementation Details}
+\subsubsection{Implementation Details}\label{subsec:implementation_details}
 
 \def\mapscreen{\textsf{Map Screen}\xspace}
 \def\routesscreen{\textsf{Routes Screen}\xspace}
@@ -273,7 +276,7 @@ For evaluating the LikertShift in our own field-study we also added the ability 
 
 The app is divided into four main screens which can be switched between by using the bottom bar.
 When it gets started for the first time, the user is presented with a demographics form to fill-in (see \autoref{subfig:app_demographics_form}).
-All form and survey data gets saved locally in a human-readable \texttt{JSON} format.
+All form and survey data gets saved locally in a \texttt{JSON} format.
 
 \begin{figure}[!htb]
     \centering
@@ -311,7 +314,7 @@ The \mapscreen displays the users current location and surroundings on a 2D map 
 It can be moved and rotated using standard touch gestures.
 The user can press the bottom-right toggle to make the map automatically follow the current location and long-press the compass to lock the rotation to the current movement direction.
 If the user starts a recording, the \mapscreen will also display the travelled route, as well as the preset route, if one was selected.
-Additionally, if a LikertShift device is connected, the \mapscreen will also display the devices' currently selected numeric rating and a description of its meaning.
+Additionally, if a \likertshift device is connected, the \mapscreen will also display the devices' currently selected numeric rating and a description of its meaning.
 Routes from the \routesscreen can also be previewed on the \mapscreen.
 
 \subsubsection*{Routes Screen and Route Recording}
@@ -320,19 +323,19 @@ The \routesscreen is divided into two tabs, showing the available route presets 
 Route presets can be previewed using the “Eye” buttons and new recordings can be started using the \raisebox{0.1em}{\textbf{+}} button.
 
 When starting a new recording the user has to select a recording method and optionally a route preset.
-Then, whenever the app receives a location update (every $\sim1$--$\SI{5}{s}$), a new data point will be added to the recording, containing the new location, the time elapsed since starting the recording and the current rating value by the active LikertShift device, if available.
+Then, whenever the app receives a location update (every $\sim1$--$\SI{5}{s}$), a new data point will be added to the recording, containing the new location, the time elapsed since starting the recording and the current rating value by the active \likertshift device, if available.
 This data is then immediately written to a new line in a \texttt{CSV} file, to prevent data loss in case of app crashes or battery run out.
 A recording can be stopped at any time by pressing the “Stop Recording” button that will appear above the main navigation bar.
 Once a recording is finished, the user can be presented with various forms and surveys (see \autoref{subfig:app_tlx_survey} for an example we used in our field-study).
 
 \subsubsection*{Devices Screen}
 
-The \devicesscreen allows discovering of and connecting to nearby LikertShift devices (see \autoref{subfig:app_devices_screen}).
+The \devicesscreen allows discovering of and connecting to nearby \likertshift devices (see \autoref{subfig:app_devices_screen}).
 It displays a list of currently advertising and already known devices.
 A new connection can be established by selecting one of the devices from the list.
 Only one device can be connected to at any time.
 If a connection gets established successfully, its Bluetooth icon lights up, signaling that its currently connected.
-During connection, the LikertShift device is queried for its currently selected rating value every \SI{500}{ms} (this update rate can be easily adjusted).
+During connection, the \likertshift device is queried for its currently selected rating value every \SI{500}{ms} (this update rate can be easily adjusted).
 Invalid ratings (see \autoref{subsec:firmware}) are ignored, so the previous rating is kept.
 
 \subsubsection*{Settings Screen}
