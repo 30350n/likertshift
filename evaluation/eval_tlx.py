@@ -10,7 +10,7 @@ from matplotlib.axes import Axes
 from numpy.typing import NDArray
 from scipy import stats
 
-from eval_questionnaires import load_json, METHODS, confidence_interval
+from eval_ueq import load_json, METHODS, confidence_interval
 
 TLX_SCALES = (
     "mental_demand",
