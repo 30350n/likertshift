@@ -3,15 +3,16 @@
 \subsection{Participants}
 
 We recruited a total of 18 participants for our study using posters we placed on the university campus in combination with snowball sampling.
-Participants age ranged from 18 to 59 years and only 3 of the 18 participants identified as female, all others identified as male.
+Participants age ranged from 18 to 59 years.
+Only 3 of the 18 participants identified as female, all others identified as male.
 Each participant received a compensation of \euro10.00 for their efforts.
-The study was conducted from November to December, but except for temperature differences and some light raining, general weather conditions were consistent between study sessions.
-Each session to about 90 minutes in total.
-We experienced no study cancellations and all recorded data was useable.
+The study was conducted from November to December, but except for temperature differences and some light rain, general weather conditions were consistent between study sessions.
+Each session took about 90 minutes in total.
+We experienced no study cancellations, and all recorded data was usable.
 
 \subsection{Route Data}
 
-In this section we describe the evaluation of the quantitative ratings performed by participants on the measure of “Travel satisfaction, based on the road” using the \likertshift, \audiorecording, and \mapping methods respectively, as described in \autoref{subsec:recording_methods} and \autoref{subsec:data_collection}. \autoref{fig:route_ratings} shows a visually appealing overview of all data collected using all three methods.
+In this section, we describe the evaluation of the quantitative ratings performed by participants on the measure of “Travel satisfaction, based on the road” using the \likertshift, \audiorecording, and \mapping methods respectively, as described in \autoref{subsec:recording_methods} and \autoref{subsec:data_collection}. \autoref{fig:route_ratings} shows a visually appealing overview of all data collected using all three methods.
 
 \begin{figure}[!htb]
     \centering
@@ -39,8 +40,8 @@ In this section we describe the evaluation of the quantitative ratings performed
 
 \subsubsection{Preprocessing}\label{subsec:preprocessing}
 
-Preprocessing of the recorded data was largely performed by hand, with the help of some simple python scripts.
-The start and end position of all data recordings were adjusted manually, to remove unneeded data.
+Preprocessing of the recorded data was largely performed by hand, with the help of some simple Python scripts.
+The start and end positions of all data recordings were adjusted manually, to remove unneeded data.
 For the \audiorecording method, we had to manually listen to each audio file and extract the ratings performed by participants to match them to the recorded timestamps and GPS locations.
 A similar process was used for the \mapping method to match the sections drawn on the paper maps to the recorded data.
 Our \likertshift method required no further preprocessing.
@@ -102,7 +103,7 @@ We then gathered all ratings by road-type for each method and computed their mea
 We evaluated each component of the \citetextnoref{nasa_tlx}{TLX} and \citetextnoref{ueq+}{UEQ+} surveys separately, without computing an overall index, because we are most interested in what components cause increased task load or affect the user experience.
 
 The \textit{Physical Demand}, \textit{Temporal Demand}, and \textit{Performance} metrics of the \citetextnoref{nasa_tlx}{TLX} showed little statistical evidence for differences between methods.
-The most notable difference is the increased \textit{Mental Demand} objected by the \mapping method, as well as higher \textit{Frustration} and perceived \textit{Effort} in comparison to the live-recording methods.
+The most notable difference is the increased \textit{Mental Demand} observed with the \mapping method, as well as higher \textit{Frustration} and perceived \textit{Effort} in comparison to the live-recording methods.
 There is insufficient statistical evidence for differences in task load between our \likertshift method and the \audiorecording method.
 
 \begin{figure}[!htb]
@@ -114,18 +115,18 @@ There is insufficient statistical evidence for differences in task load between 
 
 \bigbreak\noindent
 The evaluation of the \citetextnoref{ueq+}{UEQ+} metrics turned out to be more interesting.
-We observed incredibly evidence for the \textit{Attractiveness} and \textit{Intuitiveness} of our \likertshift method, compared to the other ones.
+We observed strong evidence for the \textit{Attractiveness} and \textit{Intuitiveness} of our \likertshift method, compared to the other ones.
 While participants perceived the \likertshift and \audiorecording methods to be similarly \textit{Efficient}, in comparison, the \mapping method was perceived as highly inefficient.
 We can also observe low \textit{Social Acceptance} ratings of the \audiorecording method.
 
 These findings were confirmed by our performed interviews.
-Multiple participants denoted that the additional time requirements of the \mapping method make using it very unattractive to them.
+Multiple participants noted that the additional time requirements of the \mapping method make using it very unattractive to them.
 Similarly, the majority of participants stated they did not like to talk during cycling and found it “awkward” to perform the \audiorecording method.
 When asked what method participants would choose to conduct a longer ($\sim\SI{2}{weeks}$) field-study which would require them to record their travel satisfaction on all of their commutes and other trips, 17 out of 18 participants chose our \likertshift method.
 
 \begin{figure}[!htb]
     \centering
     \includegraphics[height=0.5\linewidth]{../evaluation/eval_ueq.pdf}
-    \caption{UEQ+ results (the errorbars denote the confidence interval based on a student's distribution; $p$ values are computed using a Friedman test; values are normalized from -1 to 1)}
+    \caption{UEQ+ results (error-bars denote the confidence interval based on a student's distribution; $p$ values are computed using a Friedman test; values are normalized from -1 to 1)}
     \label{fig:eval_ueq}
 \end{figure}
