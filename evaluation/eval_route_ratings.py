@@ -53,46 +53,6 @@ def great_circle_point(p1: Coord, p2: Coord, x: float = 0.5):
     return (lat, long)
 
 
-def closest_point_on_great_circle(p1: Coord, p2: Coord, p3: Coord):
-    bearing_1_to_2 = initial_bearing(p1, p2)
-    distance_1_to_2 = haversine_distance(p1, p2)
-    bearing_1_to_3 = initial_bearing(p1, p3)
-    distance_1_to_3 = haversine_distance(p1, p3)
-
-    inner_cross_track: float = np.sin(distance_1_to_3) * np.sin(bearing_1_to_3 - bearing_1_to_2)
-    cross_track_distance: float = np.arcsin(inner_cross_track)
-
-    inner_along_track: float = np.cos(distance_1_to_3) / np.cos(cross_track_distance)
-    along_track_distance: float = np.arccos(inner_along_track)
-
-    return great_circle_point(p1, p2, along_track_distance / distance_1_to_2)
-
-
-def test_math():
-    point_a = (52.533685, 13.271484)
-    point_b = (41.753841, 65.566406)
-    point_c = (44.949776, 28.125000)
-
-    point_a_rad: Coord = np.radians(point_a).tolist()
-    point_b_rad: Coord = np.radians(point_b).tolist()
-    point_c_rad: Coord = np.radians(point_c).tolist()
-
-    point_d_rad: Coord = closest_point_on_great_circle(point_a_rad, point_b_rad, point_c_rad)
-    point_d: list[float] = np.degrees(point_d_rad).tolist()
-
-    folium_map = folium.Map()
-
-    xs: list[float] = np.linspace(0, 1, 128).tolist()
-    folium.PolyLine(
-        [np.degrees(great_circle_point(point_a_rad, point_b_rad, x)) for x in xs],
-    ).add_to(folium_map)
-    folium.CircleMarker(point_a).add_to(folium_map)
-    folium.CircleMarker(point_b).add_to(folium_map)
-    folium.CircleMarker(point_c).add_to(folium_map)
-    folium.CircleMarker(point_d).add_to(folium_map)
-    folium_map.show_in_browser()
-
-
 def plot_test_map():
     ROUTE = "*e"
     METHOD = "*"
@@ -298,7 +258,6 @@ def remap_recording_ratings_to_route(
 
     remapped_ratings[prev_index:] = rec_ratings[-1]
 
-    print(remapped_ratings)
     return remapped_ratings
 
 
@@ -371,7 +330,6 @@ for path in PARENT_DIRECTORY.glob("data/*/recordings/*/rec-*-*-*route.csv"):
     interp_coords, interp_types = interp_routes[index]
     interp_ratings = remap_recording_ratings_to_route(coords, ratings, interp_coords)
 
-    print(len(interp_types), len(interp_ratings))
     for type, rating in zip(interp_types, interp_ratings):
         ratings_per_method_per_type[METHODS.index(method)][type].append(rating)
 
@@ -393,6 +351,7 @@ for i, method in enumerate(METHODS):
             if scale
             else (mean, mean)
         )
+
         print(
             section_type,
             ": ",
