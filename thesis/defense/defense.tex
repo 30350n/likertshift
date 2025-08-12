@@ -20,6 +20,14 @@
 
 \AtBeginSection{\sectionpage} % Enable section pages
 
+\makeatletter
+\patchcmd{\beamer@sectionintoc}
+{\vfill}
+{\vskip\itemsep}
+{}
+{}
+\makeatother
+
 \begin{document}
 
 \maketitle
