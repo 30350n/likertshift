@@ -15,6 +15,10 @@
 *.synctex.gz
 *.synctex.gz(busy)
 
+*.nav
+*.snm
+*.vrb
+
 *.pdf
 !thesis.pdf
 

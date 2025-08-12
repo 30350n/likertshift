@@ -12,30 +12,42 @@
     in {
         devShells.${system}.default = pkgs.mkShell {
             nativeBuildInputs = with pkgs; [
+                pdfpc
                 (texlive.combine {
                     inherit (texlive) scheme-basic;
                     inherit
                         (texlive)
+                        adjustbox
+                        anyfontsize
+                        beamer
                         booktabs
                         caption
+                        catchfile
                         cite
                         collection-fontsrecommended
                         comment
                         csquotes
                         enumitem
                         eurosym
+                        fontaxes
+                        fontspec
                         koma-script
                         latexmk
                         microtype
                         multirow
                         pdflscape
                         pgf
+                        roboto
                         setspace
                         siunitx
                         tools
+                        tuda-ci
                         urlbst
                         wrapfig
+                        xcharter
                         xfrac
+                        xkeyval
+                        xstring
                         ;
                 })
             ];
