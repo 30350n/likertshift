@@ -16,5 +16,6 @@
 *.synctex.gz(busy)
 
 *.pdf
+!thesis.pdf
 
 *.pdn
