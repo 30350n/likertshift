@@ -8,6 +8,8 @@
 \usepackage[english]{babel}
 \usepackage[autostyle]{csquotes}
 \usepackage{bookmark}
+\usepackage{enumitem}
+\usepackage{eurosym}
 \newcommand*{\code}[1]{\texttt{#1}}
 
 \title[LikertShift]{LikertShift - An Input Device for Recording Cycling Subjective Experiences}
@@ -61,5 +63,106 @@
     \end{columns}
 \end{frame}
 
+\section{Prototype Design}
+
+\begin{frame}{Design Requirements}
+    \begin{enumerate}[label=\textsf{DRQ\arabic*}, left=1em .. 4.5em]
+        \item<1-> \textbf{Intuitive}
+
+            Using the prototype should be intuitive.
+
+            \note<1>{- Prototyp moeglichst einfach zu benutzen + offensichtlich}
+
+        \item<2-> \textbf{Robust}
+
+            Minimal user intervention and maintenance.
+
+            \note<2>{
+                - wartungsarm (Batteriewechsel, langsame Abnutzung)\\
+                - Prototyp sollte bei normaler Nutzung nicht kaputt gehen\\
+                - in der Lage Umgebungsbedinungen (Regen, Feuchtigkeit, Temperaturschwankungen) auszuhalten
+            }
+
+        \item<3-> \textbf{Safe}
+
+            Uncompromising to the user's safety.
+
+            \note<3>{
+                - Sicherheit beim Fahrradfahren nicht eingeschraenkt\\
+                - gewisse Ablenkung durch Bewerten ist immer gegeben
+            }
+
+        \item<4-> \textbf{Affordable}
+
+            Total cost < \euro25.00.
+
+            \note<4>{
+                - guenstig, festgelegter maximalpreis von 25 euro\\
+                - erschien mit herstellungsmeth., art von hardware erreichbar
+            }
+
+        \item<5-> \textbf{Easy to Reproduce}
+
+            Manufactured and assembled with standard components and tools.
+
+            \note<5>{
+                - einfach nachzubauen\\
+                - benoetigte bauteile + werkzeuge sollten standardmaessig verfuegbar sein
+            }
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{LikertShift Prototype}
+    \begin{columns}[onlytextwidth,c]
+        \column{.5\linewidth}
+        \centering
+        \includegraphics[height=0.7\linewidth]{../images/likertshift_assembled.jpg}
+        \column{.5\linewidth}
+        \centering
+        \includegraphics[height=0.7\linewidth]{../images/likertshift_mounted.jpg}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{How does it work?}
+    \framesubtitle{Mechanics}
+    \begin{columns}[onlytextwidth,c]
+        \column{.5\linewidth}
+        \centering
+        \includegraphics[height=0.7\linewidth]{../images/cad_rotator_head.jpg}
+        \column{.5\linewidth}
+        \centering
+        \includegraphics[height=0.7\linewidth]{../images/cad_ramped_track.jpg}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{How does it work?}
+    \framesubtitle{Electronics}
+    \begin{columns}[onlytextwidth,c]
+        \column{.5\linewidth}
+        \centering
+        \includegraphics[height=0.7\linewidth]{../images/likertshift_pcb.jpg}
+        \column{.5\linewidth}
+        \centering
+        \includegraphics[height=0.7\linewidth]{../images/cad_pcb_compartment.jpg}
+    \end{columns}
+\end{frame}
+
+\begin{frame}{How does it work?}
+    \framesubtitle{Software}
+    \begin{columns}[onlytextwidth,c]
+        \column{.25\linewidth}
+        \centering
+        \includegraphics[height=1.35\linewidth]{../images/app_map_screen.jpg}
+        \column{.25\linewidth}
+        \centering
+        \includegraphics<2->[height=1.35\linewidth]{../images/app_routes_screen.jpg}
+        \column{.25\linewidth}
+        \centering
+        \includegraphics<3->[height=1.35\linewidth]{../images/app_devices_screen.jpg}
+        \column{.25\linewidth}
+        \centering
+        \includegraphics<4->[height=1.35\linewidth]{../images/app_tlx_survey.jpg}
+    \end{columns}
+\end{frame}
 
 \end{document}
