@@ -10,6 +10,9 @@
 \usepackage{bookmark}
 \usepackage{enumitem}
 \usepackage{eurosym}
+\usepackage{multirow}
+\usepackage{siunitx}
+
 \newcommand*{\code}[1]{\texttt{#1}}
 
 \title[LikertShift]{LikertShift - An Input Device for Recording Cycling Subjective Experiences}
@@ -165,4 +168,50 @@
     \end{columns}
 \end{frame}
 
+\section{Study Design}
+
+\begin{frame}{Study Design}
+    \textbf{What methods are we comparing?}
+    \pause
+
+    \quad $\Rightarrow$ \;Audio Recording, Manual Mapping, LikertShift
+    \pause
+
+    \vspace*{1em}
+    \textbf{What are we measuring?}
+    \pause
+
+    \quad $\Rightarrow$ \;Travel Satisfaction, based on the road
+    \pause
+
+    \vspace*{1em}
+    \textbf{Route Selection}
+
+    \vspace*{1em}
+    \footnotesize
+    \centering
+    \begin{tabular}{c|c|ccccc|c}
+        \multirow{2}{*}{Name} & \multirow{2}{2.4em}{Total\newline} & \multicolumn{5}{c|}{Road Type} & \multirow{2}{4.7em}{Number of\newline}\\
+        \cline{3-7}
+        &&&&&&&\\[-1em]
+        & Length & Road & Bike Path & Mixed Path & Pedestrian Way & Other & Crossings\\[0.15em]
+        \hline
+        &&&&&&&\\[-0.8em]
+        North & \SI{2589}{m} &  \SI{191}{m} & \SI{480}{m} & \SI{1135}{m} & \SI{359}{m} & \SI{424}{m} & 13\\[0.3em]
+        East  & \SI{2007}{m} &  \SI{853}{m} & \SI{465}{m} &  \SI{173}{m} & \SI{181}{m} & \SI{335}{m} & 9\\[0.3em]
+        South & \SI{2289}{m} & \SI{1152}{m} & \SI{677}{m} &  \SI{116}{m} &  \SI{47}{m} & \SI{297}{m} & 9\\
+    \end{tabular}
+\end{frame}
+
+\begin{frame}{Study Design}
+    \framesubtitle{Routes}
+    \begin{columns}[onlytextwidth,c]
+        \column{.5\linewidth}
+        \centering
+        \includegraphics[height=0.7\linewidth]{../images/wood_planks_path.jpg}
+        \column{.5\linewidth}
+        \centering
+        \includegraphics[height=0.7\linewidth]{../images/field_east_route.jpg}
+    \end{columns}
+\end{frame}
 \end{document}
