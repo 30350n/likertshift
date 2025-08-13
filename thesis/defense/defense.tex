@@ -214,4 +214,111 @@
         \includegraphics[height=0.7\linewidth]{../images/field_east_route.jpg}
     \end{columns}
 \end{frame}
+
+\section{Results}
+
+{
+    \setbeamerfont{frametitle}{size=\large}
+    \begin{frame}{TLX Results}
+        \centering
+        \includegraphics[height=0.42\linewidth]{../../evaluation/eval_tlx.pdf}
+    \end{frame}
+}
+
+{
+    \setbeamerfont{frametitle}{size=\large}
+    \begin{frame}{UEQ+ Results}
+        \centering
+        \includegraphics[height=0.42\linewidth]{../../evaluation/eval_ueq.pdf}
+    \end{frame}
+}
+
+{
+    \setbeamerfont{frametitle}{size=\large}
+    \begin{frame}{Recorded Route Data}
+        \begin{columns}[onlytextwidth,c]
+            \column{.5\linewidth}
+            \centering
+            \includegraphics[height=0.7\linewidth]{../images/ratings_north_route.jpg}
+            \column{.5\linewidth}
+            \centering
+            \includegraphics[height=0.7\linewidth]{../images/ratings_east_route.jpg}
+        \end{columns}
+    \end{frame}
+
+    \begin{frame}{Recorded Route Data}
+        \begin{table}[!htb]
+            \scriptsize
+            \centering
+            \begin{tabular}{l|ccccccc}
+                \multirow{2}{*}{LikertShift} & \multicolumn{7}{c}{Road Type}\\
+                \cline{2-8}
+                &&&&&&&\\[-1em]
+                & Road & Bike Path & Mixed Path & Pedestrian Way & Wood Path & Field & Lawn\\[0.15em]
+                \hline
+                &&&&&&&\\[-0.8em]
+                MEAN     & 3.7661 & 3.4624 & 3.7708 & 3.0176 & 1.8114 & 1.9804 & 2.8664\\[0.3em]
+                VARIANCE & 0.9327 & 0.9140 & 0.8548 & 0.8873 & 0.9661 & 1.2512 & 1.3830\\[0.3em]
+                STDDEV   & 0.9658 & 0.9560 & 0.9246 & 0.9420 & 0.9829 & 1.1186 & 1.1760\\
+            \end{tabular}
+
+            \vspace{1em}
+            \begin{tabular}{l|ccccccc}
+                \textsf{Audio} & \multicolumn{7}{c}{Road Type}\\
+                \cline{2-8}
+                &&&&&&&\\[-1em]
+                \textsf{Recording} & Road & Bike Path & Mixed Path & Pedestrian Way & Wood Path & Field & Lawn\\[0.15em]
+                \hline
+                &&&&&&&\\[-0.8em]
+                MEAN     & 3.6622 & 3.4978 & 3.7915 & 2.9559 & 2.5513 & 1.6895 & 2.4405\\[0.3em]
+                VARIANCE & 0.8519 & 0.7970 & 0.8172 & 1.4158 & 0.5622 & 1.2402 & 0.9290\\[0.3em]
+                STDDEV   & 0.9230 & 0.8927 & 0.9040 & 1.1899 & 0.7498 & 1.1137 & 0.9638\\
+            \end{tabular}
+
+            \vspace{1em}
+            \begin{tabular}{l|ccccccc}
+                \multirow{2}{*}{Mapping} & \multicolumn{7}{c}{Road Type}\\
+                \cline{2-8}
+                &&&&&&&\\[-1em]
+                & Road & Bike Path & Mixed Path & Pedestrian Way & Wood Path & Field & Lawn\\[0.15em]
+                \hline
+                &&&&&&&\\[-0.8em]
+                MEAN     & 3.7476 & 3.4952 & 3.7230 & 3.3553 & 2.3586 & 1.0000 & 3.0291\\[0.3em]
+                VARIANCE & 0.9192 & 1.0542 & 1.0379 & 1.2773 & 1.5566 & 0.0000 & 1.0891\\[0.3em]
+                STDDEV   & 0.9587 & 1.0267 & 1.0188 & 1.1302 & 1.2476 & 0.0000 & 1.0436\\
+            \end{tabular}
+        \end{table}
+    \end{frame}
+}
+
+\begin{frame}{Future Work}
+    \large
+
+    \vspace*{2em}
+    \textbf{Hybrid Methods} - Combination of LikertShift and Mapping Methods
+    \pause
+
+    \vspace*{2em}
+    \textbf{Improved Feedback} - Sounds / Vibrations
+    \pause
+
+    \vspace*{2em}
+    \textbf{Software Improvements} - for standalone / long-time Usage Scenarios
+\end{frame}
+
+\begin{frame}{Thank you for listening!}
+    \large
+    \centering
+
+    \vspace*{2.5em}
+    \includegraphics[height=0.175\linewidth]{images/github-mark.png}
+
+    \vspace*{1em}
+    \textbf{All project sources are available at:}
+
+    \vspace*{0.5em}
+    \url{https://github.com/30350n/likertshift}
+
+\end{frame}
+
 \end{document}
