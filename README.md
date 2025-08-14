@@ -15,6 +15,10 @@ The CAD files can be viewed and modified via FreeCAD and OpenSCAD, ready to prin
 
 The PCB is designed using KiCad 9.0. For the first prototype we manufactured the PCBs at [Aisler](https://aisler.net/).
 
+### [Firmware](firmware/)
+
+The LikertShift firmware runs on the Seeed XIAO nRF52840 dev board on the LikertShift PCB. It is built with Rust and the [embassy-rs](https://github.com/embassy-rs/embassy) framework for embedded development.
+
 ### [App](app/)
 
 The LikertShift App provides different methods for recording Travel Satisfaction while Cycling (or any other data, that can be represented on a Likert Scale).
