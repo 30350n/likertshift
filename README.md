@@ -9,7 +9,9 @@ The LikertShift project introduces a novel way of collecting Travel Satisfaction
 
 ### [Hardware](hardware/)
 
-The LikertShift hardware consists of the CAD files for all the 3D printed parts, as well as the design files for the LikertShift [PCB](hardware/pcb/).
+The LikertShift hardware consists of the [CAD](hardware/cad/) files for all the 3D printed parts, as well as the design files for the LikertShift [PCB](hardware/pcb/).
+
+The CAD files can be viewed and modified via FreeCAD and OpenSCAD, ready to print STLs with correct print orientation are available under the [`stl/`](hardware/cad/stl/) directory.
 
 The PCB is designed using KiCad 9.0. For the first prototype we manufactured the PCBs at [Aisler](https://aisler.net/).
 
