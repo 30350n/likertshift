@@ -7,6 +7,12 @@ The LikertShift project introduces a novel way of collecting Travel Satisfaction
 
 ## Repository Overview
 
+### [Hardware](hardware/)
+
+The LikertShift hardware consists of the CAD files for all the 3D printed parts, as well as the design files for the LikertShift [PCB](hardware/pcb/).
+
+The PCB is designed using KiCad 9.0. For the first prototype we manufactured the PCBs at [Aisler](https://aisler.net/).
+
 ### [App](app/)
 
 The LikertShift App provides different methods for recording Travel Satisfaction while Cycling (or any other data, that can be represented on a Likert Scale).

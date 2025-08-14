@@ -1,0 +1,6 @@
+*.bak
+*-backups
+fp-info-cache
+*.kicad_prl
+
+likertshift-pcb.step
