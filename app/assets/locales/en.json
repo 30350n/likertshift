@@ -29,7 +29,7 @@
                 "route_preset": "Route Preset",
                 "method": {
                     "title": "Recording Method",
-                    "01_device": "Likertshift Device",
+                    "01_device": "LikertShift Device",
                     "02_audio": "Audio",
                     "03_manual": "Manual Mapping"
                 },

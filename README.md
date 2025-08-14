@@ -1,19 +1,19 @@
 [![flutter](https://img.shields.io/badge/Flutter-3.24-aqua)](https://flutter.dev)
 [![license](https://img.shields.io/badge/License-MIT-lightgray)](app/LICENSE)
 
-# Likertshift
+# LikertShift
 
-The Likertshift project introduces a novel way of collecting Travel Satisfaction data while Cycling, by using a gearshift-like Device that reports to the users smartphone via BLE.
+The LikertShift project introduces a novel way of collecting Travel Satisfaction data while Cycling, by using a gearshift-like Device that reports to the users smartphone via BLE.
 
 ## Repository Overview
 
 ### [App](app/)
 
-The Likertshift App provides different methods for recording Travel Satisfaction while Cycling (or any other data, that can be represented on a Likert Scale).
+The LikertShift App provides different methods for recording Travel Satisfaction while Cycling (or any other data, that can be represented on a Likert Scale).
 
 #### Supported Recording Methods
 
-- Likertshift Device
+- LikertShift Device
 - Synchronized Audio Recording
 - Retrospective Manual Mapping
 

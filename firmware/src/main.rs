@@ -102,7 +102,7 @@ async fn main(spawner: Spawner) {
             _bitfield_1: raw::ble_gap_cfg_role_count_t::new_bitfield_1(0),
         }),
         gap_device_name: Some(raw::ble_gap_cfg_device_name_t {
-            p_value: b"Likertshift" as *const u8 as _,
+            p_value: b"LikertShift" as *const u8 as _,
             current_len: 11,
             max_len: 11,
             write_perm: unsafe { mem::zeroed() },
@@ -120,7 +120,7 @@ async fn main(spawner: Spawner) {
     static ADV_DATA: LegacyAdvertisementPayload = LegacyAdvertisementBuilder::new()
         .flags(&[Flag::GeneralDiscovery, Flag::LE_Only])
         .services_16(ServiceList::Complete, &[ServiceUuid16::BATTERY])
-        .full_name("Likertshift")
+        .full_name("LikertShift")
         .build();
 
     static SCAN_DATA: LegacyAdvertisementPayload = LegacyAdvertisementBuilder::new()

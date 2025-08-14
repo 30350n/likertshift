@@ -5,7 +5,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Likertshift</string>
+	<string>LikertShift</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -46,7 +46,7 @@
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>This app needs Bluetooth to communicate with Likertshift Devices.</string>
+	<string>This app needs Bluetooth to communicate with LikertShift Devices.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This app needs Location access to record your Location.</string>
 </dict>

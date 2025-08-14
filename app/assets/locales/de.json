@@ -29,7 +29,7 @@
                 "route_preset": "Vorgegebene Route",
                 "method": {
                     "title": "Aufnahmemethode",
-                    "01_device": "Likertshift Gerät",
+                    "01_device": "LikertShift Gerät",
                     "02_audio": "Audio",
                     "03_manual": "Manuelles Markieren (Karte)"
                 },
