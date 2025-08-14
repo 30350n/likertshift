@@ -31,11 +31,14 @@
                         eurosym
                         fontaxes
                         fontspec
+                        hyperxmp
+                        ifmtarg
                         koma-script
                         latexmk
                         microtype
                         multirow
                         pdflscape
+                        pdfpc
                         pgf
                         roboto
                         setspace

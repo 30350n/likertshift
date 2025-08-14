@@ -8,10 +8,15 @@
 \usepackage[english]{babel}
 \usepackage[autostyle]{csquotes}
 \usepackage{bookmark}
+\usepackage[overridenote]{pdfpc}
 \usepackage{enumitem}
 \usepackage{eurosym}
 \usepackage{multirow}
 \usepackage{siunitx}
+
+\pdfpcsetup{
+    duration=15,
+}
 
 \newcommand*{\code}[1]{\texttt{#1}}
 
@@ -39,7 +44,20 @@
 
 \begin{document}
 
+\note{
+    - willkommen zur verteidigung meiner bachelorarbeit\\
+    - dies das titel und so
+}
+
 \maketitle
+
+\note{
+    - was ist das Problem das wir loesen wollen\\
+    - erklaeren wie der prototyp entworfen und gebaut\\
+    - dabei gehe ich kurz auf design requirements, mechanischen aufbau, sowie software ein\\
+    - studienplanung zur evaluations\\
+    - ergebnisse der studie
+}
 
 \tableofcontents
 
@@ -49,6 +67,21 @@
     \centering
     \includegraphics[height=0.35\linewidth]{images/vemotion.png}
     \footnotetext{VEmotion (Bethge et al.) \quad \url{https://doi.org/10.1145/3472749.3474775}}
+
+    \note<1>{
+        - viele Arbeiten im Human Computer Interaction Berreich die sich mit automatisierter Emotionserkennung z.B. beim Fahren eines Fahrzeuges auseinandersetzen\\
+        - die erkannten emotionen koennen z.B. genutzt werden um Sprachassitenten empathischer erscheinen lassen (Sprachton anpassen), Fahrern andere Routen vorschlagen (z.B. langsamere, szenische Route falls nicht in Eile), sogar vom Fahren abhalten (strassenuntauglich)\\
+        - grosser Teil der Forschung fokussiert auf Kraftfahrzeuge, da aber vorallem in Grossstaedten das Fahrrad eine immer wichtigere Rolle einnimmt, ist es interessant Forschung auf Radfahrende zu erweitern
+    }
+
+    \note<2>{
+        - ein vielversprechender Ansatz ist Nutzung vieler verschiedener Kontextinformationen (Mimik, Fahrverhalten, Verkehr, Wetter) -> mit denen Modell trainiert\\
+        - dafuer benoetigt man Ground-Truth data\\
+        - beim Autofahren einfach -> Mikrofon (Emotionen self reporten)\\
+        - geht grundsaetzlich beim Radfahren auch, aber Umgebungsgeraeuche\\
+        - alternativ eintragen am Smartphone (nicht waehrend Fahren -> gefaehrlich)\\
+        - kam Gedanke verbessern -> haptisch Slider oder so was
+    }
 \end{frame}
 
 \begin{frame}{Motivation}
@@ -64,6 +97,19 @@
         \footnotetext<2>{Brotate and Tribike \ldots (Wo\'{z}niak et al.)}
         \footnotetext<2>{\url{https://doi.org/10.1145/3472749.3474775}}
     \end{columns}
+
+    \note<1>{
+        - gibt es sowas schon?\\
+        - spanische Forschungsgruppe hat fuer Studie Box mit mehreren Knoepfen gebaut\\
+        - Teilnehmer fahren Landstrasse, bewerten Gefahr Gefuehl wenn ueberholt werden\\
+        - simpel, nicht gut zu benutzen, kabel haengen raus -> keine abgeschlossene loesung
+    }
+
+    \note<2>{
+        - anderer Bereich umgesehen: Arbeit fokussiert Smartphone Eingabegeraete fuers Fahrradfahren\\
+        - direkt am griff montiert, ermoeglicht annehmen von anrufen, lautstaerke anpassen etc. (bewegen in beide richtungen + knopf)\\
+        - eigentlich einfacher -> was gibts am fahrrad was in mehreren stufen etwas einstellt -> gangschaltung
+    }
 \end{frame}
 
 \section{Prototype Design}
@@ -172,6 +218,11 @@
 
 \begin{frame}{Study Design}
     \textbf{What methods are we comparing?}
+    \note<1>{
+        - was wollen wir ueberhaupt vergleichen?\\
+        - verschiedene Methoden zur Messung von CSEs (Subjektive Erfahrungen von Radfahrern)\\
+        - Wahl von bereits genutzten Methoden
+    }
     \pause
 
     \quad $\Rightarrow$ \;Audio Recording, Manual Mapping, LikertShift
@@ -179,9 +230,18 @@
 
     \vspace*{1em}
     \textbf{What are we measuring?}
+    \note<3>{
+        - was ist die Metrik die wir Messen wollen?\\
+        - zur qualitativen Analyse von Routendaten ist es sinnvoll wenn fuer Studie eine von aeusseren Bedigungen unabhaengige Metrik gewaehlt (Wetter, Verkehr etc.)\\
+        - anderseits auch nicht zu einfach (direkte Bewertung vom Untergrund)
+    }
     \pause
 
     \quad $\Rightarrow$ \;Travel Satisfaction, based on the road
+    \note<4>{
+        - Reisezufriedenheit basierend auf dem Weg\\
+        - abhaengig vom Eigenempfinden
+    }
     \pause
 
     \vspace*{1em}
@@ -222,6 +282,11 @@
     \begin{frame}{TLX Results}
         \centering
         \includegraphics[height=0.42\linewidth]{../../evaluation/eval_tlx.pdf}
+
+        \note{
+            - Interessant hier Mental Demand, Effort und Frustration weissen Unterschiede mit hoher statistischer Evidenz auf (wo p am geringsten ist)\\
+            - auch Interessant: Erwartungen an Performance aehnlich
+        }
     \end{frame}
 }
 
@@ -230,6 +295,13 @@
     \begin{frame}{UEQ+ Results}
         \centering
         \includegraphics[height=0.42\linewidth]{../../evaluation/eval_ueq.pdf}
+
+        \note{
+            - LikertShift besonders attraktiv\\
+            - Mapping besondern ineffizient/unintuitiv\\
+            - Sicherheitsempfinden aehnlich, Mapping unsicherer wegen hohem Mental Demand (Interviews)\\
+            - Social Acceptance von Audio Recording gering, weil unangenehm (auch Bestaetigt in Interviews)
+        }
     \end{frame}
 }
 
@@ -304,6 +376,26 @@
 
     \vspace*{2em}
     \textbf{Software Improvements} - for standalone / long-time Usage Scenarios
+
+    \note<1>{
+        - mehrere Teilnehmende in Interviews vorgeschlagen (teils auch nach Fahrt)\\
+        - Moeglichkeit aufgenommene Punkte in App verschieben, neue Punkte setzen etc.\\
+        - beste von beiden Methoden
+    }
+
+    \note<2>{
+        - Prototyp rastet nicht optimal auf Stufen ein\\
+        - entweder Rastpunkte verbessern, oder Feedback wenn Stufe umgestellt\\
+        - z.B. durch Buzzer, Vibrationsmotor\\
+        - evtl. verschiedene Patterns fuer Stufen
+    }
+
+    \note<3>{
+        - Batterielaufzeit ist nicht optimiert\\
+        - erfordert teilweise Restrukturierung der Firmware (und App)\\
+        - um Daten ueber laengere Zeitraeume (z.B. Monat) aufzunehmen\\
+        - Nutzung ganz ohne Smartphone denkbar
+    }
 \end{frame}
 
 \begin{frame}{Thank you for listening!}
